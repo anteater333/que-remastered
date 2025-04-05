@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1092820632181",
+    "project_id": "que-production",
+    "storage_bucket": "que-production.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092820632181:android:f157b054bfa79953cc6e3c",
+        "android_client_info": {
+          "package_name": "com.que.queandroidclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092820632181-aa2jdu20tr6o8ilt1avht1djqv6tlahn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXosoCVy-FWtbBLwuI8O33asNsfI2nvUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092820632181-aa2jdu20tr6o8ilt1avht1djqv6tlahn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
