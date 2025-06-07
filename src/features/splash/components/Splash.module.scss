@@ -1,0 +1,24 @@
+@use "@/styles/_colors.scss";
+
+.splash-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    $que-gardient-primary 0%,
+    $que-gradient-secondary 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.splash-title {
+  color: $que-white;
+  font-size: 6rem;
+  font-weight: bold;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+}

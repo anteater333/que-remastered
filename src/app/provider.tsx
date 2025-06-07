@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import QueSplashProvider from "../features/splash";
+import QueSplashProvider from "@/features/splash";
 
 type RootProviderProps = {
   children: ReactNode;
