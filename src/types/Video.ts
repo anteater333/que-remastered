@@ -1,8 +1,8 @@
-import LikeType from "./Like";
-import Place from "./Place";
-import Song from "./Song";
-import StarType from "./Star";
-import UserType from "./User";
+import type LikeType from "./Like";
+import type Place from "./Place";
+import type Song from "./Song";
+import type StarType from "./Star";
+import type UserType from "./User";
 
 /**
  * 영상에 대한 정보 객체 형식

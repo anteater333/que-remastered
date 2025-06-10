@@ -1,4 +1,5 @@
-import LikeType, { LikeTypeSelector } from "./Like";
+import type LikeType from "./Like";
+import type { LikeTypeSelector } from "./Like";
 
 export default interface UserReaction {
   /**

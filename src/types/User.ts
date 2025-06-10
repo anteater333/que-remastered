@@ -1,8 +1,8 @@
-import UserLevel from "./UserLevel";
-import UserPage from "./UserPage";
-import UserPersonality from "./UserPersonality";
-import UserReaction from "./UserReaction";
-import UserStatus from "./UserStatus";
+import type UserLevel from "./UserLevel";
+import type UserPage from "./UserPage";
+import type UserPersonality from "./UserPersonality";
+import type UserReaction from "./UserReaction";
+import type UserStatus from "./UserStatus";
 
 /**
  * 사용자 정보 객체 형식
