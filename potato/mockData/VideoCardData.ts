@@ -1,4 +1,4 @@
-import VideoType from "../../app/types/Video";
+import VideoType from "../../src/types/Video";
 
 const mockVideoCardData: VideoType[] = [
   {
