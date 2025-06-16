@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.77.1",
     "@tanstack/react-router": "^1.120.10",
+    "@tanstack/react-router-devtools": "^1.121.19",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
+    "@tanstack/router-plugin": "^1.121.19",
     "@types/node": "^22.15.30",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^19.1.2",
