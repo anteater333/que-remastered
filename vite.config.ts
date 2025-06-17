@@ -10,7 +10,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
-      tanstackRouter(),
+      tanstackRouter({
+        target: "react",
+        autoCodeSplitting: true,
+      }),
       react(),
       {
         name: "print-wsl-host-ip",

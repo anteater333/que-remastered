@@ -1,6 +1,6 @@
 @use "@/styles/_colors.scss";
 
-.splash-container {
+.splashContainer {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -16,7 +16,7 @@
   z-index: 9999;
 }
 
-.splash-title {
+.splashTitle {
   color: $que-white;
   font-size: 6rem;
   font-weight: bold;

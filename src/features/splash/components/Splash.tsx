@@ -4,8 +4,8 @@ import styles from "./Splash.module.scss";
  */
 const Splash = () => {
   return (
-    <div className={styles["splash-container"]}>
-      <span className={styles["splash-title"]}>QUE</span>
+    <div className={styles.splashContainer}>
+      <span className={styles.splashTitle}>QUE</span>
     </div>
   );
 };
