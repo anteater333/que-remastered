@@ -804,6 +804,11 @@
   resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.121.21.tgz#98060d706ad0d428e2442c24ba849d41f2e664e1"
   integrity sha512-8BFGA7fpElicM1aEfZRDoEiWgMrNb/fVuJjSKv+nYtbp7jdtqt57fROi/uDGf6PLlgJbMoT3GWxqveZisOUEKA==
 
+"@tanstack/history@1.121.34":
+  version "1.121.34"
+  resolved "https://registry.yarnpkg.com/@tanstack/history/-/history-1.121.34.tgz#c11f09d2a0fedd6596a0f89d929d3c17ec4f1130"
+  integrity sha512-YL8dGi5ZU+xvtav2boRlw4zrRghkY6hvdcmHhA0RGSJ/CBgzv+cbADW9eYJLx74XMZvIQ1pp6VMbrpXnnM5gHA==
+
 "@tanstack/query-core@5.80.7":
   version "5.80.7"
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.80.7.tgz#e029b26cad02fc5fe64116ac245aad0c3e5f83b4"
@@ -843,6 +848,15 @@
     "@tanstack/store" "0.7.1"
     use-sync-external-store "^1.5.0"
 
+"@tanstack/router-cli@^1.123.0":
+  version "1.123.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-cli/-/router-cli-1.123.0.tgz#040923590fba4f5a817ab68f2a7f724a9d93d31d"
+  integrity sha512-xMmmAlnCsIECUUcmRrG7zgbMXE2sYHiPZuyIL+E8OaTLz4XkUdpw706gR5nCnDdH/lJeitvewdyFHT1/SNBqdA==
+  dependencies:
+    "@tanstack/router-generator" "1.123.0"
+    chokidar "^3.6.0"
+    yargs "^17.7.2"
+
 "@tanstack/router-core@1.121.21", "@tanstack/router-core@^1.121.21":
   version "1.121.21"
   resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.121.21.tgz#aede6ee11b6f8258f3415461ae809564ca16c81b"
@@ -852,6 +866,18 @@
     "@tanstack/store" "^0.7.0"
     tiny-invariant "^1.3.3"
 
+"@tanstack/router-core@^1.123.0":
+  version "1.123.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.123.0.tgz#0aef499c02a9a233ddc7c366163d8fc7b2601e1a"
+  integrity sha512-trp4swyaNZaHf5SLutVLcsBJvAtfainr95QIV6OVJy7/3LZgiJLELOAF1eSg5hCkV3PnmSgFcsonYIkF7Dw7xg==
+  dependencies:
+    "@tanstack/history" "1.121.34"
+    "@tanstack/store" "^0.7.0"
+    cookie-es "^1.2.2"
+    jsesc "^3.1.0"
+    tiny-invariant "^1.3.3"
+    tiny-warning "^1.0.3"
+
 "@tanstack/router-devtools-core@^1.121.21":
   version "1.121.21"
   resolved "https://registry.yarnpkg.com/@tanstack/router-devtools-core/-/router-devtools-core-1.121.21.tgz#d9888d98490aa87b474ae944ae1f575a7634e6c6"
@@ -860,6 +886,20 @@
     clsx "^2.1.1"
     goober "^2.1.16"
     solid-js "^1.9.5"
+
+"@tanstack/router-generator@1.123.0":
+  version "1.123.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-generator/-/router-generator-1.123.0.tgz#b22ea2eaef05739402b8729b303becf4a04f2c79"
+  integrity sha512-F9Rl1qKoe7UmYkYTQQsYnlcYFtEHB2zG5jhk5rBdRk6Y8HalzdvhVTUHZmAQdJhKGi7deRlIYh3PQJLiTC0qYQ==
+  dependencies:
+    "@tanstack/router-core" "^1.123.0"
+    "@tanstack/router-utils" "1.121.21"
+    "@tanstack/virtual-file-routes" "^1.121.21"
+    prettier "^3.5.0"
+    recast "^0.23.11"
+    source-map "^0.7.4"
+    tsx "^4.19.2"
+    zod "^3.24.2"
 
 "@tanstack/router-generator@^1.121.21":
   version "1.121.21"
@@ -895,7 +935,7 @@
     unplugin "^2.1.2"
     zod "^3.24.2"
 
-"@tanstack/router-utils@^1.121.21":
+"@tanstack/router-utils@1.121.21", "@tanstack/router-utils@^1.121.21":
   version "1.121.21"
   resolved "https://registry.yarnpkg.com/@tanstack/router-utils/-/router-utils-1.121.21.tgz#d45dca5615478a95a359f8ed68ae6de197da2584"
   integrity sha512-u7ubq1xPBtNiU7Fm+EOWlVWdgFLzuKOa1thhqdscVn8R4dNMUd1VoOjZ6AKmLw201VaUhFtlX+u0pjzI6szX7A==
@@ -1349,6 +1389,15 @@ cliui@^6.0.0:
     strip-ansi "^6.0.0"
     wrap-ansi "^6.2.0"
 
+cliui@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/cliui/-/cliui-8.0.1.tgz#0c04b075db02cbfe60dc8e6cf2f5486b1a3608aa"
+  integrity sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==
+  dependencies:
+    string-width "^4.2.0"
+    strip-ansi "^6.0.1"
+    wrap-ansi "^7.0.0"
+
 clsx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.1.1.tgz#eed397c9fd8bd882bfb18deab7102049a2f32999"
@@ -1375,6 +1424,11 @@ convert-source-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
+
+cookie-es@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/cookie-es/-/cookie-es-1.2.2.tgz#18ceef9eb513cac1cb6c14bcbf8bdb2679b34821"
+  integrity sha512-+W7VmiVINB+ywl1HGXJXmrqkOhpKrIiVZV6tQuV54ZyQC7MMuBt81Vc336GMLoHBq5hV/F9eXgt5Mnx0Rha5Fg==
 
 cross-spawn@^7.0.6:
   version "7.0.6"
@@ -1649,7 +1703,7 @@ esbuild@^0.25.0, esbuild@~0.25.0:
     "@esbuild/win32-ia32" "0.25.5"
     "@esbuild/win32-x64" "0.25.5"
 
-escalade@^3.2.0:
+escalade@^3.1.1, escalade@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.2.0.tgz#011a3f69856ba189dffa7dc8fcce99d2a87903e5"
   integrity sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==
@@ -1915,7 +1969,7 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-get-caller-file@^2.0.1:
+get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
@@ -2990,7 +3044,7 @@ stop-iteration-iterator@^1.1.0:
     es-errors "^1.3.0"
     internal-slot "^1.1.0"
 
-string-width@^4.1.0, string-width@^4.2.0:
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -3340,10 +3394,24 @@ wrap-ansi@^6.2.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
 
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
 y18n@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.3.tgz#b5f259c82cd6e336921efd7bfd8bf560de9eeedf"
   integrity sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==
+
+y18n@^5.0.5:
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-5.0.8.tgz#7f4934d0f7ca8c56f95314939ddcd2dd91ce1d55"
+  integrity sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==
 
 yallist@^3.0.2:
   version "3.1.1"
@@ -3357,6 +3425,11 @@ yargs-parser@^18.1.2:
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
+
+yargs-parser@^21.1.1:
+  version "21.1.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
+  integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
 
 yargs@^15.3.1:
   version "15.4.1"
@@ -3374,6 +3447,19 @@ yargs@^15.3.1:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
+
+yargs@^17.7.2:
+  version "17.7.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.7.2.tgz#991df39aca675a192b816e1e0363f9d75d2aa269"
+  integrity sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==
+  dependencies:
+    cliui "^8.0.1"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.3"
+    y18n "^5.0.5"
+    yargs-parser "^21.1.1"
 
 yocto-queue@^0.1.0:
   version "0.1.0"
