@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute()({
+export const Route = createFileRoute("/studio")({
   component: Index,
 });
 
 function Index() {
   return (
     <div>
-      <h3>Welcome QUE!</h3>
+      <h3>Welcome Studio</h3>
     </div>
   );
 }
