@@ -1,15 +1,14 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { GNB } from "../components/navigation/GNB";
+import { FNB } from "../components/navigation/FNB";
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div id="container">
-        <Link to="/">QUE</Link>
-        <Link to="/studio">Studio</Link>
-      </div>
-      <hr />
+      <GNB />
       <Outlet />
+      <FNB />
       <TanStackRouterDevtools />
     </>
   ),
