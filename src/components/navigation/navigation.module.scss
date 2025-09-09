@@ -1,7 +1,6 @@
 .gnb {
   height: 56px;
-  background-color: aqua;
-  border-bottom: 1px solid black; // 임시색
+  border-bottom: 1px solid #e5e5e5; // 임시색
 }
 
 .fnb {
@@ -11,6 +10,5 @@
   height: 56px;
   width: 100%;
   z-index: 1000;
-  background-color: aqua;
-  border-top: 1px solid black; // 임시색
+  border-top: 1px solid #e5e5e5; // 임시색
 }
