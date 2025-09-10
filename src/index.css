@@ -37,8 +37,11 @@ div#root {
 }
 
 div#appContainer {
+  height: 100%;
   max-width: 720px;
   width: 100%;
+
+  box-shadow: 0px 0px 50px black;
 }
 
 div#appContainer.mobile {
