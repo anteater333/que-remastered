@@ -3,12 +3,19 @@
   border-bottom: 1px solid #e5e5e5; // 임시색
 }
 
-.fnb {
+.fnbContainer {
   position: fixed;
   bottom: 0;
   left: 0;
   height: 56px;
   width: 100%;
-  z-index: 1000;
-  border-top: 1px solid #e5e5e5; // 임시색
+
+  display: flex;
+  justify-content: center;
+  .fnb {
+    max-width: 720px;
+    width: 100%;
+    border-top: 1px solid #e5e5e5; // 임시색
+    z-index: 1000;
+  }
 }
