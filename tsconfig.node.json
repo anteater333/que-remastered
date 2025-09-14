@@ -2,10 +2,11 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
+    "jsx": "react-jsx",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -25,7 +26,11 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
-    }
+    },
+
+    "rootDir": "src",
+    "outDir": "dist"
   },
-  "include": ["vite.config.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
 }
