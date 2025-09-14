@@ -1,6 +1,15 @@
 .gnb {
+  position: sticky;
+  top: 0;
   height: 56px;
   border-bottom: 1px solid #e5e5e5; // 임시색
+
+  background-color: red;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 .fnbContainer {
@@ -17,5 +26,11 @@
     width: 100%;
     border-top: 1px solid #e5e5e5; // 임시색
     z-index: 1000;
+
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
   }
 }
