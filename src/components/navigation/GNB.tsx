@@ -1,11 +1,19 @@
 import styles from "./navigation.module.scss";
-import SvgIcon from "@mui/material/SvgIcon";
-import SearchIcon from "@mui/icons-material/Search";
+import { IcoSearch } from "../common/icon/IcoSearch";
+import { IcoNoti } from "../common/icon/IcoNoti";
+import logo from "@/assets/custom/haeder-logo.png";
 
 export const GNB = () => {
   return (
     <div id="header" className={styles.gnb}>
-      <SvgIcon component={SearchIcon} inheritViewBox />
+      <div>
+        <img src={logo} />
+      </div>
+
+      <div>
+        <IcoSearch className={""} />
+        <IcoNoti className={""} />
+      </div>
     </div>
   );
 };
