@@ -10,6 +10,20 @@
   justify-content: center;
   align-items: center;
   color: white;
+
+  .gnbLeft {
+    display: flex;
+
+    height: 100%;
+    flex: 1;
+    img {
+      height: 100%;
+    }
+  }
+
+  .gnbRight {
+    display: flex;
+  }
 }
 
 .fnbContainer {
