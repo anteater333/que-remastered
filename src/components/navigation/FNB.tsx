@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import styles from "./navigation.module.scss";
 import { IcoTimeline } from "../common/icon/IcoTimeline";
 import { IcoSetting } from "../common/icon/IcoSetting";
+import { IcoUpload } from "../common/icon/IcoUpload";
 
 export const FNB = () => {
   return (
@@ -14,7 +15,7 @@ export const FNB = () => {
         </div>
         <div className={styles.fnbCenter}>
           <Link className={styles.mainButton} to="/">
-            임시
+            <IcoUpload />
           </Link>
         </div>
         <div className={styles.fnbRight}>
