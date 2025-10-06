@@ -16,13 +16,13 @@ export const GNB = () => {
 
       <div className={styles.gnbRight}>
         <Link className={styles.button} to="/search">
-          <IcoSearch className={""} />
+          {({ isActive }) => <IcoSearch className={""} />}
         </Link>
         <Link className={styles.button} to="/alert">
-          <IcoNoti className={""} />
+          {({ isActive }) => <IcoNoti className={""} />}
         </Link>
         <Link className={styles.button} to="/studio">
-          <Profile />
+          {({ isActive }) => <Profile />}
         </Link>
       </div>
     </div>

@@ -13,19 +13,19 @@ export const FNB = () => {
       <div id="footer" className={styles.fnb}>
         <div className={styles.fnbLeft}>
           <Link className={styles.sideButton} to="/">
-            <IcoTimeline className={""} />
+            {({ isActive }) => <IcoTimeline className={""} />}
           </Link>
         </div>
         {isAdmin && (
           <div className={styles.fnbCenter}>
             <Link className={styles.mainButton} to="/upload">
-              <IcoUpload />
+              {({ isActive }) => <IcoUpload />}
             </Link>
           </div>
         )}
         <div className={styles.fnbRight}>
           <Link className={styles.sideButton} to="/setting">
-            <IcoSetting className={""} />
+            {({ isActive }) => <IcoSetting className={""} />}
           </Link>
         </div>
       </div>
