@@ -19,7 +19,7 @@ export const GNB = () => {
           {({ isActive }) => <IcoSearch className={""} />}
         </Link>
         <Link className={styles.button} to="/alert">
-          {({ isActive }) => <IcoNoti className={""} />}
+          {({ isActive }) => <IcoNoti isActive={isActive} />}
         </Link>
         <Link className={styles.button} to="/studio">
           {({ isActive }) => <Profile />}

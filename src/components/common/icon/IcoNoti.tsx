@@ -1,12 +1,15 @@
-import SvgIcon, { type SvgIconTypeMap } from "@mui/material/SvgIcon";
+import SvgIcon from "@mui/material/SvgIcon";
 import Icon from "@mui/icons-material/NotificationsNone";
-import type {
-  CommonProps,
-  OverridableComponent,
-} from "@mui/material/OverridableComponent";
+import IconActive from "@mui/icons-material/Notifications";
 
-export const IcoNoti = (
-  props: Partial<CommonProps & OverridableComponent<SvgIconTypeMap<{}, "svg">>>,
-) => {
-  return <SvgIcon component={Icon} inheritViewBox {...props} />;
+import type { MaterialIconProps } from "./types";
+
+export const IcoNoti = (props: MaterialIconProps) => {
+  return (
+    <SvgIcon
+      component={props.isActive ? IconActive : Icon}
+      inheritViewBox
+      {...props}
+    />
+  );
 };
