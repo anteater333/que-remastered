@@ -1,10 +1,9 @@
 import SvgIcon from "@mui/material/SvgIcon";
-import Icon from "@mui/icons-material/NotificationsNone";
-import IconActive from "@mui/icons-material/Notifications";
-
+import Icon from "@mui/icons-material/SettingsOutlined";
+import IconActive from "@mui/icons-material/Settings";
 import type { MaterialIconProps } from "./types";
 
-export const IcoNoti = (props: MaterialIconProps) => {
+export const IcoSetting = (props: MaterialIconProps) => {
   return (
     <SvgIcon
       component={props.isActive ? IconActive : Icon}

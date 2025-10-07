@@ -29,9 +29,11 @@
       "@/*": ["*"]
     },
 
+    "types": ["vite-plugin-svgr/client"],
+
     "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "svg.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

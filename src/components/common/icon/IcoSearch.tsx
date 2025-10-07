@@ -1,12 +1,7 @@
-import SvgIcon, { type SvgIconTypeMap } from "@mui/material/SvgIcon";
+import SvgIcon from "@mui/material/SvgIcon";
 import Icon from "@mui/icons-material/Search";
-import type {
-  CommonProps,
-  OverridableComponent,
-} from "@mui/material/OverridableComponent";
+import type { MaterialIconProps } from "./types";
 
-export const IcoSearch = (
-  props: Partial<CommonProps & OverridableComponent<SvgIconTypeMap<{}, "svg">>>,
-) => {
+export const IcoSearch = (props: MaterialIconProps) => {
   return <SvgIcon component={Icon} inheritViewBox {...props} />;
 };
