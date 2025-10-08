@@ -1,8 +1,8 @@
 import styles from "./navigation.module.scss";
-import { IcoSearch } from "../common/icon/IcoSearch";
-import { IcoNoti } from "../common/icon/IcoNoti";
+import { IcoSearch } from "@/components/common/icon/IcoSearch";
+import { IcoNoti } from "@/components/common/icon/IcoNoti";
 import logo from "@/assets/custom/haeder-logo.png";
-import { Profile } from "../common/profile/Profile";
+import { Profile } from "@/components/common/profile/Profile";
 import { Link } from "@tanstack/react-router";
 
 export const GNB = () => {
@@ -16,13 +16,13 @@ export const GNB = () => {
 
       <div className={styles.gnbRight}>
         <Link className={styles.button} to="/search">
-          {({ isActive }) => <IcoSearch className={""} />}
+          {({}) => <IcoSearch className={""} />}
         </Link>
         <Link className={styles.button} to="/alert">
           {({ isActive }) => <IcoNoti isActive={isActive} />}
         </Link>
         <Link className={styles.button} to="/studio">
-          {({ isActive }) => <Profile />}
+          {({}) => <Profile />}
         </Link>
       </div>
     </div>

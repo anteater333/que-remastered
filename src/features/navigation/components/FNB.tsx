@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import styles from "./navigation.module.scss";
-import { IcoTimeline } from "../common/icon/IcoTimeline";
-import { IcoSetting } from "../common/icon/IcoSetting";
-import { IcoUpload } from "../common/icon/IcoUpload";
+import { IcoTimeline } from "@/components/common/icon/IcoTimeline";
+import { IcoSetting } from "@/components/common/icon/IcoSetting";
+import { IcoUpload } from "@/components/common/icon/IcoUpload";
 import { useState } from "react";
 
 export const FNB = () => {
