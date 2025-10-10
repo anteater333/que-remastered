@@ -59,7 +59,7 @@ export default function VideoCardList(props: VideoCardListProps) {
       }
       return null;
     },
-    [props.noMoreData, isLoading]
+    [props.noMoreData, isLoading],
   );
 
   /**
