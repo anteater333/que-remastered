@@ -1,4 +1,5 @@
 import type VideoType from "../../types/Video";
+import styles from "./VideoCard.module.scss";
 
 interface VideoCardProps {
   video: VideoType;
@@ -26,7 +27,7 @@ interface CardThumbnailViewProps {
 const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
   return (
     <>
-      <img src={thumbnailUrl} />
+      <img className={styles.thumbnail} src={thumbnailUrl} />
     </>
   );
 };
