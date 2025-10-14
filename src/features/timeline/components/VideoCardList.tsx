@@ -8,8 +8,8 @@ type VideoCardListProps = {
 const VideoCardList = ({ data }: VideoCardListProps) => {
   return (
     <>
-      {data.map((_, index) => {
-        return <VideoCard key={index} />;
+      {data.map((video, index) => {
+        return <VideoCard key={index} video={video} />;
       })}
     </>
   );
