@@ -1,3 +1,9 @@
 .thumbnail {
   width: 100%;
 }
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}

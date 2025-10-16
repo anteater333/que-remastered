@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
 
@@ -10,11 +11,20 @@ interface VideoCardProps {
  */
 const VideoCard = ({ video }: VideoCardProps) => {
   return (
-    <>
-      <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
+    <div>
+      <CardOverlayView />
+      <Link to={`/video/${video.videoId}`}>
+        <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
+      </Link>
       <CardInfoView />
-    </>
+    </div>
   );
+};
+
+interface CardOverlayViewProps {}
+
+const CardOverlayView = ({}: CardOverlayViewProps) => {
+  return <></>;
 };
 
 interface CardThumbnailViewProps {
@@ -36,7 +46,13 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
  * 카드 컴포넌트의 정보 영역
  */
 const CardInfoView = () => {
-  return <></>;
+  return (
+    <div className={styles.info}>
+      <div>Profile</div>
+      <div>Title</div>
+      <div>Score</div>
+    </div>
+  );
 };
 
 export default VideoCard;
