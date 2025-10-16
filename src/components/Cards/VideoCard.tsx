@@ -13,7 +13,7 @@ const VideoCard = ({ video }: VideoCardProps) => {
   return (
     <div>
       <CardOverlayView />
-      <Link to={`/video/${video.videoId}`}>
+      <Link to={`/stage/$stageId`} params={{ stageId: video.videoId ?? "" }}>
         <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
       </Link>
       <CardInfoView />
