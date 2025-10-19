@@ -29,6 +29,7 @@ body {
   overflow: hidden;
 
   -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
@@ -52,6 +53,13 @@ div#appContainer {
   overflow: scroll;
 
   box-shadow: 0px 0px 50px black;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+div#appContainer::-webkit-scrollbar {
+  display: none;
 }
 
 div#appContainer.mobile {
