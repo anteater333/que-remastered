@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
+import { formatTimer } from "../../utils/formatter";
 
 interface VideoCardProps {
   video: VideoType;
@@ -12,19 +13,26 @@ interface VideoCardProps {
 const VideoCard = ({ video }: VideoCardProps) => {
   return (
     <div>
-      <CardOverlayView />
-      <Link to={`/stage/$stageId`} params={{ stageId: video.videoId ?? "" }}>
-        <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
-      </Link>
+      <div className={styles.cardHead}>
+        <CardOverlayView length={video.length} />
+        <Link to={`/stage/$stageId`} params={{ stageId: video.videoId ?? "" }}>
+          <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
+        </Link>
+      </div>
       <CardInfoView />
     </div>
   );
 };
+interface CardOverlayViewProps {
+  length: VideoType["length"];
+}
 
-interface CardOverlayViewProps {}
-
-const CardOverlayView = ({}: CardOverlayViewProps) => {
-  return <></>;
+const CardOverlayView = ({ length }: CardOverlayViewProps) => {
+  return (
+    <div className={styles.overlay}>
+      <div className={styles.time}>{formatTimer(length)}</div>
+    </div>
+  );
 };
 
 interface CardThumbnailViewProps {
