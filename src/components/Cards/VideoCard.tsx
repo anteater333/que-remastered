@@ -44,9 +44,9 @@ interface CardThumbnailViewProps {
  */
 const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
   return (
-    <>
+    <div>
       <img className={styles.thumbnail} src={thumbnailUrl} />
-    </>
+    </div>
   );
 };
 
