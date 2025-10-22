@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
 import { formatTimer } from "../../utils/formatter";
+import { Profile } from "../Profile/Profile";
 
 interface VideoCardProps {
   video: VideoType;
@@ -56,7 +57,11 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 const CardInfoView = () => {
   return (
     <div className={styles.info}>
-      <div>Profile</div>
+      <div>
+        <Link className={styles.profile} to="/studio">
+          <Profile />
+        </Link>
+      </div>
       <div>Title</div>
       <div>Score</div>
     </div>
