@@ -3,6 +3,7 @@ import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
 import { formatTimer } from "../../utils/formatter";
 import { Profile } from "../Profile/Profile";
+import type UserType from "../../types/User";
 
 interface VideoCardProps {
   video: VideoType;
@@ -20,7 +21,11 @@ const VideoCard = ({ video }: VideoCardProps) => {
           <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
         </Link>
       </div>
-      <CardInfoView />
+      <CardInfoView
+        title={video.title}
+        nickname={video.uploader?.nickname}
+        videoId={video.videoId}
+      />
     </div>
   );
 };
@@ -51,19 +56,36 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
   );
 };
 
+interface CardInfoViewProps {
+  title: VideoType["title"];
+  nickname: UserType["nickname"];
+  videoId: VideoType["videoId"];
+}
+
 /**
  * 카드 컴포넌트의 정보 영역
  */
-const CardInfoView = () => {
+const CardInfoView = ({ title, nickname, videoId }: CardInfoViewProps) => {
   return (
     <div className={styles.info}>
-      <div>
-        <Link className={styles.profile} to="/studio">
-          <Profile />
-        </Link>
+      <Link
+        to={"/stage/$stageId"}
+        params={{ stageId: videoId ?? "" }}
+        className={styles.infoMainLink}
+      >
+        <span>{title} 영상 보기</span>
+      </Link>
+
+      <Link className={styles.profile} to="/studio">
+        <Profile />
+      </Link>
+      <div className={styles.infoCenter}>
+        <span className={styles.title}>{title}</span>
+        <span className={styles.nickname}>
+          <Link to="/studio">{nickname}</Link>
+        </span>
       </div>
-      <div>Title</div>
-      <div>Score</div>
+      <div className={styles.infoRight}>Score</div>
     </div>
   );
 };

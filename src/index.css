@@ -7,6 +7,35 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Reset browser default link styles */
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus,
+a:focus-visible {
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration-skip-ink: none;
+  -webkit-text-decoration-skip-ink: none;
+}
+
+/* Keep keyboard focus visible if needed (uncomment to enable) */
+/*
+a:focus-visible {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+*/
+
 body {
   margin: 0;
   display: flex;
