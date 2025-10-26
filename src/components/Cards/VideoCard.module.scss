@@ -40,7 +40,7 @@
     height: 100%;
     z-index: 1;
 
-    span {
+    p {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -65,7 +65,7 @@
     min-width: 0;
     padding: 0 12px;
 
-    span {
+    p {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
@@ -79,6 +79,54 @@
       font-size: 8px;
       z-index: 2;
       width: fit-content;
+    }
+  }
+
+  .infoRight {
+    z-index: 2;
+
+    display: flex;
+
+    gap: 8px;
+
+    .countContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      width: 24px;
+
+      button {
+        margin-top: 2px;
+        margin-bottom: 2px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mainCountText {
+      padding-top: 4px;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .subText {
+      font-size: 8px;
+    }
+
+    .subCountText {
+      font-size: 8px;
+      display: flex;
     }
   }
 }

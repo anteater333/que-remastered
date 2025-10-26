@@ -4,6 +4,8 @@ import styles from "./VideoCard.module.scss";
 import { formatTimer } from "../../utils/formatter";
 import { Profile } from "../Profile/Profile";
 import type UserType from "../../types/User";
+import { IcoThumb } from "../common/icon/IcoThumb";
+import { IcoStar } from "../common/icon/IcoStar";
 
 interface VideoCardProps {
   video: VideoType;
@@ -25,6 +27,9 @@ const VideoCard = ({ video }: VideoCardProps) => {
         title={video.title}
         nickname={video.uploader?.nickname}
         videoId={video.videoId}
+        viewCount={video.viewCount}
+        likeCount={video.likeCount}
+        starCount={video.starCount}
       />
     </div>
   );
@@ -60,12 +65,22 @@ interface CardInfoViewProps {
   title: VideoType["title"];
   nickname: UserType["nickname"];
   videoId: VideoType["videoId"];
+  viewCount: VideoType["viewCount"];
+  likeCount: VideoType["likeCount"];
+  starCount: VideoType["starCount"];
 }
 
 /**
  * 카드 컴포넌트의 정보 영역
  */
-const CardInfoView = ({ title, nickname, videoId }: CardInfoViewProps) => {
+const CardInfoView = ({
+  title,
+  nickname,
+  videoId,
+  viewCount,
+  likeCount,
+  starCount,
+}: CardInfoViewProps) => {
   return (
     <div className={styles.info}>
       <Link
@@ -73,19 +88,41 @@ const CardInfoView = ({ title, nickname, videoId }: CardInfoViewProps) => {
         params={{ stageId: videoId ?? "" }}
         className={styles.infoMainLink}
       >
-        <span>{title} 영상 보기</span>
+        <p>{title} 영상 보기</p>
       </Link>
 
       <Link className={styles.profile} to="/studio">
         <Profile />
       </Link>
       <div className={styles.infoCenter}>
-        <span className={styles.title}>{title}</span>
-        <span className={styles.nickname}>
+        <p className={styles.title}>{title}</p>
+        <p className={styles.nickname}>
           <Link to="/studio">{nickname}</Link>
-        </span>
+        </p>
       </div>
-      <div className={styles.infoRight}>Score</div>
+      <div
+        onClick={(event) => {
+          event.preventDefault();
+        }}
+        className={styles.infoRight}
+      >
+        <div className={styles.countContainer}>
+          <p className={styles.mainCountText}>{viewCount}</p>
+          <p className={styles.subText}>views</p>
+        </div>
+        <div className={styles.countContainer}>
+          <button>
+            <IcoThumb className={styles.icon} isActive={false} />
+          </button>
+          <p className={styles.subCountText}>{likeCount}</p>
+        </div>
+        <div className={styles.countContainer}>
+          <button>
+            <IcoStar className={styles.icon} isActive={false} />
+          </button>
+          <p className={styles.subCountText}>{starCount}</p>
+        </div>
+      </div>
     </div>
   );
 };
