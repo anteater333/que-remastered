@@ -51,12 +51,13 @@
 
   display: flex;
   justify-content: center;
+  z-index: 1000;
+
   .fnb {
     max-width: 720px;
     width: 100%;
     box-sizing: border-box;
     border-top: 1px solid #e5e5e5; // 임시색
-    z-index: 1000;
 
     display: flex;
     justify-content: space-evenly;

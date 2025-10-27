@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
-import { formatTimer } from "../../utils/formatter";
+import { formatCount, formatTimer } from "../../utils/formatter";
 import { Profile } from "../Profile/Profile";
 import type UserType from "../../types/User";
 import { IcoThumb } from "../common/icon/IcoThumb";
@@ -107,20 +107,20 @@ const CardInfoView = ({
         className={styles.infoRight}
       >
         <div className={styles.countContainer}>
-          <p className={styles.mainCountText}>{viewCount}</p>
+          <p className={styles.mainCountText}>{formatCount(viewCount)}</p>
           <p className={styles.subText}>views</p>
         </div>
         <div className={styles.countContainer}>
           <button>
             <IcoThumb className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subCountText}>{likeCount}</p>
+          <p className={styles.subCountText}>{formatCount(likeCount)}</p>
         </div>
         <div className={styles.countContainer}>
           <button>
             <IcoStar className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subCountText}>{starCount}</p>
+          <p className={styles.subCountText}>{formatCount(starCount)}</p>
         </div>
       </div>
     </div>
