@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type VideoType from "../../types/Video";
 import styles from "./VideoCard.module.scss";
-import { formatCount, formatTimer } from "../../utils/formatter";
+import { formatCount, formatDate, formatTimer } from "../../utils/formatter";
 import { Profile } from "../Profile/Profile";
 import type UserType from "../../types/User";
 import { IcoThumb } from "../common/icon/IcoThumb";
@@ -30,6 +30,7 @@ const VideoCard = ({ video }: VideoCardProps) => {
         viewCount={video.viewCount}
         likeCount={video.likeCount}
         starCount={video.starCount}
+        uploadedAt={video.uploadedAt}
       />
     </div>
   );
@@ -68,6 +69,7 @@ interface CardInfoViewProps {
   viewCount: VideoType["viewCount"];
   likeCount: VideoType["likeCount"];
   starCount: VideoType["starCount"];
+  uploadedAt: VideoType["uploadedAt"];
 }
 
 /**
@@ -80,6 +82,7 @@ const CardInfoView = ({
   viewCount,
   likeCount,
   starCount,
+  uploadedAt,
 }: CardInfoViewProps) => {
   return (
     <div className={styles.info}>
@@ -96,8 +99,9 @@ const CardInfoView = ({
       </Link>
       <div className={styles.infoCenter}>
         <p className={styles.title}>{title}</p>
-        <p className={styles.nickname}>
+        <p className={styles.subInfo}>
           <Link to="/studio">{nickname}</Link>
+          <p>{formatDate(uploadedAt)}</p>
         </p>
       </div>
       <div

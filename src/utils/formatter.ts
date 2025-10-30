@@ -31,3 +31,21 @@ export function formatCount(count: number) {
     return front.toString() + "." + back.toString() + "k";
   }
 }
+
+function addZeroPadding(str: string, length = 2) {
+  const zeros = new Array(length - str.length).fill(0).join("");
+
+  return zeros + str;
+}
+
+/**
+ * Date 객체를 받아 yyyy-mm-dd 형식의 문자열로 변환합니다.
+ * @param sourceDate
+ */
+export function formatDate(sourceDate: Date, separator = "-") {
+  const year = sourceDate.getFullYear();
+  let month = addZeroPadding((sourceDate.getMonth() + 1).toString());
+  let day = addZeroPadding(sourceDate.getDate().toString());
+
+  return [year, month, day].join(separator);
+}
