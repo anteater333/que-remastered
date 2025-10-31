@@ -15,6 +15,7 @@ import { Route as SettingRouteImport } from './routes/setting'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as AlertRouteImport } from './routes/alert'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StageStageIdRouteImport } from './routes/stage/$stageId'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
@@ -46,6 +47,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StageStageIdRoute = StageStageIdRouteImport.update({
+  id: '/stage/$stageId',
+  path: '/stage/$stageId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/setting': typeof SettingRoute
   '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
+  '/stage/$stageId': typeof StageStageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/setting': typeof SettingRoute
   '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
+  '/stage/$stageId': typeof StageStageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,12 +79,27 @@ export interface FileRoutesById {
   '/setting': typeof SettingRoute
   '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
+  '/stage/$stageId': typeof StageStageIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/alert' | '/search' | '/setting' | '/studio' | '/upload'
+  fullPaths:
+    | '/'
+    | '/alert'
+    | '/search'
+    | '/setting'
+    | '/studio'
+    | '/upload'
+    | '/stage/$stageId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/alert' | '/search' | '/setting' | '/studio' | '/upload'
+  to:
+    | '/'
+    | '/alert'
+    | '/search'
+    | '/setting'
+    | '/studio'
+    | '/upload'
+    | '/stage/$stageId'
   id:
     | '__root__'
     | '/'
@@ -85,6 +108,7 @@ export interface FileRouteTypes {
     | '/setting'
     | '/studio'
     | '/upload'
+    | '/stage/$stageId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,6 +118,7 @@ export interface RootRouteChildren {
   SettingRoute: typeof SettingRoute
   StudioRoute: typeof StudioRoute
   UploadRoute: typeof UploadRoute
+  StageStageIdRoute: typeof StageStageIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -140,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stage/$stageId': {
+      id: '/stage/$stageId'
+      path: '/stage/$stageId'
+      fullPath: '/stage/$stageId'
+      preLoaderRoute: typeof StageStageIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -150,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingRoute: SettingRoute,
   StudioRoute: StudioRoute,
   UploadRoute: UploadRoute,
+  StageStageIdRoute: StageStageIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

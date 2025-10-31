@@ -48,15 +48,15 @@ export default function VideoCard(props: VideoCardProps) {
   const [menuModalVisible, setMenuModalVisible] = useState<boolean>(false);
   /** 형식 변환된 시청 수 */
   const [strViewCount, setStrViewCount] = useState<string>(
-    formatCount(props.videoInfo.viewCount!)
+    formatCount(props.videoInfo.viewCount!),
   );
   /** 형식 변환된 좋아요 수 */
   const [strLikeCount, setStrLikeCount] = useState<string>(
-    formatCount(props.videoInfo.likeCount!)
+    formatCount(props.videoInfo.likeCount!),
   );
   /** 형식 변환된 평가 수 */
   const [strStarCount, setStrStarCount] = useState<string>(
-    formatCount(props.videoInfo.starCount!)
+    formatCount(props.videoInfo.starCount!),
   );
   /** 사용자의 좋아요 여부 */
   const [videoLiked, setVideoLiked] = useState<boolean>(false);
@@ -179,11 +179,11 @@ type CardThumbnailProps = {
 function CardThumbnailView(props: CardThumbnailProps) {
   /** 영상 길이 */
   const [modifiedVideoLength, setModifiedLength] = useState<string>(
-    props.length ? formatTimer(props.length) : "0:00"
+    props.length ? formatTimer(props.length) : "0:00",
   );
   /** 영상 업로드 날짜 */
   const [modifiedVideoDate, setModifiedVideoDate] = useState<string>(
-    props.uploadedAt ? formatDateByDifference(props.uploadedAt) : "알 수 없음"
+    props.uploadedAt ? formatDateByDifference(props.uploadedAt) : "알 수 없음",
   );
   /** 썸네일 주소 TBD : firebase 다운로드 api 사용 메소드 구현 */
   const [thumbnail, setThumbnail] = useState<ImageSourcePropType>({});
