@@ -117,17 +117,16 @@
       height: 16px;
     }
 
-    .mainCountText {
-      padding-top: 4px;
+    .mainCountArea {
       font-size: 14px;
       line-height: 14px;
+      height: 16px;
+      display: flex;
+      align-items: center;
     }
 
     .subText {
-      font-size: 8px;
-    }
-
-    .subCountText {
+      height: 10px;
       font-size: 8px;
       display: flex;
     }

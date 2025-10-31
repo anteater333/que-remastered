@@ -111,20 +111,20 @@ const CardInfoView = ({
         className={styles.infoRight}
       >
         <div className={styles.countContainer}>
-          <p className={styles.mainCountText}>{formatCount(viewCount)}</p>
+          <p className={styles.mainCountArea}>{formatCount(viewCount)}</p>
           <p className={styles.subText}>views</p>
         </div>
         <div className={styles.countContainer}>
           <button>
             <IcoThumb className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subCountText}>{formatCount(likeCount)}</p>
+          <p className={styles.subText}>{formatCount(likeCount)}</p>
         </div>
         <div className={styles.countContainer}>
           <button>
             <IcoStar className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subCountText}>{formatCount(starCount)}</p>
+          <p className={styles.subText}>{formatCount(starCount)}</p>
         </div>
       </div>
     </div>
