@@ -6,7 +6,9 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "dev": "concurrently \"yarn watch-routes\" \"vite\"",
+    "dev:fe": "concurrently \"yarn watch-routes\" \"vite\"",
+    "dev:be": "yarn --cwd server dev",
+    "dev": "concurrently \"yarn:dev:*\"",
     "build": "yarn generate-routes && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
