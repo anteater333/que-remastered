@@ -10,21 +10,20 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadRouteImport } from './routes/upload'
-import { Route as StudioRouteImport } from './routes/studio'
 import { Route as SettingRouteImport } from './routes/setting'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as AlertRouteImport } from './routes/alert'
+import { Route as StudioLayoutRouteImport } from './routes/_studioLayout'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StageStageIdRouteImport } from './routes/stage/$stageId'
+import { Route as StudioLayoutStudioUserIdIndexRouteImport } from './routes/_studioLayout/studio/$userId/index'
+import { Route as StudioLayoutStudioUserIdStagesRouteImport } from './routes/_studioLayout/studio/$userId/stages'
+import { Route as StudioLayoutStudioUserIdReactionsRouteImport } from './routes/_studioLayout/studio/$userId/reactions'
+import { Route as StudioLayoutStudioUserIdBoardRouteImport } from './routes/_studioLayout/studio/$userId/board'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
   path: '/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudioRoute = StudioRouteImport.update({
-  id: '/studio',
-  path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingRoute = SettingRouteImport.update({
@@ -42,6 +41,10 @@ const AlertRoute = AlertRouteImport.update({
   path: '/alert',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudioLayoutRoute = StudioLayoutRouteImport.update({
+  id: '/_studioLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -52,34 +55,68 @@ const StageStageIdRoute = StageStageIdRouteImport.update({
   path: '/stage/$stageId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudioLayoutStudioUserIdIndexRoute =
+  StudioLayoutStudioUserIdIndexRouteImport.update({
+    id: '/studio/$userId/',
+    path: '/studio/$userId/',
+    getParentRoute: () => StudioLayoutRoute,
+  } as any)
+const StudioLayoutStudioUserIdStagesRoute =
+  StudioLayoutStudioUserIdStagesRouteImport.update({
+    id: '/studio/$userId/stages',
+    path: '/studio/$userId/stages',
+    getParentRoute: () => StudioLayoutRoute,
+  } as any)
+const StudioLayoutStudioUserIdReactionsRoute =
+  StudioLayoutStudioUserIdReactionsRouteImport.update({
+    id: '/studio/$userId/reactions',
+    path: '/studio/$userId/reactions',
+    getParentRoute: () => StudioLayoutRoute,
+  } as any)
+const StudioLayoutStudioUserIdBoardRoute =
+  StudioLayoutStudioUserIdBoardRouteImport.update({
+    id: '/studio/$userId/board',
+    path: '/studio/$userId/board',
+    getParentRoute: () => StudioLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/alert': typeof AlertRoute
   '/search': typeof SearchRoute
   '/setting': typeof SettingRoute
-  '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
   '/stage/$stageId': typeof StageStageIdRoute
+  '/studio/$userId/board': typeof StudioLayoutStudioUserIdBoardRoute
+  '/studio/$userId/reactions': typeof StudioLayoutStudioUserIdReactionsRoute
+  '/studio/$userId/stages': typeof StudioLayoutStudioUserIdStagesRoute
+  '/studio/$userId': typeof StudioLayoutStudioUserIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/alert': typeof AlertRoute
   '/search': typeof SearchRoute
   '/setting': typeof SettingRoute
-  '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
   '/stage/$stageId': typeof StageStageIdRoute
+  '/studio/$userId/board': typeof StudioLayoutStudioUserIdBoardRoute
+  '/studio/$userId/reactions': typeof StudioLayoutStudioUserIdReactionsRoute
+  '/studio/$userId/stages': typeof StudioLayoutStudioUserIdStagesRoute
+  '/studio/$userId': typeof StudioLayoutStudioUserIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_studioLayout': typeof StudioLayoutRouteWithChildren
   '/alert': typeof AlertRoute
   '/search': typeof SearchRoute
   '/setting': typeof SettingRoute
-  '/studio': typeof StudioRoute
   '/upload': typeof UploadRoute
   '/stage/$stageId': typeof StageStageIdRoute
+  '/_studioLayout/studio/$userId/board': typeof StudioLayoutStudioUserIdBoardRoute
+  '/_studioLayout/studio/$userId/reactions': typeof StudioLayoutStudioUserIdReactionsRoute
+  '/_studioLayout/studio/$userId/stages': typeof StudioLayoutStudioUserIdStagesRoute
+  '/_studioLayout/studio/$userId/': typeof StudioLayoutStudioUserIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -88,35 +125,45 @@ export interface FileRouteTypes {
     | '/alert'
     | '/search'
     | '/setting'
-    | '/studio'
     | '/upload'
     | '/stage/$stageId'
+    | '/studio/$userId/board'
+    | '/studio/$userId/reactions'
+    | '/studio/$userId/stages'
+    | '/studio/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/alert'
     | '/search'
     | '/setting'
-    | '/studio'
     | '/upload'
     | '/stage/$stageId'
+    | '/studio/$userId/board'
+    | '/studio/$userId/reactions'
+    | '/studio/$userId/stages'
+    | '/studio/$userId'
   id:
     | '__root__'
     | '/'
+    | '/_studioLayout'
     | '/alert'
     | '/search'
     | '/setting'
-    | '/studio'
     | '/upload'
     | '/stage/$stageId'
+    | '/_studioLayout/studio/$userId/board'
+    | '/_studioLayout/studio/$userId/reactions'
+    | '/_studioLayout/studio/$userId/stages'
+    | '/_studioLayout/studio/$userId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  StudioLayoutRoute: typeof StudioLayoutRouteWithChildren
   AlertRoute: typeof AlertRoute
   SearchRoute: typeof SearchRoute
   SettingRoute: typeof SettingRoute
-  StudioRoute: typeof StudioRoute
   UploadRoute: typeof UploadRoute
   StageStageIdRoute: typeof StageStageIdRoute
 }
@@ -128,13 +175,6 @@ declare module '@tanstack/react-router' {
       path: '/upload'
       fullPath: '/upload'
       preLoaderRoute: typeof UploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/studio': {
-      id: '/studio'
-      path: '/studio'
-      fullPath: '/studio'
-      preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/setting': {
@@ -158,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlertRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_studioLayout': {
+      id: '/_studioLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof StudioLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -172,15 +219,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StageStageIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_studioLayout/studio/$userId/': {
+      id: '/_studioLayout/studio/$userId/'
+      path: '/studio/$userId'
+      fullPath: '/studio/$userId'
+      preLoaderRoute: typeof StudioLayoutStudioUserIdIndexRouteImport
+      parentRoute: typeof StudioLayoutRoute
+    }
+    '/_studioLayout/studio/$userId/stages': {
+      id: '/_studioLayout/studio/$userId/stages'
+      path: '/studio/$userId/stages'
+      fullPath: '/studio/$userId/stages'
+      preLoaderRoute: typeof StudioLayoutStudioUserIdStagesRouteImport
+      parentRoute: typeof StudioLayoutRoute
+    }
+    '/_studioLayout/studio/$userId/reactions': {
+      id: '/_studioLayout/studio/$userId/reactions'
+      path: '/studio/$userId/reactions'
+      fullPath: '/studio/$userId/reactions'
+      preLoaderRoute: typeof StudioLayoutStudioUserIdReactionsRouteImport
+      parentRoute: typeof StudioLayoutRoute
+    }
+    '/_studioLayout/studio/$userId/board': {
+      id: '/_studioLayout/studio/$userId/board'
+      path: '/studio/$userId/board'
+      fullPath: '/studio/$userId/board'
+      preLoaderRoute: typeof StudioLayoutStudioUserIdBoardRouteImport
+      parentRoute: typeof StudioLayoutRoute
+    }
   }
 }
 
+interface StudioLayoutRouteChildren {
+  StudioLayoutStudioUserIdBoardRoute: typeof StudioLayoutStudioUserIdBoardRoute
+  StudioLayoutStudioUserIdReactionsRoute: typeof StudioLayoutStudioUserIdReactionsRoute
+  StudioLayoutStudioUserIdStagesRoute: typeof StudioLayoutStudioUserIdStagesRoute
+  StudioLayoutStudioUserIdIndexRoute: typeof StudioLayoutStudioUserIdIndexRoute
+}
+
+const StudioLayoutRouteChildren: StudioLayoutRouteChildren = {
+  StudioLayoutStudioUserIdBoardRoute: StudioLayoutStudioUserIdBoardRoute,
+  StudioLayoutStudioUserIdReactionsRoute:
+    StudioLayoutStudioUserIdReactionsRoute,
+  StudioLayoutStudioUserIdStagesRoute: StudioLayoutStudioUserIdStagesRoute,
+  StudioLayoutStudioUserIdIndexRoute: StudioLayoutStudioUserIdIndexRoute,
+}
+
+const StudioLayoutRouteWithChildren = StudioLayoutRoute._addFileChildren(
+  StudioLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  StudioLayoutRoute: StudioLayoutRouteWithChildren,
   AlertRoute: AlertRoute,
   SearchRoute: SearchRoute,
   SettingRoute: SettingRoute,
-  StudioRoute: StudioRoute,
   UploadRoute: UploadRoute,
   StageStageIdRoute: StageStageIdRoute,
 }
