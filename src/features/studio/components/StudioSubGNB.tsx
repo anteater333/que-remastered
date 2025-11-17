@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { clsx } from "clsx";
+import styles from "./StudioSubGNB.module.scss";
 
 type StudioSubGNBProps = {
   userId: string;
@@ -6,18 +8,38 @@ type StudioSubGNBProps = {
 
 export const StudioSubGNB = ({ userId }: StudioSubGNBProps) => {
   return (
-    <div>
-      <Link to="/studio/$userId" params={{ userId }}>
-        홈
+    <div className={styles.subGnb}>
+      <Link
+        to="/studio/$userId"
+        params={{ userId }}
+        activeOptions={{ exact: true }}
+      >
+        {({ isActive }) => (
+          <div className={clsx(styles.tab, isActive && styles.isActive)}>
+            홈
+          </div>
+        )}
       </Link>
       <Link to="/studio/$userId/stages" params={{ userId }}>
-        영상
+        {({ isActive }) => (
+          <div className={clsx(styles.tab, isActive && styles.isActive)}>
+            영상
+          </div>
+        )}
       </Link>
       <Link to="/studio/$userId/reactions" params={{ userId }}>
-        리액션
+        {({ isActive }) => (
+          <div className={clsx(styles.tab, isActive && styles.isActive)}>
+            리액션
+          </div>
+        )}
       </Link>
       <Link to="/studio/$userId/board" params={{ userId }}>
-        게시판
+        {({ isActive }) => (
+          <div className={clsx(styles.tab, isActive && styles.isActive)}>
+            게시판
+          </div>
+        )}
       </Link>
     </div>
   );

@@ -9,9 +9,9 @@ function RouteComponent() {
   const { userId } = useParams({ strict: false });
 
   return (
-    <div>
+    <>
       <StudioSubGNB userId={userId!} />
       <Outlet />
-    </div>
+    </>
   );
 }

@@ -21,7 +21,11 @@ export const GNB = () => {
         <Link className={styles.button} to="/alert">
           {({ isActive }) => <IcoNoti isActive={isActive} />}
         </Link>
-        <Link className={styles.button} to="/studio">
+        <Link
+          className={styles.button}
+          to="/studio/$userId"
+          params={{ userId: "tmp" }}
+        >
           {({}) => <Profile />}
         </Link>
       </div>
