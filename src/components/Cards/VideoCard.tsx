@@ -25,6 +25,7 @@ const VideoCard = ({ video }: VideoCardProps) => {
       </div>
       <CardInfoView
         title={video.title}
+        userId={video.uploader?.userId}
         nickname={video.uploader?.nickname}
         videoId={video.videoId}
         viewCount={video.viewCount}
@@ -64,6 +65,7 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 
 interface CardInfoViewProps {
   title: VideoType["title"];
+  userId: UserType["userId"];
   nickname: UserType["nickname"];
   videoId: VideoType["videoId"];
   viewCount: VideoType["viewCount"];
@@ -77,6 +79,7 @@ interface CardInfoViewProps {
  */
 const CardInfoView = ({
   title,
+  userId,
   nickname,
   videoId,
   viewCount,
@@ -97,14 +100,14 @@ const CardInfoView = ({
       <Link
         className={styles.profile}
         to="/studio/$userId"
-        params={{ userId: nickname! }}
+        params={{ userId: userId! }}
       >
         <Profile />
       </Link>
       <div className={styles.infoCenter}>
         <p className={styles.title}>{title}</p>
         <p className={styles.subInfo}>
-          <Link to="/studio/$userId" params={{ userId: nickname! }}>
+          <Link to="/studio/$userId" params={{ userId: userId! }}>
             {nickname}
           </Link>
           <p>{formatDate(uploadedAt)}</p>
