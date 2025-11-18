@@ -4,8 +4,11 @@ import { IcoNoti } from "@/components/common/icon/IcoNoti";
 import logo from "@/assets/custom/haeder-logo.png";
 import { Profile } from "@/components/Profile/Profile";
 import { Link } from "@tanstack/react-router";
+import { IcoPerson } from "../../../components/common/icon/IcoPerson";
 
 export const GNB = () => {
+  const isLogin = false; // todo: 로그인 상태 구현
+
   return (
     <div id="header" className={styles.gnb}>
       <div className={styles.gnbLeft}>
@@ -18,16 +21,24 @@ export const GNB = () => {
         <Link className={styles.button} to="/search">
           {({}) => <IcoSearch className={""} />}
         </Link>
-        <Link className={styles.button} to="/alert">
-          {({ isActive }) => <IcoNoti isActive={isActive} />}
-        </Link>
-        <Link
-          className={styles.button}
-          to="/studio/$userId"
-          params={{ userId: "tmp" }} // TODO: 로그인 전역 상태 구현
-        >
-          {({}) => <Profile />}
-        </Link>
+        {isLogin ? (
+          <>
+            <Link className={styles.button} to="/alert">
+              {({ isActive }) => <IcoNoti isActive={isActive} />}
+            </Link>
+            <Link
+              className={styles.button}
+              to="/studio/$userId"
+              params={{ userId: "tmp" }} // TODO: 로그인 전역 상태 구현
+            >
+              {({}) => <Profile />}
+            </Link>
+          </>
+        ) : (
+          <Link className={styles.button} to="/intro">
+            {({}) => <IcoPerson />}
+          </Link>
+        )}
       </div>
     </div>
   );
