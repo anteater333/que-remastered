@@ -21,7 +21,11 @@ export const GNB = () => {
         <Link className={styles.button} to="/alert">
           {({ isActive }) => <IcoNoti isActive={isActive} />}
         </Link>
-        <Link className={styles.button} to="/studio">
+        <Link
+          className={styles.button}
+          to="/studio/$userId"
+          params={{ userId: "tmp" }} // TODO: 로그인 전역 상태 구현
+        >
           {({}) => <Profile />}
         </Link>
       </div>
