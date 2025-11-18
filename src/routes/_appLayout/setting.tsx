@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/setting")({
-  component: Index,
+export const Route = createFileRoute("/_appLayout/setting")({
+  component: Setting,
 });
 
-function Index() {
+function Setting() {
   return (
     <div>
       <h3>Welcome Setting</h3>

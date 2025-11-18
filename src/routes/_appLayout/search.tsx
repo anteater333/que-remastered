@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/search")({
-  component: Index,
+export const Route = createFileRoute("/_appLayout/search")({
+  component: Search,
 });
 
-function Index() {
+function Search() {
   return (
     <div>
       <h3>Welcome Search</h3>

@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/upload")({
-  component: Index,
+export const Route = createFileRoute("/_appLayout/upload")({
+  component: Upload,
 });
 
-function Index() {
+function Upload() {
   return (
     <div>
       <h3>Welcome Upload</h3>

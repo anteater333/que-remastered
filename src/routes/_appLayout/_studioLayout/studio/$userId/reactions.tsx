@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_studioLayout/studio/$userId/stages")({
+export const Route = createFileRoute("/_appLayout/_studioLayout/studio/$userId/reactions")({
   component: Index,
 });
 
@@ -12,7 +12,7 @@ function Index() {
 
   return (
     <div>
-      <h3>Welcome {userId}'s Studio - stages</h3>
+      <h3>Welcome {userId}'s Studio - reactions</h3>
     </div>
   );
 }

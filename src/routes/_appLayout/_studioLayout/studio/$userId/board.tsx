@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_studioLayout/studio/$userId/board")({
+export const Route = createFileRoute("/_appLayout/_studioLayout/studio/$userId/board")({
   component: Index,
 });
 

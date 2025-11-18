@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Player from "../../features/player";
+import Player from "../../../features/player";
 
-export const Route = createFileRoute("/stage/$stageId")({
+export const Route = createFileRoute("/_appLayout/stage/$stageId")({
   component: Index,
 });
 
