@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LandingLayoutRouteImport } from './routes/_landingLayout'
 import { Route as AppLayoutRouteImport } from './routes/_appLayout'
 import { Route as AppLayoutIndexRouteImport } from './routes/_appLayout/index'
+import { Route as LandingLayoutLoginRouteImport } from './routes/_landingLayout/login'
 import { Route as LandingLayoutIntroRouteImport } from './routes/_landingLayout/intro'
 import { Route as AppLayoutUploadRouteImport } from './routes/_appLayout/upload'
 import { Route as AppLayoutSettingRouteImport } from './routes/_appLayout/setting'
@@ -36,6 +37,11 @@ const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppLayoutRoute,
+} as any)
+const LandingLayoutLoginRoute = LandingLayoutLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => LandingLayoutRoute,
 } as any)
 const LandingLayoutIntroRoute = LandingLayoutIntroRouteImport.update({
   id: '/intro',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/setting': typeof AppLayoutSettingRoute
   '/upload': typeof AppLayoutUploadRoute
   '/intro': typeof LandingLayoutIntroRoute
+  '/login': typeof LandingLayoutLoginRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/setting': typeof AppLayoutSettingRoute
   '/upload': typeof AppLayoutUploadRoute
   '/intro': typeof LandingLayoutIntroRoute
+  '/login': typeof LandingLayoutLoginRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/_appLayout/setting': typeof AppLayoutSettingRoute
   '/_appLayout/upload': typeof AppLayoutUploadRoute
   '/_landingLayout/intro': typeof LandingLayoutIntroRoute
+  '/_landingLayout/login': typeof LandingLayoutLoginRoute
   '/_appLayout/': typeof AppLayoutIndexRoute
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/_appLayout/_studioLayout/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/setting'
     | '/upload'
     | '/intro'
+    | '/login'
     | '/'
     | '/stage/$stageId'
     | '/studio/$userId/board'
@@ -160,6 +170,7 @@ export interface FileRouteTypes {
     | '/setting'
     | '/upload'
     | '/intro'
+    | '/login'
     | '/'
     | '/stage/$stageId'
     | '/studio/$userId/board'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/_appLayout/setting'
     | '/_appLayout/upload'
     | '/_landingLayout/intro'
+    | '/_landingLayout/login'
     | '/_appLayout/'
     | '/_appLayout/stage/$stageId'
     | '/_appLayout/_studioLayout/studio/$userId/board'
@@ -211,6 +223,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppLayoutIndexRouteImport
       parentRoute: typeof AppLayoutRoute
+    }
+    '/_landingLayout/login': {
+      id: '/_landingLayout/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LandingLayoutLoginRouteImport
+      parentRoute: typeof LandingLayoutRoute
     }
     '/_landingLayout/intro': {
       id: '/_landingLayout/intro'
@@ -341,10 +360,12 @@ const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
 
 interface LandingLayoutRouteChildren {
   LandingLayoutIntroRoute: typeof LandingLayoutIntroRoute
+  LandingLayoutLoginRoute: typeof LandingLayoutLoginRoute
 }
 
 const LandingLayoutRouteChildren: LandingLayoutRouteChildren = {
   LandingLayoutIntroRoute: LandingLayoutIntroRoute,
+  LandingLayoutLoginRoute: LandingLayoutLoginRoute,
 }
 
 const LandingLayoutRouteWithChildren = LandingLayoutRoute._addFileChildren(
