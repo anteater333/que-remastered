@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import styles from "./intro.module.scss";
+import { SignupButton } from "./components/SignupButton";
 
 const Intro = () => {
   return (
@@ -16,8 +17,7 @@ const Intro = () => {
           당신의 콘서트를 시작하세요
         </div>
         <div className={styles.buttonGroup}>
-          {/* todo: 공용 버튼 컴포넌트 구현 */}
-          <button>QUE 계정 만들기</button>
+          <SignupButton />
         </div>
         <div className={styles.login}>
           <p>이미 게정이 있다면</p>

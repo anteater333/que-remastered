@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LandingLayoutRouteImport } from './routes/_landingLayout'
 import { Route as AppLayoutRouteImport } from './routes/_appLayout'
 import { Route as AppLayoutIndexRouteImport } from './routes/_appLayout/index'
+import { Route as LandingLayoutSignupRouteImport } from './routes/_landingLayout/signup'
 import { Route as LandingLayoutLoginRouteImport } from './routes/_landingLayout/login'
 import { Route as LandingLayoutIntroRouteImport } from './routes/_landingLayout/intro'
 import { Route as AppLayoutUploadRouteImport } from './routes/_appLayout/upload'
@@ -37,6 +38,11 @@ const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppLayoutRoute,
+} as any)
+const LandingLayoutSignupRoute = LandingLayoutSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => LandingLayoutRoute,
 } as any)
 const LandingLayoutLoginRoute = LandingLayoutLoginRouteImport.update({
   id: '/login',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/upload': typeof AppLayoutUploadRoute
   '/intro': typeof LandingLayoutIntroRoute
   '/login': typeof LandingLayoutLoginRoute
+  '/signup': typeof LandingLayoutSignupRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -123,6 +130,7 @@ export interface FileRoutesByTo {
   '/upload': typeof AppLayoutUploadRoute
   '/intro': typeof LandingLayoutIntroRoute
   '/login': typeof LandingLayoutLoginRoute
+  '/signup': typeof LandingLayoutSignupRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/_appLayout/upload': typeof AppLayoutUploadRoute
   '/_landingLayout/intro': typeof LandingLayoutIntroRoute
   '/_landingLayout/login': typeof LandingLayoutLoginRoute
+  '/_landingLayout/signup': typeof LandingLayoutSignupRoute
   '/_appLayout/': typeof AppLayoutIndexRoute
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/_appLayout/_studioLayout/studio/$userId/board': typeof AppLayoutStudioLayoutStudioUserIdBoardRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/upload'
     | '/intro'
     | '/login'
+    | '/signup'
     | '/'
     | '/stage/$stageId'
     | '/studio/$userId/board'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/upload'
     | '/intro'
     | '/login'
+    | '/signup'
     | '/'
     | '/stage/$stageId'
     | '/studio/$userId/board'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/_appLayout/upload'
     | '/_landingLayout/intro'
     | '/_landingLayout/login'
+    | '/_landingLayout/signup'
     | '/_appLayout/'
     | '/_appLayout/stage/$stageId'
     | '/_appLayout/_studioLayout/studio/$userId/board'
@@ -223,6 +235,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppLayoutIndexRouteImport
       parentRoute: typeof AppLayoutRoute
+    }
+    '/_landingLayout/signup': {
+      id: '/_landingLayout/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof LandingLayoutSignupRouteImport
+      parentRoute: typeof LandingLayoutRoute
     }
     '/_landingLayout/login': {
       id: '/_landingLayout/login'
@@ -361,11 +380,13 @@ const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
 interface LandingLayoutRouteChildren {
   LandingLayoutIntroRoute: typeof LandingLayoutIntroRoute
   LandingLayoutLoginRoute: typeof LandingLayoutLoginRoute
+  LandingLayoutSignupRoute: typeof LandingLayoutSignupRoute
 }
 
 const LandingLayoutRouteChildren: LandingLayoutRouteChildren = {
   LandingLayoutIntroRoute: LandingLayoutIntroRoute,
   LandingLayoutLoginRoute: LandingLayoutLoginRoute,
+  LandingLayoutSignupRoute: LandingLayoutSignupRoute,
 }
 
 const LandingLayoutRouteWithChildren = LandingLayoutRoute._addFileChildren(
