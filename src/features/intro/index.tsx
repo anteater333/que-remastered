@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import styles from "./intro.module.scss";
 import { SignupButton } from "./components/SignupButton";
+import { LogoText } from "../../components/common/logo/LogoText";
 
 const Intro = () => {
   return (
@@ -9,8 +10,7 @@ const Intro = () => {
 
       <div className={styles.introContainer}>
         <div className={styles.logo}>
-          {/* todo: 로고 이미지로 교체 */}
-          QUE
+          <LogoText isColored={true} />
         </div>
         <div className={styles.catchPhrase}>
           {/* todo: 캐치 프레이즈 변경 */}

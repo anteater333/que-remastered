@@ -5,6 +5,7 @@ import logo from "@/assets/custom/haeder-logo.png";
 import { Profile } from "@/components/Profile/Profile";
 import { Link } from "@tanstack/react-router";
 import { IcoPerson } from "../../../components/common/icon/IcoPerson";
+import { LogoText } from "../../../components/common/logo/LogoText";
 
 export const GNB = () => {
   const isLogin = false; // todo: 로그인 상태 구현
@@ -13,7 +14,7 @@ export const GNB = () => {
     <div id="header" className={styles.gnb}>
       <div className={styles.gnbLeft}>
         <Link className={styles.logo} to="/">
-          <img src={logo} />
+          <LogoText isColored={false} />
         </Link>
       </div>
 
