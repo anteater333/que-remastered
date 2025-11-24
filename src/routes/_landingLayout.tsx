@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { BackButton } from "../components/Buttons/BackButton";
+import { LandingGNB } from "../features/navigation";
 
 export const Route = createFileRoute("/_landingLayout")({
   component: RouteComponent,
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_landingLayout")({
 function RouteComponent() {
   return (
     <>
-      <BackButton />
+      <LandingGNB />
       <Outlet />
     </>
   );
