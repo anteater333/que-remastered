@@ -1,4 +1,22 @@
 .introRoot {
+  & > div {
+    height: 100%;
+    width: 100%;
+  }
+
   .introBackground {
+    position: absolute;
+  }
+  .introOverlay {
+    position: absolute;
+    background-color: black;
+  }
+
+  .introContainer {
+    position: absolute;
+    z-index: 10;
+    div {
+      color: white;
+    }
   }
 }

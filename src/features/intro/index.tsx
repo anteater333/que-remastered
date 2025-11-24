@@ -10,6 +10,7 @@ const Intro = () => {
   return (
     <div className={styles.introRoot}>
       <div className={styles.introBackground} />
+      <div className={styles.introOverlay} />
 
       <div className={styles.introContainer}>
         <div className={styles.logo}>
