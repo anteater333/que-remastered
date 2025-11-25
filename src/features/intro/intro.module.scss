@@ -1,4 +1,8 @@
 .introRoot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
   & > div {
     height: 100%;
     width: 100%;
@@ -6,10 +10,14 @@
 
   .introBackground {
     position: absolute;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
   }
   .introOverlay {
     position: absolute;
-    background-color: black;
+    background: linear-gradient(to bottom, #00000033 0%, black 75%);
   }
 
   .introContainer {

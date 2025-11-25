@@ -5,11 +5,14 @@ import { LogoText } from "../../components/common/logo/LogoText";
 
 /** TODO: 어드민 설정 가능하도록 만들기 */
 const CATCHPHRASE = `내 방에서 열리는 <span style="color: #07b2f8">콘서트</span>`;
+const BG_IMG = `https://i.postimg.cc/mgdFtJd5/welcome.gif`;
 
 const Intro = () => {
   return (
     <div className={styles.introRoot}>
-      <div className={styles.introBackground} />
+      <div className={styles.introBackground}>
+        <img src={BG_IMG} alt="welcome" />
+      </div>
       <div className={styles.introOverlay} />
 
       <div className={styles.introContainer}>
