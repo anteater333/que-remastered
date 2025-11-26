@@ -16,19 +16,21 @@ const Intro = () => {
       <div className={styles.introOverlay} />
 
       <div className={styles.introContainer}>
-        <div className={styles.logo}>
-          <LogoText isColored={true} />
-        </div>
-        <div
-          className={styles.catchPhrase}
-          dangerouslySetInnerHTML={{ __html: CATCHPHRASE }}
-        ></div>
-        <div className={styles.buttonGroup}>
-          <SignupButton />
-        </div>
-        <div className={styles.login}>
-          <p>이미 계정이 있다면</p>
-          <Link to="/login">로그인</Link>
+        <div>
+          <div className={styles.logo}>
+            <LogoText isColored={true} />
+          </div>
+          <div
+            className={styles.catchPhrase}
+            dangerouslySetInnerHTML={{ __html: CATCHPHRASE }}
+          ></div>
+          <div className={styles.buttonGroup}>
+            <SignupButton />
+          </div>
+          <div className={styles.login}>
+            <p>이미 계정이 있다면</p>
+            <Link to="/login">로그인</Link>
+          </div>
         </div>
       </div>
     </div>
