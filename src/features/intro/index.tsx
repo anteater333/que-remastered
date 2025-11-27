@@ -18,7 +18,9 @@ const Intro = () => {
       <div className={styles.introContainer}>
         <div>
           <div className={styles.logo}>
-            <LogoText isColored={true} />
+            <Link to="/">
+              <LogoText isColored={true} />
+            </Link>
           </div>
           <div
             className={styles.catchPhrase}
