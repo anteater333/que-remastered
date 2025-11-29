@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Intro from "../../features/intro";
+import Intro from "../features/intro";
 
-export const Route = createFileRoute("/_landingLayout/intro")({
+export const Route = createFileRoute("/intro")({
   component: RouteComponent,
 });
 
