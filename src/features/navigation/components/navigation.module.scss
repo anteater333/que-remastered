@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: $que-white;
 
   .gnbLeft {
     display: flex;
@@ -20,7 +20,7 @@
     height: 100%;
     flex: 1;
     .logo {
-      height: 50%;
+      height: 75%;
       img {
         height: 100%;
       }
@@ -62,7 +62,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background-color: white;
+    background-color: $que-white;
     padding: 0 60px;
 
     svg {

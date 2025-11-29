@@ -1,0 +1,38 @@
+.signupButton {
+  color: $que-white;
+  background: linear-gradient(
+    -115deg,
+    $que-gardient-primary 0%,
+    $que-gradient-secondary 100%
+  );
+
+  border-radius: 4px;
+
+  display: flex;
+  gap: 8px;
+
+  padding: 6px 8px 6px 8px;
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo {
+    width: 24px;
+    font-size: 24px;
+    font-weight: bold;
+
+    border-right: 1px solid white;
+
+    padding-right: 8px;
+  }
+
+  .phrase {
+    font-size: 18px;
+    font-weight: bold;
+
+    width: 100%;
+  }
+}
