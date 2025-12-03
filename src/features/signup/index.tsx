@@ -4,10 +4,16 @@ import { TextInput } from "../../components/Inputs/TextInput";
 
 const SignupPage = () => {
   return (
-    <div>
-      <LogoText isColored />
-      <div>회원가입</div>
-      <TextInput className={styles.input} placeholder="이메일" />
+    <div className={styles.signupContainer}>
+      <div className={styles.upper}>
+        <div className={styles.logo}>
+          <LogoText isColored />
+        </div>
+        <div className={styles.label}>회원가입</div>
+      </div>
+      <div className={styles.lower}>
+        <TextInput className={styles.input} placeholder="이메일" />
+      </div>
     </div>
   );
 };
