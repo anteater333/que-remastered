@@ -12,7 +12,9 @@ const SignupPage = () => {
         <div className={styles.label}>회원가입</div>
       </div>
       <div className={styles.lower}>
-        <TextInput className={styles.input} placeholder="이메일" />
+        <div className={styles.lowerInner}>
+          <TextInput className={styles.input} placeholder="이메일" />
+        </div>
       </div>
     </div>
   );
