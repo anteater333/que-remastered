@@ -1,8 +1,11 @@
 import styles from "./signup.module.scss";
 import { LogoText } from "../../components/common/logo/LogoText";
 import { TextInput } from "../../components/Inputs/TextInput";
+import { useState } from "react";
 
 const SignupPage = () => {
+  const [email, setEmail] = useState("");
+
   return (
     <div className={styles.signupContainer}>
       <div className={styles.upper}>
@@ -13,7 +16,14 @@ const SignupPage = () => {
       </div>
       <div className={styles.lower}>
         <div className={styles.lowerInner}>
-          <TextInput className={styles.input} placeholder="이메일" />
+          <TextInput
+            id="signUpEmailInput"
+            value={email}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.input}
+            placeholder="이메일"
+          />
         </div>
       </div>
     </div>
