@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.scss";
 import "./font.scss";
 import App from "./app/app";
+
 /**
  * 엔트리 포인트
  */
