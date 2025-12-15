@@ -1,3 +1,4 @@
+import { Button } from "../../../components/Buttons/Button";
 import styles from "./SignUpFNB.module.scss";
 
 /**
@@ -7,7 +8,7 @@ export const SignUpFNB = () => {
   return (
     <div className={styles.fnbContainer}>
       <div className={styles.fnb}>
-        <button className={styles.nextButton}>다음</button>
+        <Button className={styles.nextButton}>다음</Button>
       </div>
     </div>
   );
