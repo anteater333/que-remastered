@@ -7,6 +7,8 @@ import { SignUpFNB } from "./components/SignUpFNB";
 const SignupPage = () => {
   const [email, setEmail] = useState("");
 
+  const handleOnNext = () => {};
+
   return (
     <>
       <div className={styles.signupContainer}>
@@ -29,7 +31,7 @@ const SignupPage = () => {
           </div>
         </div>
       </div>
-      <SignUpFNB />
+      <SignUpFNB onNext={handleOnNext} />
     </>
   );
 };
