@@ -16,13 +16,19 @@
     border-top: 1px solid #e5e5e5;
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     background-color: $que-white;
     padding: 0 24px;
   }
 
+  .prevButton {
+    width: 72px;
+    height: 24px;
+  }
+
   .nextButton {
+    margin-left: auto;
     width: 72px;
     height: 24px;
   }
