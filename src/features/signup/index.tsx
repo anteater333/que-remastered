@@ -3,23 +3,35 @@ import { LogoText } from "../../components/common/logo/LogoText";
 import { TextInput } from "../../components/Inputs/TextInput";
 import { useCallback, useState } from "react";
 import { SignUpFNB } from "./components/SignUpFNB";
+import { useMailVarificationMutation } from "./hooks/queries/useMailVarificationMutation";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [varificationCode, setVarificationCode] = useState("");
 
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { mutateAsync: requestMailVarification } =
+    useMailVarificationMutation();
 
   const handleOnPrev = useCallback(() => {
     setStep((prev) => Math.max(0, prev - 1));
   }, []);
 
-  const handleOnNext = useCallback(() => {
+  const handleOnNext = useCallback(async () => {
+    setIsLoading(true);
     switch (step) {
       case 1:
-        setStep(2);
+        try {
+          await requestMailVarification();
+          setStep(2);
+        } catch (error) {
+          alert(error);
+        }
         break;
     }
+    setIsLoading(false);
   }, [step]);
 
   return (
@@ -37,7 +49,7 @@ const SignupPage = () => {
               id="signUpEmailInput"
               value={email}
               type="email"
-              disabled={step !== 1}
+              disabled={step !== 1 && !isLoading}
               onChange={(e) => setEmail(e.target.value)}
               className={styles.input}
               placeholder="이메일"
@@ -47,7 +59,7 @@ const SignupPage = () => {
                 id="signUpVarificationCodeInput"
                 value={varificationCode}
                 type="text"
-                disabled={step !== 2}
+                disabled={step !== 2 && !isLoading}
                 onChange={(e) => setVarificationCode(e.target.value)}
                 className={styles.input}
                 placeholder="인증번호"
@@ -60,7 +72,11 @@ const SignupPage = () => {
         showPrev={step > 1}
         onPrev={handleOnPrev}
         onNext={handleOnNext}
-        isNextEnabled={!!email}
+        isNextEnabled={
+          ((step === 1 && !!email) || (step === 2 && !!varificationCode)) &&
+          !isLoading
+        }
+        isPrevEnabled={!isLoading}
       />
     </>
   );

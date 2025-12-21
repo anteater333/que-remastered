@@ -5,6 +5,7 @@ interface SignUpFNBProps {
   onNext: () => void;
   onPrev: () => void;
   isNextEnabled: boolean;
+  isPrevEnabled: boolean;
   showPrev: boolean;
 }
 
@@ -15,13 +16,18 @@ export const SignUpFNB = ({
   onNext,
   onPrev,
   isNextEnabled,
+  isPrevEnabled,
   showPrev,
 }: SignUpFNBProps) => {
   return (
     <div className={styles.fnbContainer}>
       <div className={styles.fnb}>
         {showPrev && (
-          <Button className={styles.prevButton} onClick={onPrev}>
+          <Button
+            className={styles.prevButton}
+            onClick={onPrev}
+            disabled={!isPrevEnabled}
+          >
             이전
           </Button>
         )}
