@@ -1,9 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
+import { postSignUpVerificationMail } from "../controllers";
 
 const signUpRoutes: FastifyPluginAsync = async (server, options) => {
-  server.post("/varification", async (request, reply) => {
-    return {};
-  });
+  server.post("/verification", postSignUpVerificationMail);
 };
 
 export default signUpRoutes;
