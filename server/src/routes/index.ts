@@ -1,5 +1,6 @@
 import server from "../server";
 import signUpRoutes from "./signup.route";
+import userRoutes from "./user.route";
 
 /** Health Check */
 server.get("/", async (request, reply) => {
@@ -7,3 +8,4 @@ server.get("/", async (request, reply) => {
 });
 
 server.register(signUpRoutes, { prefix: "/signup" });
+server.register(userRoutes, { prefix: "/users" });
