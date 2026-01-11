@@ -24,8 +24,12 @@ const SignupPage = () => {
     switch (step) {
       case 1:
         try {
-          await requestMailVarification();
-          setStep(2);
+          try {
+            await requestMailVarification(email);
+            setStep(2);
+          } catch (error) {
+            console.error(error);
+          }
         } catch (error) {
           alert(error);
         }
