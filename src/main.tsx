@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.scss";
 import "./font.scss";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./app/app";
 
 /**

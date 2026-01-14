@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import QueSplashProvider from "@/features/splash";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
+import { toastConfig } from "../config/toast";
 
 type RootProviderProps = {
   children: ReactNode;
@@ -17,6 +19,7 @@ const RootProvider = ({ children }: RootProviderProps) => {
     <QueryClientProvider client={queryClient}>
       <QueSplashProvider>
         {children}
+        <ToastContainer {...toastConfig} />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueSplashProvider>
     </QueryClientProvider>

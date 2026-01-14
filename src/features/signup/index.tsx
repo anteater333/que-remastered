@@ -4,6 +4,7 @@ import { TextInput } from "../../components/Inputs/TextInput";
 import { useCallback, useState } from "react";
 import { SignUpFNB } from "./components/SignUpFNB";
 import { useMailVarificationMutation } from "./hooks/queries/useMailVarificationMutation";
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -24,15 +25,13 @@ const SignupPage = () => {
     switch (step) {
       case 1:
         try {
-          try {
-            await requestMailVarification(email);
-            setStep(2);
-          } catch (error) {
-            console.error(error);
-          }
+          await requestMailVarification(email);
+          setStep(2);
         } catch (error) {
-          alert(error);
+          console.error(error);
+          toast.error("오류가 발생했습니다.");
         }
+
         break;
     }
     setIsLoading(false);
