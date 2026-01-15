@@ -48,6 +48,16 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true,
+      // 로컬 개발용 프록시 설정
+      proxy: {
+        "/api": {
+          target: env.VITE_API_SERVER_ADDR_HOST,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+          secure: false,
+          ws: true,
+        },
+      },
     },
     resolve: {
       alias: {

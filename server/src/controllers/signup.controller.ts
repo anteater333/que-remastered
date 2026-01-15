@@ -3,7 +3,6 @@ import prisma from "../services/connectors/prisma.service";
 import { generateRandomCode } from "../utils/generator";
 import redisService from "../services/connectors/redis.service";
 import mailService from "../services/mail.service";
-import { request } from "http";
 
 interface PostSignUpVerificationMailBody {
   email: string;
@@ -40,7 +39,9 @@ export const postSignUpVerificationMail: RouteHandler<{
     );
   } catch (error) {
     console.error("Redis 에러:", error);
-    return reply.status(500).send({ message: "키 저장 실패" });
+    return reply
+      .status(500)
+      .send({ message: "인증 키 생성에 실패하였습니다." });
   }
 
   // 메일 발송
@@ -49,7 +50,7 @@ export const postSignUpVerificationMail: RouteHandler<{
   if (isSent) {
     return reply.status(201).send();
   } else {
-    return reply.status(500).send({ message: "메일 발송 실패" });
+    return reply.status(500).send({ message: "메일 발송에 실패하였습니다." });
   }
 };
 

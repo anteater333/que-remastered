@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { SignUpFNB } from "./components/SignUpFNB";
 import { useMailVarificationMutation } from "./hooks/queries/useMailVarificationMutation";
 import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -28,8 +29,12 @@ const SignupPage = () => {
           await requestMailVarification(email);
           setStep(2);
         } catch (error) {
-          console.error(error);
-          toast.error("오류가 발생했습니다.");
+          if (isAxiosError(error)) {
+            toast.error(error.response?.data?.message);
+          } else {
+            console.error(error);
+            toast.error("오류가 발생했습니다.");
+          }
         }
 
         break;
@@ -54,6 +59,11 @@ const SignupPage = () => {
               type="email"
               disabled={step !== 1 && !isLoading}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && step === 1 && !!email && !isLoading) {
+                  handleOnNext();
+                }
+              }}
               className={styles.input}
               placeholder="이메일"
             />
