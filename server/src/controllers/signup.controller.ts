@@ -3,12 +3,14 @@ import prisma from "../services/connectors/prisma.service";
 import { generateRandomCode } from "../utils/generator";
 import redisService from "../services/connectors/redis.service";
 import mailService from "../services/mail.service";
+import {
+  REDIS_VERIFICATION_CHECK_KEY_PREFIX,
+  REDIS_VERIFICATION_EMAIL_KEY_PREFIX,
+} from "../constatns/storeKeys";
 
 interface PostSignUpVerificationMailBody {
   email: string;
 }
-
-const REDIS_VERIFICATION_EMAIL_KEY_PREFIX = "que-verificationMail-";
 
 export const postSignUpVerificationMail: RouteHandler<{
   Body: PostSignUpVerificationMailBody;
@@ -30,13 +32,9 @@ export const postSignUpVerificationMail: RouteHandler<{
 
   // Redis에 생성한 인증번호 + 메일 키 값 쌍 저장
   try {
-    await redisService.set(
-      `${REDIS_VERIFICATION_EMAIL_KEY_PREFIX}${email}`,
-      code,
-      {
-        expiration: { type: "EX", value: 180 },
-      },
-    );
+    await redisService.set(REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email), code, {
+      expiration: { type: "EX", value: 180 },
+    });
   } catch (error) {
     console.error("Redis 에러:", error);
     return reply
@@ -59,8 +57,6 @@ interface PostSignUpVerificationCheckBody {
   code: string;
 }
 
-const REDIS_VERIFICATION_CHECK_KEY_PREFIX = "que-verificationCheck-";
-
 export const postSignUpVerificationCheck: RouteHandler<{
   Body: PostSignUpVerificationCheckBody;
 }> = async (request, reply) => {
@@ -76,7 +72,7 @@ export const postSignUpVerificationCheck: RouteHandler<{
 
   try {
     const savedCode = await redisService.get(
-      `${REDIS_VERIFICATION_EMAIL_KEY_PREFIX}${email}`,
+      REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email),
     );
 
     if (!savedCode) {
@@ -87,19 +83,15 @@ export const postSignUpVerificationCheck: RouteHandler<{
       return reply.status(409).send({ message: "인증 번호가 틀렸습니다" });
     }
 
-    await redisService.unlink(`${REDIS_VERIFICATION_EMAIL_KEY_PREFIX}${email}`);
+    await redisService.unlink(REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email));
 
     // 인증 확인 되었음을 레디스에 기록
-    await redisService.set(
-      `${REDIS_VERIFICATION_CHECK_KEY_PREFIX}${email}`,
-      1,
-      {
-        expiration: {
-          type: "EX",
-          value: 600,
-        },
+    await redisService.set(REDIS_VERIFICATION_CHECK_KEY_PREFIX(email), 1, {
+      expiration: {
+        type: "EX",
+        value: 600,
       },
-    );
+    });
 
     return reply.status(200).send({ message: "인증 성공" });
   } catch (error) {
