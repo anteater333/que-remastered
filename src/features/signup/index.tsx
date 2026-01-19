@@ -40,7 +40,7 @@ const SignupPage = () => {
         break;
     }
     setIsLoading(false);
-  }, [step]);
+  }, [step, email]);
 
   return (
     <>
