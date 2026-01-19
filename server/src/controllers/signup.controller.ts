@@ -21,10 +21,15 @@ export const postSignUpVerificationMail: RouteHandler<{
     return reply.status(400).send({ message: "이메일을 입력해주세요." });
   }
 
-  const existingUser = await prisma.user.findUnique({ where: { email } });
-  // 이미 사용 중인 이메일 있음
-  if (existingUser) {
-    return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    // 이미 사용 중인 이메일 있음
+    if (existingUser) {
+      return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
+    }
+  } catch (error) {
+    console.error("DB 에러:", error);
+    return reply.status(500).send({ message: "사용자 조회에 실패하였습니다." });
   }
 
   // 인증번호 생성
