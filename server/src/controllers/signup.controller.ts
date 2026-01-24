@@ -53,7 +53,9 @@ export const postSignUpVerificationMail: RouteHandler<{
   if (isSent) {
     return reply.status(201).send();
   } else {
-    return reply.status(500).send({ message: "메일 발송에 실패하였습니다." });
+    return reply.status(500).send({
+      message: "메일 발송에 실패하였습니다.\n이메일 주소를 다시 확인해주세요.",
+    });
   }
 };
 
