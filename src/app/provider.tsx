@@ -20,7 +20,7 @@ const RootProvider = ({ children }: RootProviderProps) => {
       <QueSplashProvider>
         {children}
         <ToastContainer {...toastConfig} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueSplashProvider>
     </QueryClientProvider>
   );
