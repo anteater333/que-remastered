@@ -3,24 +3,31 @@ import { LogoText } from "../../components/common/logo/LogoText";
 import { TextInput } from "../../components/Inputs/TextInput";
 import { useCallback, useRef, useState } from "react";
 import { SignUpFNB } from "./components/SignUpFNB";
-import { useMailVarificationMutation } from "./hooks/queries/useMailVarificationMutation";
+import {
+  useMailVerificationCheckMutation,
+  useMailVerificationMutation,
+} from "./hooks/queries/useMailVerificationMutation";
 import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
 import { formatTimer } from "../../utils/formatter";
+import { requsetMailVerificationCheck } from "./api";
+import { Aod } from "@mui/icons-material";
 
 const INITIAL_TIME = 180;
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
-  const [varificationCode, setVarificationCode] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIME);
   const [isExpired, setIsExpired] = useState(false);
 
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { mutateAsync: requestMailVarification } =
-    useMailVarificationMutation();
+  const { mutateAsync: requestMailVerification } =
+    useMailVerificationMutation();
+  const { mutateAsync: requestMailVerificationCheck } =
+    useMailVerificationCheckMutation();
 
   const handleOnPrev = useCallback(() => {
     setStep((prev) => Math.max(0, prev - 1));
@@ -31,7 +38,7 @@ const SignupPage = () => {
     switch (step) {
       case 1:
         try {
-          await requestMailVarification(email);
+          await requestMailVerification(email);
           setStep(2);
           runTimer();
         } catch (error) {
@@ -49,12 +56,22 @@ const SignupPage = () => {
             // do nothing
             break;
           }
+
+          await requestMailVerificationCheck({ email, code: verificationCode });
           // 성공시 타이머 종료
           stopTimer();
-        } catch (error) {}
+        } catch (error) {
+          if (isAxiosError(error)) {
+            toast.error(error.response?.data?.message);
+          } else {
+            console.error(error);
+            toast.error("오류가 발생했습니다.");
+          }
+        }
+        break;
     }
     setIsLoading(false);
-  }, [step, email]);
+  }, [step, email, verificationCode]);
 
   // 이메일 인증 시 타이머 기능
   const countRef = useRef<number>(INITIAL_TIME);
@@ -82,7 +99,7 @@ const SignupPage = () => {
         stopTimer();
         setIsExpired(true);
         setStep(1);
-        setVarificationCode("");
+        setVerificationCode("");
         toast.error("인증 시간이 만료되었습니다.");
       }
     }, 1000);
@@ -117,16 +134,29 @@ const SignupPage = () => {
               <>
                 <TextInput
                   id="signUpVarificationCodeInput"
-                  value={varificationCode}
+                  value={verificationCode}
                   type="text"
                   disabled={step !== 2 && !isLoading}
-                  onChange={(e) => setVarificationCode(e.target.value)}
+                  onChange={(e) => setVerificationCode(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      step === 2 &&
+                      !!email &&
+                      !!verificationCode &&
+                      !isLoading
+                    ) {
+                      handleOnNext();
+                    }
+                  }}
                   className={styles.input}
                   placeholder="인증번호"
                 />
-                <p className={styles.timer}>
-                  {formatTimer(timeLeft * 1000)}내에 입력해주세요.
-                </p>
+                {!!timerRef.current && (
+                  <p className={styles.timer}>
+                    {formatTimer(timeLeft * 1000)}내에 입력해주세요.
+                  </p>
+                )}
               </>
             )}
           </div>
@@ -137,7 +167,7 @@ const SignupPage = () => {
         onPrev={handleOnPrev}
         onNext={handleOnNext}
         isNextEnabled={
-          ((step === 1 && !!email) || (step === 2 && !!varificationCode)) &&
+          ((step === 1 && !!email) || (step === 2 && !!verificationCode)) &&
           !isLoading
         }
         isPrevEnabled={!isLoading}
