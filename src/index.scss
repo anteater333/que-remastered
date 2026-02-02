@@ -85,6 +85,7 @@ div#root {
 div#appContainer {
   height: 100%;
   max-width: 720px;
+  transform: translateZ(0);
   width: 100%;
 
   overflow: scroll;

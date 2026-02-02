@@ -1,7 +1,6 @@
 import styles from "./navigation.module.scss";
 import { IcoSearch } from "@/components/common/icon/IcoSearch";
 import { IcoNoti } from "@/components/common/icon/IcoNoti";
-import logo from "@/assets/custom/haeder-logo.png";
 import { Profile } from "@/components/Profile/Profile";
 import { Link } from "@tanstack/react-router";
 import { IcoPerson } from "../../../components/common/icon/IcoPerson";

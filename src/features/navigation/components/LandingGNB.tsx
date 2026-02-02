@@ -8,6 +8,7 @@ export const LandingGNB = () => {
       <div className={styles.gnbLeft}>
         <BackButton />
       </div>
+      <div className={styles.gnbRight}></div>
     </div>
   );
 };
