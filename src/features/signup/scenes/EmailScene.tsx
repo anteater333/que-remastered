@@ -169,13 +169,13 @@ const EmailStep = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
         </div>
       </div>
       <SignUpFNB
-        showPrev={step > 1}
         onPrev={handleOnPrev}
         onNext={handleOnNext}
         isNextEnabled={
           ((step === 1 && !!email) || (step === 2 && !!verificationCode)) &&
           !isLoading
         }
+        showPrev={step > 1}
         isPrevEnabled={!isLoading}
       />
     </>

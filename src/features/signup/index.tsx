@@ -5,7 +5,7 @@ import PasswordScene from "./scenes/PasswordScene";
 type SIGNUP_SCENE_CODE = "EMAIL" | "PASSWORD";
 
 const SignupPage = () => {
-  const [scene, setScene] = useState<SIGNUP_SCENE_CODE>("EMAIL");
+  const [scene, setScene] = useState<SIGNUP_SCENE_CODE>("PASSWORD");
 
   const [email, setEmail] = useState("");
 
