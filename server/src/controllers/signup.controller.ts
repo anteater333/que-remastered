@@ -1,5 +1,6 @@
 import { RouteHandler } from "fastify";
 import prisma from "../services/connectors/prisma.service";
+import bcrypt from "bcrypt";
 import { generateRandomCode } from "../utils/generator";
 import redisService from "../services/connectors/redis.service";
 import mailService from "../services/mail.service";
@@ -28,7 +29,7 @@ export const postSignUpVerificationMail: RouteHandler<{
       return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
     }
   } catch (error) {
-    console.error("DB 에러:", error);
+    console.error("DB Error:", error);
     return reply.status(500).send({ message: "사용자 조회에 실패하였습니다." });
   }
 
@@ -41,7 +42,7 @@ export const postSignUpVerificationMail: RouteHandler<{
       expiration: { type: "EX", value: 180 },
     });
   } catch (error) {
-    console.error("Redis 에러:", error);
+    console.error("Redis Error:", error);
     return reply
       .status(500)
       .send({ message: "인증 키 생성에 실패하였습니다." });
@@ -103,6 +104,69 @@ export const postSignUpVerificationCheck: RouteHandler<{
     return reply.status(200).send({ message: "인증 성공" });
   } catch (error) {
     console.error("Redis Error: ", error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
+interface PostSignUpBody {
+  email: string;
+  password: string;
+}
+export const postSignUp: RouteHandler<{
+  Body: PostSignUpBody;
+}> = async (request, reply) => {
+  const { email, password } = request.body;
+
+  if (!email || !password) {
+    return reply.status(400).send({ message: "잘못된 요청입니다." });
+  }
+
+  try {
+    // Redis 인증 완료 정보 확인
+    const isVerified = await redisService.get(
+      REDIS_VERIFICATION_CHECK_KEY_PREFIX(email),
+    );
+
+    if (!isVerified) {
+      return reply
+        .status(403)
+        .send({ message: "이메일 인증이 완료되지 않았습니다." });
+    }
+  } catch (error) {
+    console.error("Redis Error: ", error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+
+  try {
+    // 중복 가입 여부 확인
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
+    }
+
+    /** 해싱 처리된 비밀번호 */
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // DB에 사용자 생성
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    // Redis에서 키 삭제
+    await redisService.unlink(REDIS_VERIFICATION_CHECK_KEY_PREFIX(email));
+
+    return reply.status(201).send({
+      message: "회원가입이 완료되었습니다.",
+      userId: newUser.id,
+    });
+  } catch (error) {
+    console.error("SignUp Error: ", error);
     return reply.status(500).send({ message: "서버 오류" });
   }
 };
