@@ -7,7 +7,7 @@ import { LogoText } from "../../components/common/logo/LogoText";
 const CATCHPHRASE = `내 방에서 열리는 콘서트`;
 const BG_IMG = `https://i.postimg.cc/mgdFtJd5/welcome.gif`;
 
-const Intro = () => {
+const IntroPage = () => {
   return (
     <div className={styles.introRoot}>
       <div className={styles.introBackground}>
@@ -18,7 +18,7 @@ const Intro = () => {
       <div className={styles.introContainer}>
         <div className={styles.logo}>
           <Link to="/">
-            <LogoText isColored={true} />
+            <LogoText isColored />
           </Link>
         </div>
         <div
@@ -37,4 +37,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default IntroPage;

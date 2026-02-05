@@ -1,13 +1,5 @@
-import Fastify, { FastifyInstance } from "fastify";
-import { request } from "http";
-
-const server: FastifyInstance = Fastify({
-  logger: true,
-});
-
-server.get("/", async (request, reply) => {
-  return { status: "ok" };
-});
+import server from "./server";
+import "./routes";
 
 const start = async () => {
   try {

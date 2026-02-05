@@ -1,0 +1,16 @@
+.button {
+  color: $que-black;
+  border: 2px solid $que-black;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+
+  &:not(.disabled):active {
+    background-color: $que-black;
+    color: $que-white;
+  }
+
+  &.disabled {
+    opacity: 0.3;
+  }
+}

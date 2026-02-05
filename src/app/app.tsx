@@ -9,6 +9,7 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
+
 /**
  * 어플리케이션 프로그램 최상단 컴포넌트
  */

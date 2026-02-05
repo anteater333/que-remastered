@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Intro from "../features/intro";
+import IntroPage from "../features/intro";
 
 export const Route = createFileRoute("/intro")({
-  component: RouteComponent,
+  component: Intro,
 });
 
-function RouteComponent() {
-  return <Intro />;
+function Intro() {
+  return <IntroPage />;
 }

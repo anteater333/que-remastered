@@ -5,11 +5,36 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(uuid()) // userId
+  email             String    @unique
+  password          String
+  nickname          String?
+  profilePictureUrl String?
+  description       String?
+  registeredAt      DateTime  @default(now())
+
+  // 1. 자기 참조 다대다 관계 (Follower / Following)
+  // followers와 following을 연결하는 중간 테이블이 자동으로 생성됩니다.
+  followers User[] @relation("UserFollows")
+  following User[] @relation("UserFollows")
+
+  // // 2. 1:1 관계들 (Optional)
+  // personality UserPersonality?
+  // page        UserPage?
+  // level       UserLevel?
+  // status      UserStatus?
+  
+  // // 3. 사용자 반응 (보통 1:N 혹은 1:1)
+  // reactions   UserReaction?
+
+  @@map("users") // 실제 DB 테이블 이름을 소문자로 설정
 }
