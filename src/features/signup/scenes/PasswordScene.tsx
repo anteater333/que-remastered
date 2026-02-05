@@ -5,6 +5,8 @@ import styles from "../signup.module.scss";
 import type { SignUpSceneProps } from "../types";
 import { SignUpFNB } from "../components/SignUpFNB";
 import { toast } from "react-toastify";
+import { useSignUpMutation } from "../hooks/queries/useMailVerificationMutation";
+import { isAxiosError } from "axios";
 
 interface PasswordFailReason {
   isValidated: boolean;
@@ -43,7 +45,7 @@ const checkValidatePassword = (password: string): PasswordFailReason => {
 const PasswordScene = ({
   onValidated,
   email,
-}: SignUpSceneProps<{}> & { email: string }) => {
+}: SignUpSceneProps<{ userId: string }> & { email: string }) => {
   const [password, setPassword] = useState("");
   const [passwordFailReason, setPasswordFailReason] =
     useState<PasswordFailReason>({
@@ -56,6 +58,8 @@ const PasswordScene = ({
   const [passwordCheck, setPasswordCheck] = useState("");
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { mutateAsync: signUp } = useSignUpMutation();
 
   const handleOnPrev = useCallback(() => {
     setStep((prev) => Math.max(0, prev - 1));
@@ -79,6 +83,21 @@ const PasswordScene = ({
       case 2:
         if (password !== passwordCheck) {
           toast.warn("비밀번호가 다릅니다!");
+          break;
+        }
+        try {
+          const { userId } = await signUp({ email, password });
+
+          toast.success("회원가입이 완료되었습니다!");
+
+          onValidated({ userId });
+        } catch (error) {
+          if (isAxiosError(error)) {
+            toast.error(error.response?.data?.message);
+          } else {
+            console.error(error);
+            toast.error("오류가 발생했습니다.");
+          }
         }
         break;
     }

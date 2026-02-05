@@ -1,7 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import {
   requestMailVerification,
-  requsetMailVerificationCheck,
+  requestMailVerificationCheck,
+  requestSignUp,
 } from "../../api";
 
 export const useMailVerificationMutation = () => {
@@ -15,7 +16,15 @@ export const useMailVerificationMutation = () => {
 export const useMailVerificationCheckMutation = () => {
   return useMutation({
     mutationFn: ({ email, code }: { email: string; code: string }) => {
-      return requsetMailVerificationCheck(email, code);
+      return requestMailVerificationCheck(email, code);
+    },
+  });
+};
+
+export const useSignUpMutation = () => {
+  return useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) => {
+      return requestSignUp(email, password);
     },
   });
 };
