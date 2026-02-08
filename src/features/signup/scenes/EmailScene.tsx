@@ -139,7 +139,7 @@ const EmailStep = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
             {step > 1 && (
               <>
                 <TextInput
-                  id="signUpVarificationCodeInput"
+                  id="signUpVerificationCodeInput"
                   value={verificationCode}
                   type="text"
                   disabled={step !== 2 && !isLoading}
