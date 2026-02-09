@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import {
   useMailVerificationCheckMutation,
   useMailVerificationMutation,
-} from "../hooks/queries/useMailVerificationMutation";
+} from "../hooks/queries";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { LogoText } from "../../../components/common/logo/LogoText";
