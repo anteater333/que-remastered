@@ -1,4 +1,5 @@
 import server from "./server";
+import "./plugins";
 import "./routes";
 
 const start = async () => {

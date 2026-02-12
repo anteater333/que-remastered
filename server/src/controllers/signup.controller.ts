@@ -7,7 +7,7 @@ import mailService from "../services/mail.service";
 import {
   REDIS_VERIFICATION_CHECK_KEY_PREFIX,
   REDIS_VERIFICATION_EMAIL_KEY_PREFIX,
-} from "../constatns/storeKeys";
+} from "../constants/storeKeys";
 
 interface PostSignUpVerificationMailBody {
   email: string;
