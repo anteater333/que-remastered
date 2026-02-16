@@ -1,4 +1,5 @@
 import server from "../server";
+import signInRoutes from "./signin.route";
 import signUpRoutes from "./signup.route";
 import userRoutes from "./user.route";
 
@@ -8,4 +9,5 @@ server.get("/", async (request, reply) => {
 });
 
 server.register(signUpRoutes, { prefix: "/signup" });
+server.register(signInRoutes, { prefix: "/signin" });
 server.register(userRoutes, { prefix: "/users" });

@@ -29,6 +29,7 @@ const LoginPage = () => {
     setIsLoading(true);
     try {
       await requestLogin({ email, password });
+      toast.success("로그인 되었습니다.");
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data?.message);
