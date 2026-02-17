@@ -82,7 +82,7 @@ const LoginPage = () => {
           </div>
         </div>
       </form>
-      <LoginFNB isNextEnabled formId="que-login" />
+      <LoginFNB isNextEnabled={!isLoading} formId="que-login" />
     </>
   );
 };
