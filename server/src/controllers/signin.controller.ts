@@ -28,5 +28,15 @@ export const postSignIn: RouteHandler<{ Body: PostSignInBody }> = async (
 
   const token = request.server.jwt.sign({ id: user.id, email: user.email });
 
-  return { token };
+  return reply
+    .code(200)
+    .setCookie("accessToken", token, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      signed: true,
+      maxAge: 60 * 60 * 24 * 7,
+    })
+    .send({ message: "로그인 되었습니다." });
 };
