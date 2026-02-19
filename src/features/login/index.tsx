@@ -6,6 +6,8 @@ import { LoginFNB } from "./components/LoginFNB";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useLoginMutation } from "./hooks/queries";
+import { useNavigate, useRouter, useSearch } from "@tanstack/react-router";
+import { getSafeInnerURL } from "../../utils/url";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +15,12 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: requestLogin } = useLoginMutation();
+
+  const navigate = useNavigate();
+  const router = useRouter();
+  const { redirect } = useSearch({
+    from: "/_landingLayout/login",
+  });
 
   const handleLogin = async () => {
     // 기본 검증 실행
@@ -30,6 +38,13 @@ const LoginPage = () => {
     try {
       await requestLogin({ email, password });
       toast.success("로그인 되었습니다.");
+      if (redirect) {
+        router.history.push(getSafeInnerURL(redirect));
+      } else {
+        navigate({
+          to: "/",
+        });
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data?.message);
