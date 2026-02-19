@@ -5,7 +5,7 @@ import styles from "../signup.module.scss";
 import type { SignUpSceneProps } from "../types";
 import { SignUpFNB } from "../components/SignUpFNB";
 import { toast } from "react-toastify";
-import { useSignUpMutation } from "../hooks/queries/useMailVerificationMutation";
+import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
 
 interface PasswordFailReason {

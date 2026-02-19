@@ -1,0 +1,30 @@
+.fnbContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 56px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+
+  .fnb {
+    max-width: 720px;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #e5e5e5;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $que-white;
+    padding: 0 24px;
+  }
+
+  .nextButton {
+    margin-left: auto;
+    width: 72px;
+    height: 24px;
+  }
+}

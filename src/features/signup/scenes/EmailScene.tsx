@@ -3,7 +3,7 @@ import { useCallback, useRef, useState } from "react";
 import {
   useMailVerificationCheckMutation,
   useMailVerificationMutation,
-} from "../hooks/queries/useMailVerificationMutation";
+} from "../hooks/queries";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { LogoText } from "../../../components/common/logo/LogoText";
@@ -139,7 +139,7 @@ const EmailStep = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
             {step > 1 && (
               <>
                 <TextInput
-                  id="signUpVarificationCodeInput"
+                  id="signUpVerificationCodeInput"
                   value={verificationCode}
                   type="text"
                   disabled={step !== 2 && !isLoading}
