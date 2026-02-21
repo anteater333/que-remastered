@@ -1,6 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
-import { postSignUpVerificationMail } from "../controllers";
+import { getMe } from "../controllers";
 
-const userRoutes: FastifyPluginAsync = async (server, options) => {};
+const userRoutes: FastifyPluginAsync = async (server, options) => {
+  server.get("/me", { onRequest: [server.authenticate] }, getMe);
+};
 
 export default userRoutes;

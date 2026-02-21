@@ -1,6 +1,5 @@
 import { RouteHandler } from "fastify";
 import userService from "../services/user.service";
-import { request } from "http";
 
 interface PostSignInBody {
   email: string;
