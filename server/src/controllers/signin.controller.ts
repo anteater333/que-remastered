@@ -1,5 +1,6 @@
 import { RouteHandler } from "fastify";
 import userService from "../services/user.service";
+import { request } from "http";
 
 interface PostSignInBody {
   email: string;
@@ -39,4 +40,17 @@ export const postSignIn: RouteHandler<{ Body: PostSignInBody }> = async (
       maxAge: 60 * 60 * 24 * 7,
     })
     .send({ message: "로그인 되었습니다." });
+};
+
+export const postSignOut: RouteHandler = async (request, reply) => {
+  return reply
+    .clearCookie("accessToken", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      signed: true,
+    })
+    .code(200)
+    .send({ message: "로그아웃 되었습니다." });
 };
