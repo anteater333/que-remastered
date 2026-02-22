@@ -1,12 +1,9 @@
 import APIInstance from "../lib/axios";
+import type { UserProfileType } from "../types/User";
 
-export interface WhoAmIResponse {
-  email: string;
-  nickname: string;
-}
-
-export const requestWhoAmI = async () => {
-  return (await APIInstance.get<WhoAmIResponse>("/signin/whoami")).data;
+export const requestUserProfile = async () => {
+  return (await APIInstance.get<{ user: UserProfileType }>("/users/me")).data
+    .user;
 };
 
 export const requestLogOut = async () => {

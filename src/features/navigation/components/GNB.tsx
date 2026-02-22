@@ -5,9 +5,10 @@ import { Profile } from "@/components/Profile/Profile";
 import { Link } from "@tanstack/react-router";
 import { IcoPerson } from "../../../components/common/icon/IcoPerson";
 import { LogoText } from "../../../components/common/logo/LogoText";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const GNB = () => {
-  const isLogin = false; // todo: 로그인 상태 구현
+  const { isLoggedIn, userProfile } = useAuth();
 
   return (
     <div id="header" className={styles.gnb}>
@@ -21,7 +22,7 @@ export const GNB = () => {
         <Link className={styles.button} to="/search">
           {({}) => <IcoSearch className={""} />}
         </Link>
-        {isLogin ? (
+        {isLoggedIn ? (
           <>
             <Link className={styles.button} to="/alert">
               {({ isActive }) => <IcoNoti isActive={isActive} />}

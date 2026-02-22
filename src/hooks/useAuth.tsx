@@ -1,15 +1,25 @@
 import { useEffect } from "react";
-import { useWhoAmIQuery } from "./queries/useWhoAmIQuery";
+import { useUserProfileQuery } from "./queries/useWhoAmIQuery";
 import { toast } from "react-toastify";
 import { useLogoutMutation } from "./queries/useLogOutMutation";
+import type { UserProfileType } from "../types/User";
+
+interface AuthProps {
+  isLoggedIn: boolean;
+  userProfile: UserProfileType;
+}
 
 /**
  * 로그인 한 사용자의 정보를 가져와 사용하는 훅
  */
-export const useAuth = () => {
-  const { data, isError, error } = useWhoAmIQuery();
+export const useAuth = (): AuthProps => {
+  const { data, isError, error } = useUserProfileQuery();
   const { mutateAsync: requestLogout } = useLogoutMutation();
-  const { email, nickname } = data ?? { email: undefined, nickname: undefined };
+  const { email, nickname, profilePictureUrl } = data ?? {
+    email: "",
+  };
+
+  console.log("🥕 :: ", data);
 
   const isLoggedIn = !!email;
 
@@ -26,7 +36,10 @@ export const useAuth = () => {
 
   return {
     isLoggedIn,
-    email,
-    nickname,
+    userProfile: {
+      email: email,
+      nickname: nickname,
+      profilePictureUrl: profilePictureUrl,
+    },
   };
 };
