@@ -6,6 +6,7 @@ import type { UserProfileType } from "../types/User";
 
 interface AuthProps {
   isLoggedIn: boolean;
+  logout: () => void;
   userProfile: UserProfileType;
 }
 
@@ -13,29 +14,24 @@ interface AuthProps {
  * 로그인 한 사용자의 정보를 가져와 사용하는 훅
  */
 export const useAuth = (): AuthProps => {
-  const { data, isError, error } = useUserProfileQuery();
+  const { data, isError } = useUserProfileQuery();
   const { mutateAsync: requestLogout } = useLogoutMutation();
+
+  const isLoggedIn = !isError && !!data?.email;
   const { email, nickname, profilePictureUrl } = data ?? {
     email: "",
   };
 
-  console.log("🥕 :: ", data);
-
-  const isLoggedIn = !!email;
-
-  /**
-   * 로그인이 만료되었음을 감지하는 Effect
-   */
-  useEffect(() => {
-    if (isError) {
-      toast.error("로그인 정보가 만료되었습니다. 다시 로그인해주세요.");
-      console.error(error);
-      requestLogout();
-    }
-  }, [isError, error]);
+  const logout = async () => {
+    try {
+      await requestLogout();
+      toast.success("로그아웃 되었습니다.");
+    } catch (error) {}
+  };
 
   return {
     isLoggedIn,
+    logout,
     userProfile: {
       email: email,
       nickname: nickname,

@@ -8,7 +8,8 @@ export const useLogoutMutation = () => {
   return useMutation({
     mutationFn: requestLogOut,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY_WHOAMI });
+      queryClient.setQueryData(QUERY_KEY_WHOAMI, null);
+      queryClient.removeQueries({ queryKey: QUERY_KEY_WHOAMI });
     },
   });
 };
