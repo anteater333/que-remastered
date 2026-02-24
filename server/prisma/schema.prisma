@@ -15,6 +15,7 @@ datasource db {
 
 model User {
   id                String    @id @default(uuid()) // userId
+  handle            String    @unique // 사람이 읽을 수 있는 사용자 고유 ID
   email             String    @unique
   password          String
   nickname          String?
