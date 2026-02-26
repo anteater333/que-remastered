@@ -46,6 +46,7 @@ const PasswordScene = ({
   onValidated,
   email,
 }: SignUpSceneProps<{ userId: string }> & { email: string }) => {
+  const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
   const [passwordFailReason, setPasswordFailReason] =
     useState<PasswordFailReason>({
@@ -86,7 +87,7 @@ const PasswordScene = ({
           break;
         }
         try {
-          const { userId } = await signUp({ email, password });
+          const { userId } = await signUp({ email, handle, password });
 
           toast.success("회원가입이 완료되었습니다!");
 
@@ -102,7 +103,7 @@ const PasswordScene = ({
         break;
     }
     setIsLoading(false);
-  }, [password, step, passwordCheck]);
+  }, [email, handle, password, step, passwordCheck]);
 
   return (
     <>
