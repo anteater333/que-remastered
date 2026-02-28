@@ -8,6 +8,19 @@ import { toast } from "react-toastify";
 import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
 
+interface HandleFailReason {
+  isValidated: boolean;
+}
+
+/**
+ * 핸들 유효성 검사
+ */
+const checkHandleValidation = (handle: string): HandleFailReason => {
+  return {
+    isValidated: true,
+  };
+};
+
 interface PasswordFailReason {
   isValidated: boolean;
   hasProperLength: boolean;
@@ -19,7 +32,7 @@ interface PasswordFailReason {
 /**
  * 비밀번호 유효성 검사 (8~20자, 영문+숫자 포함)
  */
-const checkValidatePassword = (password: string): PasswordFailReason => {
+const checkPasswordValidation = (password: string): PasswordFailReason => {
   // 1. 길이 체크 (8~20자)
   const hasProperLength = !(password.length < 8 || password.length > 20);
 
@@ -47,6 +60,9 @@ const PasswordScene = ({
   email,
 }: SignUpSceneProps<{ userId: string }> & { email: string }) => {
   const [handle, setHandle] = useState("");
+  const [handleFailReason, setHandleFailReason] = useState<HandleFailReason>({
+    isValidated: false,
+  });
   const [password, setPassword] = useState("");
   const [passwordFailReason, setPasswordFailReason] =
     useState<PasswordFailReason>({
@@ -57,7 +73,7 @@ const PasswordScene = ({
       hasSpace: false,
     });
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutateAsync: signUp } = useSignUpMutation();
@@ -73,10 +89,18 @@ const PasswordScene = ({
 
     setIsLoading(true);
     switch (step) {
+      case 0:
+        const handleResult = checkHandleValidation(handle);
+        setHandleFailReason(handleResult);
+        if (handleResult.isValidated) {
+          setPassword("");
+          setStep(1);
+        }
+        break;
       case 1:
-        const result = checkValidatePassword(password);
-        setPasswordFailReason(result);
-        if (result.isValidated) {
+        const passwordResult = checkPasswordValidation(password);
+        setPasswordFailReason(passwordResult);
+        if (passwordResult.isValidated) {
           setPasswordCheck("");
           setStep(2);
         }
@@ -110,34 +134,61 @@ const PasswordScene = ({
       <div className={styles.signupContainer}>
         <div className={styles.passwordSceneContainer}>
           <p className={styles.email}>{email}</p>
+
           <TextInput
-            id="signUpPassword"
-            value={password}
-            disabled={step !== 1}
+            id="signUpHandle"
+            value={handle}
+            disabled={step !== 0}
             onChange={(e) => {
-              setPasswordFailReason(checkValidatePassword(e.target.value));
-              setPassword(e.target.value);
+              setHandleFailReason(checkHandleValidation(e.target.value));
+              setHandle(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && step === 1 && !!password) {
+              if (e.key === "Enter" && step === 0 && !!handle) {
                 handleOnNext();
               }
             }}
-            type="password"
+            type="text"
             className={styles.input}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="Handle을 입력해주세요."
           />
-          {step === 1 && (
-            <div className={styles.passwordHint}>
-              <p>
-                8 ~ 20자 이내 {passwordFailReason.hasProperLength ? "✅" : "❌"}
-              </p>
-              <p>숫자 포함 {passwordFailReason.hasNumber ? "✅" : "❌"}</p>
-              <p>영문자 포함 {passwordFailReason.hasLetter ? "✅" : "❌"}</p>
-              <p>공백 미포함 {passwordFailReason.hasSpace ? "❌" : "✅"}</p>
-            </div>
+          {step >= 1 && (
+            <>
+              <TextInput
+                id="signUpPassword"
+                value={password}
+                disabled={step !== 1}
+                onChange={(e) => {
+                  setPasswordFailReason(
+                    checkPasswordValidation(e.target.value),
+                  );
+                  setPassword(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && step === 1 && !!password) {
+                    handleOnNext();
+                  }
+                }}
+                type="password"
+                className={styles.input}
+                placeholder="비밀번호를 입력해주세요."
+              />
+              {step === 1 && (
+                <div className={styles.passwordHint}>
+                  <p>
+                    8 ~ 20자 이내{" "}
+                    {passwordFailReason.hasProperLength ? "✅" : "❌"}
+                  </p>
+                  <p>숫자 포함 {passwordFailReason.hasNumber ? "✅" : "❌"}</p>
+                  <p>
+                    영문자 포함 {passwordFailReason.hasLetter ? "✅" : "❌"}
+                  </p>
+                  <p>공백 미포함 {passwordFailReason.hasSpace ? "❌" : "✅"}</p>
+                </div>
+              )}
+            </>
           )}
-          {step > 1 && (
+          {step >= 2 && (
             <TextInput
               id="signUpPasswordCheck"
               value={passwordCheck}
@@ -159,11 +210,12 @@ const PasswordScene = ({
         onPrev={handleOnPrev}
         onNext={handleOnNext}
         isNextEnabled={
-          ((step === 1 && !!password && passwordFailReason.isValidated) ||
+          ((step === 0 && !!handle && handleFailReason.isValidated) ||
+            (step === 1 && !!password && passwordFailReason.isValidated) ||
             (step === 2 && !!passwordCheck)) &&
           !isLoading
         }
-        showPrev={step > 1}
+        showPrev={step > 0}
         isPrevEnabled={!isLoading}
       />
     </>
