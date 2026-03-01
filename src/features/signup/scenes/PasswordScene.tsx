@@ -7,17 +7,58 @@ import { SignUpFNB } from "../components/SignUpFNB";
 import { toast } from "react-toastify";
 import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
+import { RESERVED_HANDLES } from "../../../../shared/keywords";
 
 interface HandleFailReason {
   isValidated: boolean;
+  hasProperLength: boolean; // 3~20자 여부
+  hasAllowedCharsOnly: boolean; // 영문 소문자, 숫자, 마침표(.), 언더바(_)만 포함
+  startsWithLetter: boolean; // 영문으로 시작하는지
+  endsWithAlphanumeric: boolean; // 마침표나 언더바로 끝나지 않는지
+  hasNoConsecutiveSymbols: boolean; // 기호(., _)가 연속으로 나오지 않는지
+  isNotReserved: boolean; // 예약어(admin 등)가 아닌지
 }
 
 /**
  * 핸들 유효성 검사
  */
 const checkHandleValidation = (handle: string): HandleFailReason => {
+  // 1. 길이 체크 (3~20자)
+  const hasProperLength = handle.length >= 3 && handle.length <= 20;
+
+  // 2. 허용된 문자만 있는지 (영문 소문자, 숫자, ., _)
+  const hasAllowedCharsOnly = /^[a-z0-9._]+$/.test(handle);
+
+  // 3. 영문으로 시작하는지
+  const startsWithLetter = /^[a-z]/.test(handle);
+
+  // 4. 영문 또는 숫자로 끝나는지 (마침표나 언더바 종료 방지)
+  const endsWithAlphanumeric = /[a-z0-9]$/.test(handle);
+
+  // 5. 기호(., _)가 연속으로 사용되었는지 확인
+  // .. , __ , ._ , _. 이 포함되어 있지 않아야 함
+  const hasNoConsecutiveSymbols = !/\.\.|__|_\.|\._/.test(handle);
+
+  // 6. 예약어 포함 여부 확인
+  const isNotReserved = !RESERVED_HANDLES.includes(handle);
+
+  // 모든 조건이 참이어야 최종 통과
+  const isValidated =
+    hasProperLength &&
+    hasAllowedCharsOnly &&
+    startsWithLetter &&
+    endsWithAlphanumeric &&
+    hasNoConsecutiveSymbols &&
+    isNotReserved;
+
   return {
-    isValidated: true,
+    isValidated,
+    hasProperLength,
+    hasAllowedCharsOnly,
+    startsWithLetter,
+    endsWithAlphanumeric,
+    hasNoConsecutiveSymbols,
+    isNotReserved,
   };
 };
 
@@ -62,6 +103,12 @@ const PasswordScene = ({
   const [handle, setHandle] = useState("");
   const [handleFailReason, setHandleFailReason] = useState<HandleFailReason>({
     isValidated: false,
+    endsWithAlphanumeric: false,
+    hasAllowedCharsOnly: false,
+    hasNoConsecutiveSymbols: false,
+    hasProperLength: false,
+    isNotReserved: false,
+    startsWithLetter: false,
   });
   const [password, setPassword] = useState("");
   const [passwordFailReason, setPasswordFailReason] =
@@ -152,6 +199,35 @@ const PasswordScene = ({
             className={styles.input}
             placeholder="Handle을 입력해주세요."
           />
+          {step === 0 && (
+            <div className={styles.hintContainer}>
+              <p>
+                3 ~ 20자 이내 {handleFailReason.hasProperLength ? "✅" : "❌"}
+              </p>
+              <p>
+                허용된 문자만 포함(영어 소문자, 숫자, 언더바, 온점){" "}
+                {handleFailReason.hasAllowedCharsOnly ? "✅" : "❌"}
+              </p>
+              <p>
+                영문자로 시작 {handleFailReason.startsWithLetter ? "✅" : "❌"}
+              </p>
+              <p>
+                기호로 끝나지 않음{" "}
+                {handleFailReason.endsWithAlphanumeric ? "✅" : "❌"}
+              </p>
+              <p>
+                기호 연속 사용하지 않음{" "}
+                {handleFailReason.hasNoConsecutiveSymbols ? "✅" : "❌"}
+              </p>
+              <p>
+                예약어 사용하지 않음{" "}
+                {handleFailReason.isNotReserved ? "✅" : "❌"}
+              </p>
+              {handleFailReason.isValidated && (
+                <p className={styles.handlePreview}>@{handle}</p>
+              )}
+            </div>
+          )}
           {step >= 1 && (
             <>
               <TextInput
@@ -174,7 +250,7 @@ const PasswordScene = ({
                 placeholder="비밀번호를 입력해주세요."
               />
               {step === 1 && (
-                <div className={styles.passwordHint}>
+                <div className={styles.hintContainer}>
                   <p>
                     8 ~ 20자 이내{" "}
                     {passwordFailReason.hasProperLength ? "✅" : "❌"}

@@ -62,6 +62,17 @@
       }
     }
   }
+
+  .hintContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .handlePreview {
+      margin-top: 6px;
+      font-weight: bold;
+    }
+  }
 }
 
 .passwordSceneContainer {

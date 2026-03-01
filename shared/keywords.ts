@@ -1,0 +1,17 @@
+export const RESERVED_HANDLES = [
+  "admin",
+  "administrator",
+  "support",
+  "help",
+  "official",
+  "api",
+  "login",
+  "signup",
+  "setting",
+  "settings",
+  "profile",
+  "root",
+  "stage",
+  "studio",
+  "que",
+];
