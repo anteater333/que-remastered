@@ -7,24 +7,27 @@ import {
 
 export const useMailVerificationMutation = () => {
   return useMutation({
-    mutationFn: (email: string) => {
-      return requestMailVerification(email);
-    },
+    mutationFn: (email: string) => requestMailVerification(email),
   });
 };
 
 export const useMailVerificationCheckMutation = () => {
   return useMutation({
-    mutationFn: ({ email, code }: { email: string; code: string }) => {
-      return requestMailVerificationCheck(email, code);
-    },
+    mutationFn: ({ email, code }: { email: string; code: string }) =>
+      requestMailVerificationCheck(email, code),
   });
 };
 
 export const useSignUpMutation = () => {
   return useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) => {
-      return requestSignUp(email, password);
-    },
+    mutationFn: ({
+      email,
+      handle,
+      password,
+    }: {
+      email: string;
+      handle: string;
+      password: string;
+    }) => requestSignUp(email, handle, password),
   });
 };

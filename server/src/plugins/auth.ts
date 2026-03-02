@@ -1,5 +1,5 @@
 import fp from "fastify-plugin";
-import jwt from "@fastify/jwt";
+import jwt, { FastifyJWT } from "@fastify/jwt";
 import { FastifyReply, FastifyRequest } from "fastify";
 import "@fastify/cookie";
 
@@ -23,7 +23,9 @@ const authPlugin = fp(async (fastify) => {
           throw new Error("Invalid cookie signature");
         }
 
-        const decoded = fastify.jwt.verify(unsigned.value);
+        const decoded = fastify.jwt.verify(
+          unsigned.value,
+        ) as FastifyJWT["user"];
 
         request.user = decoded;
       } catch (err) {

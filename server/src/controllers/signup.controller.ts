@@ -8,10 +8,11 @@ import {
   REDIS_VERIFICATION_CHECK_KEY_PREFIX,
   REDIS_VERIFICATION_EMAIL_KEY_PREFIX,
 } from "../constants/storeKeys";
-
-interface PostSignUpVerificationMailBody {
-  email: string;
-}
+import {
+  PostSignUpBody,
+  PostSignUpVerificationCheckBody,
+  PostSignUpVerificationMailBody,
+} from "../schemes/signup.schema";
 
 export const postSignUpVerificationMail: RouteHandler<{
   Body: PostSignUpVerificationMailBody;
@@ -60,11 +61,6 @@ export const postSignUpVerificationMail: RouteHandler<{
   }
 };
 
-interface PostSignUpVerificationCheckBody {
-  email: string;
-  code: string;
-}
-
 export const postSignUpVerificationCheck: RouteHandler<{
   Body: PostSignUpVerificationCheckBody;
 }> = async (request, reply) => {
@@ -108,16 +104,12 @@ export const postSignUpVerificationCheck: RouteHandler<{
   }
 };
 
-interface PostSignUpBody {
-  email: string;
-  password: string;
-}
 export const postSignUp: RouteHandler<{
   Body: PostSignUpBody;
 }> = async (request, reply) => {
-  const { email, password } = request.body;
+  const { email, handle, password } = request.body;
 
-  if (!email || !password) {
+  if (!email || !handle || !password) {
     return reply.status(400).send({ message: "잘못된 요청입니다." });
   }
 
@@ -139,12 +131,18 @@ export const postSignUp: RouteHandler<{
 
   try {
     // 중복 가입 여부 확인
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ email }, { handle }] },
     });
 
     if (existingUser) {
-      return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
+      if (existingUser.email === email)
+        return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
+
+      if (existingUser.handle === handle)
+        return reply
+          .status(409)
+          .send({ message: "이미 사용 중인 핸들입니다." });
     }
 
     /** 해싱 처리된 비밀번호 */
@@ -154,6 +152,7 @@ export const postSignUp: RouteHandler<{
     const newUser = await prisma.user.create({
       data: {
         email,
+        handle,
         password: hashedPassword,
       },
     });

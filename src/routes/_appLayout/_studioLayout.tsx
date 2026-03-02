@@ -6,11 +6,11 @@ export const Route = createFileRoute("/_appLayout/_studioLayout")({
 });
 
 function RouteComponent() {
-  const { userId } = useParams({ strict: false });
+  const { handle } = useParams({ strict: false });
 
   return (
     <>
-      <StudioSubGNB userId={userId!} />
+      <StudioSubGNB handle={handle!} />
       <Outlet />
     </>
   );

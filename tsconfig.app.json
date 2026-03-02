@@ -24,16 +24,15 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"],
+      "@shared/*": ["shared/*"]
     },
 
     "types": ["vite-plugin-svgr/client"],
-
-    "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src/**/*", "svg.d.ts"],
+  "include": ["src/**/*", "shared/**/*", "svg.d.ts"],
   "exclude": ["dist", "node_modules", "server"]
 }

@@ -12,8 +12,16 @@ export interface SignUpResponse {
   userId: string;
 }
 
-export const requestSignUp = async (email: string, password: string) => {
+export const requestSignUp = async (
+  email: string,
+  handle: string,
+  password: string,
+) => {
   return (
-    await APIInstance.post<SignUpResponse>("/signup", { email, password })
+    await APIInstance.post<SignUpResponse>("/signup", {
+      email,
+      handle,
+      password,
+    })
   ).data;
 };
