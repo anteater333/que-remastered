@@ -18,8 +18,9 @@ export const useAuth = (): AuthProps => {
   const { mutateAsync: requestLogout } = useLogoutMutation();
 
   const isLoggedIn = !isError && !!data?.email;
-  const { email, nickname, profilePictureUrl } = data ?? {
+  const { email, handle, nickname, profilePictureUrl } = data ?? {
     email: "",
+    handle: "",
   };
 
   const logout = async () => {
@@ -34,6 +35,7 @@ export const useAuth = (): AuthProps => {
     logout,
     userProfile: {
       email: email,
+      handle: handle,
       nickname: nickname,
       profilePictureUrl: profilePictureUrl,
     },

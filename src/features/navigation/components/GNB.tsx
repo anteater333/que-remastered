@@ -29,8 +29,8 @@ export const GNB = () => {
             </Link>
             <Link
               className={styles.button}
-              to="/studio/$userId"
-              params={{ userId: "tmp" }} // TODO: 로그인 전역 상태 구현
+              to="/studio/$handle"
+              params={{ handle: userProfile.handle }}
             >
               {({}) => <Profile />}
             </Link>

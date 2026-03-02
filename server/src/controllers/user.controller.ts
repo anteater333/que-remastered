@@ -10,6 +10,7 @@ export const getMe: RouteHandler = async (request, reply) => {
       select: {
         email: true,
         nickname: true,
+        handle: true,
         profilePictureUrl: true,
       },
     });

@@ -8,8 +8,10 @@ import type UserStatus from "./UserStatus";
  * 사용자 정보 객체 형식
  */
 export default interface UserType {
-  /** 사용자 고유 ID */
+  /** 사용자 고유 UUID */
   userId?: string;
+  /** 사용자 고유 핸들 (readable ID) */
+  handle: string;
   /** 사용자 Email */
   email: string;
   /** 사용자 표시명 */
@@ -39,6 +41,7 @@ export default interface UserType {
 /** 사용자 프로필 표시용 타입 */
 export interface UserProfileType {
   email: UserType["email"];
+  handle: UserType["handle"];
   nickname?: UserType["nickname"];
   profilePictureUrl?: UserType["profilePictureUrl"];
 }

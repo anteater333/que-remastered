@@ -14,4 +14,5 @@ export const RESERVED_HANDLES = [
   "stage",
   "studio",
   "que",
+  "undefined",
 ];

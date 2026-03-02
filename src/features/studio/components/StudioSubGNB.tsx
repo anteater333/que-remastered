@@ -3,15 +3,15 @@ import { clsx } from "clsx";
 import styles from "./StudioSubGNB.module.scss";
 
 type StudioSubGNBProps = {
-  userId: string;
+  handle: string;
 };
 
-export const StudioSubGNB = ({ userId }: StudioSubGNBProps) => {
+export const StudioSubGNB = ({ handle }: StudioSubGNBProps) => {
   return (
     <div className={styles.subGnb}>
       <Link
-        to="/studio/$userId"
-        params={{ userId }}
+        to="/studio/$handle"
+        params={{ handle }}
         activeOptions={{ exact: true }}
       >
         {({ isActive }) => (
@@ -20,21 +20,21 @@ export const StudioSubGNB = ({ userId }: StudioSubGNBProps) => {
           </div>
         )}
       </Link>
-      <Link to="/studio/$userId/stages" params={{ userId }}>
+      <Link to="/studio/$handle/stages" params={{ handle }}>
         {({ isActive }) => (
           <div className={clsx(styles.tab, isActive && styles.isActive)}>
             영상
           </div>
         )}
       </Link>
-      <Link to="/studio/$userId/reactions" params={{ userId }}>
+      <Link to="/studio/$handle/reactions" params={{ handle }}>
         {({ isActive }) => (
           <div className={clsx(styles.tab, isActive && styles.isActive)}>
             리액션
           </div>
         )}
       </Link>
-      <Link to="/studio/$userId/board" params={{ userId }}>
+      <Link to="/studio/$handle/board" params={{ handle }}>
         {({ isActive }) => (
           <div className={clsx(styles.tab, isActive && styles.isActive)}>
             게시판
