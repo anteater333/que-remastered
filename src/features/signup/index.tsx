@@ -6,7 +6,7 @@ import { useNavigate } from "@tanstack/react-router";
 type SIGNUP_SCENE_CODE = "EMAIL" | "PASSWORD";
 
 const SignupPage = () => {
-  const [scene, setScene] = useState<SIGNUP_SCENE_CODE>("PASSWORD");
+  const [scene, setScene] = useState<SIGNUP_SCENE_CODE>("EMAIL");
 
   const [email, setEmail] = useState("");
 
