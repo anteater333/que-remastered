@@ -14,6 +14,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  OWNER
+}
+
 model User {
   id                String    @id @default(uuid()) // userId
   handle            String    @unique // 사람이 읽을 수 있는 사용자 고유 ID
@@ -23,6 +28,9 @@ model User {
   profilePictureUrl String?
   description       String?
   registeredAt      DateTime  @default(now())
+
+  // 사용자 권한
+  role              Role      @default(USER)
 
   // 1. 자기 참조 다대다 관계 (Follower / Following)
   // followers와 following을 연결하는 중간 테이블이 자동으로 생성됩니다.
