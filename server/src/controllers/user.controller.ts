@@ -12,6 +12,7 @@ export const getMe: RouteHandler = async (request, reply) => {
         nickname: true,
         handle: true,
         profilePictureUrl: true,
+        role: true,
       },
     });
 

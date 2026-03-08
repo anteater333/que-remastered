@@ -1,3 +1,4 @@
+import type { QueUserRole } from "../../shared/role";
 import type UserLevel from "./UserLevel";
 import type UserPage from "./UserPage";
 import type UserPersonality from "./UserPersonality";
@@ -12,6 +13,8 @@ export default interface UserType {
   userId?: string;
   /** 사용자 고유 핸들 (readable ID) */
   handle: string;
+  /** 사용자 권한 정보 */
+  role: QueUserRole;
   /** 사용자 Email */
   email: string;
   /** 사용자 표시명 */
@@ -42,6 +45,7 @@ export default interface UserType {
 export interface UserProfileType {
   email: UserType["email"];
   handle: UserType["handle"];
+  role: UserType["role"];
   nickname?: UserType["nickname"];
   profilePictureUrl?: UserType["profilePictureUrl"];
 }
