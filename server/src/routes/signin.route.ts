@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { postSignIn, postSignOut } from "../controllers/signin.controller";
+import { postSignIn, postSignOut } from "../controllers";
 
 const signInRoutes: FastifyPluginAsync = async (server, options) => {
   server.post("/", postSignIn);
