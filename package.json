@@ -9,7 +9,7 @@
     "dev:fe": "concurrently \"yarn watch-routes\" \"vite\"",
     "dev:be": "yarn --cwd server dev",
     "dev": "concurrently \"yarn:dev:*\"",
-    "build": "yarn generate-routes && tsc -b && vite build",
+    "build": "yarn generate-routes && tsc -p tsconfig.app.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

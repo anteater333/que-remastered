@@ -7,7 +7,7 @@ import { SignUpFNB } from "../components/SignUpFNB";
 import { toast } from "react-toastify";
 import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
-import { RESERVED_HANDLES } from "../../../../shared/keywords";
+import { RESERVED_HANDLES } from "@shared/keywords";
 
 interface HandleFailReason {
   isValidated: boolean;

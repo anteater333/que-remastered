@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useUserProfileQuery } from "./queries/useWhoAmIQuery";
 import { toast } from "react-toastify";
 import { useLogoutMutation } from "./queries/useLogOutMutation";
