@@ -99,15 +99,15 @@ const CardInfoView = ({
 
       <Link
         className={styles.profile}
-        to="/studio/$userId"
-        params={{ userId: userId! }}
+        to="/studio/$handle"
+        params={{ handle: userId! }}
       >
         <Profile />
       </Link>
       <div className={styles.infoCenter}>
         <p className={styles.title}>{title}</p>
         <p className={styles.subInfo}>
-          <Link to="/studio/$userId" params={{ userId: userId! }}>
+          <Link to="/studio/$handle" params={{ handle: userId! }}>
             {nickname}
           </Link>
           <p>{formatDate(uploadedAt)}</p>

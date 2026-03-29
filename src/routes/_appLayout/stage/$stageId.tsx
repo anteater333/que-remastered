@@ -6,7 +6,7 @@ export const Route = createFileRoute("/_appLayout/stage/$stageId")({
 });
 
 function Index() {
-  const { stageId } = Route.useParams();
+  // const { stageId } = Route.useParams();
 
   return (
     <div>
