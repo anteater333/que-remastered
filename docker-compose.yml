@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: que-backend
+    restart: always
+    env_file: server/.env
+    ports:
+      - "3000:3000"
+    networks:
+      - que-network
+
+networks:
+  que-network:
+    external: true
