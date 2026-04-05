@@ -14,21 +14,17 @@ console.log("🎙️ isProduction:", isProduction, process.env.NODE_ENV);
 
 const server: FastifyInstance = Fastify({
   logger: {
-    transport: {
-      targets: isProduction
-        ? []
-        : [
-            {
-              target: "pino-pretty",
-              level: "info",
-              options: {
-                colorize: true,
-                translateTime: "HH:MM:ss Z",
-                ignore: "pid,hostname",
-              },
-            },
-          ],
-    },
+    transport: isProduction
+      ? undefined
+      : {
+          target: "pino-pretty",
+          level: "info",
+          options: {
+            colorize: true,
+            translateTime: "HH:MM:ss Z",
+            ignore: "pid,hostname",
+          },
+        },
   },
 }).withTypeProvider<ZodTypeProvider>();
 
