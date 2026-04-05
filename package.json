@@ -11,7 +11,8 @@
     "dev": "concurrently \"yarn:dev:*\"",
     "build": "yarn generate-routes && tsc -p tsconfig.app.json && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy:be": "docker compose up -d --build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

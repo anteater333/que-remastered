@@ -6,6 +6,8 @@ services:
     container_name: que-backend
     restart: always
     env_file: server/.env
+    volumes:
+      - ${BE_LOG_HOST_PATH}:${BE_LOG_CONTAINER_PATH}
     ports:
       - "3000:3000"
     networks:
