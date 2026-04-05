@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { globalLogger } from "../server";
 
 class MailService {
   private transporter: nodemailer.Transporter;
@@ -16,9 +17,9 @@ class MailService {
     // (선택 사항) 연결이 잘 되었는지 서버 시작 시 로그로 확인
     this.transporter.verify((error, success) => {
       if (error) {
-        console.error("메일 서버 연결 실패:", error);
+        globalLogger.error({ msg: `메일 서버 연결 실패`, error });
       } else {
-        console.log("메일 서버가 준비되었습니다.");
+        globalLogger.info("메일 서버가 준비되었습니다.");
       }
     });
   }
@@ -39,10 +40,9 @@ class MailService {
     try {
       // 이미 생성된 this.transporter를 재사용
       await this.transporter.sendMail(mailOptions);
-      console.log(`메일 발송 완료: ${toEmail}`);
       return true;
     } catch (error) {
-      console.error("메일 발송 중 에러:", error);
+      globalLogger.error({ msg: "메일 발송 중 에러", error });
       return false;
     }
   }

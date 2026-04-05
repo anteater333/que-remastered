@@ -1,4 +1,5 @@
 import { createClient } from "redis";
+import { globalLogger } from "../../server";
 
 class RedisService {
   private redisClient;
@@ -9,11 +10,11 @@ class RedisService {
     });
 
     this.redisClient.on("connect", () => {
-      console.log("Redis 연결 성공!");
+      globalLogger.info("Redis 연결 성공!");
     });
 
     this.redisClient.on("error", (error) => {
-      console.error("Redis 에러 ::", error);
+      globalLogger.error({ msg: "Redis 에러 ::", error });
     });
 
     this.redisClient.connect().then();
