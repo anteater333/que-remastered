@@ -30,7 +30,7 @@ export const postSignUpVerificationMail: RouteHandler<{
       return reply.status(409).send({ message: "이미 가입된 이메일입니다." });
     }
   } catch (error) {
-    console.error("DB Error:", error);
+    request.log.error({ msg: "DB Error", error });
     return reply.status(500).send({ message: "사용자 조회에 실패하였습니다." });
   }
 
@@ -43,7 +43,7 @@ export const postSignUpVerificationMail: RouteHandler<{
       expiration: { type: "EX", value: 180 },
     });
   } catch (error) {
-    console.error("Redis Error:", error);
+    request.log.error({ msg: "Redis Error", error });
     return reply
       .status(500)
       .send({ message: "인증 키 생성에 실패하였습니다." });
@@ -99,7 +99,7 @@ export const postSignUpVerificationCheck: RouteHandler<{
 
     return reply.status(200).send({ message: "인증 성공" });
   } catch (error) {
-    console.error("Redis Error: ", error);
+    request.log.error({ msg: "Redis Error: ", error });
     return reply.status(500).send({ message: "서버 오류" });
   }
 };
@@ -125,7 +125,7 @@ export const postSignUp: RouteHandler<{
         .send({ message: "이메일 인증이 완료되지 않았습니다." });
     }
   } catch (error) {
-    console.error("Redis Error: ", error);
+    request.log.error({ msg: "Redis Error", error });
     return reply.status(500).send({ message: "서버 오류" });
   }
 
@@ -165,7 +165,7 @@ export const postSignUp: RouteHandler<{
       userId: newUser.id,
     });
   } catch (error) {
-    console.error("SignUp Error: ", error);
+    request.log.error({ msg: "SignUp Error: ", error });
     return reply.status(500).send({ message: "서버 오류" });
   }
 };

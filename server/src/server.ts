@@ -77,3 +77,6 @@ server.register(fastifyCookie, {
 });
 
 export default server;
+
+/** Fastify Logger for global context */
+export const globalLogger = server.log;

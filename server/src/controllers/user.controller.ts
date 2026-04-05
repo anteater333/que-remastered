@@ -21,7 +21,7 @@ export const getMe: RouteHandler = async (request, reply) => {
 
     return reply.code(200).send({ user });
   } catch (error) {
-    console.error("DB Error:", error);
+    request.log.error({ msg: "DB Error:", error });
     return reply.status(500).send({ message: "사용자 조회에 실패하였습니다." });
   }
 };
