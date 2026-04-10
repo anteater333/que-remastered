@@ -24,6 +24,7 @@ model User {
 
   // // 3. 사용자 반응 (보통 1:N 혹은 1:1)
   // reactions   UserReaction?
+  stages Stage[]
 
   @@map("users") // 실제 DB 테이블 이름을 소문자로 설정
 }
