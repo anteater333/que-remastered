@@ -1,6 +1,9 @@
 import { RouteHandler } from "fastify";
 import { PatchStageBody, StageIdParams } from "../schemes/stage.schema";
 import prismaService from "../services/connectors/prisma.service";
+import stageService, {
+  STAGE_SERVICE_ERROR_NOT_FOUND,
+} from "../services/stage.service";
 
 /**
  * 영상 업로드 시, 최초로 빈 스테이지 데이터를 생성한다.
@@ -19,7 +22,7 @@ export const postStage: RouteHandler = async (request, reply) => {
       .status(201)
       .send({ message: "스테이지가 생성되었습니다.", stageId: newStage.id });
   } catch (error) {
-    request.log.error({ error });
+    request.log.error(error);
     return reply.status(500).send({ message: "서버 오류" });
   }
 };
@@ -37,12 +40,45 @@ export const patchStage: RouteHandler<{
       data: { title, description },
     });
 
+    if (!updatedStage) {
+      return reply
+        .status(404)
+        .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
     return reply.status(200).send({
       message: "스테이지 정보가 업데이트되었습니다.",
       stageId: updatedStage.id,
     });
   } catch (error) {
-    request.log.error({ error });
+    request.log.error(error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
+export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
+  request,
+  reply,
+) => {
+  const { stageId } = request.params;
+
+  /** 데이터 스트림 확인 */
+  const fileData = await request.file();
+  if (!fileData) {
+    return reply
+      .status(400)
+      .send({ message: "업로드할 영상 파일이 없습니다." });
+  }
+
+  try {
+    await stageService.uploadVideo(stageId, fileData);
+  } catch (error: any) {
+    if (error?.message === STAGE_SERVICE_ERROR_NOT_FOUND) {
+      return reply
+        .status(404)
+        .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
     return reply.status(500).send({ message: "서버 오류" });
   }
 };

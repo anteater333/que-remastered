@@ -26,6 +26,16 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
     },
     patchStage,
   );
+  server.post<{ Params: StageIdParams }>(
+    "/:stageId/video",
+    {
+      schema: {
+        params: stageIdParamSchema,
+      },
+      preHandler: [server.authenticate, server.authorizeOwner],
+    },
+    () => {},
+  );
 };
 
 export default stageRoutes;
