@@ -1,20 +1,46 @@
 import { RouteHandler } from "fastify";
-import { PostStageBody } from "../schemes/stage.schema";
+import { PatchStageBody, StageIdParams } from "../schemes/stage.schema";
 import prismaService from "../services/connectors/prisma.service";
 
-export const postStage: RouteHandler<{
-  Body: PostStageBody;
-}> = async (request, reply) => {
-  const { description, title } = request.body; // Note. zod 통해 검증 완료
-
+/**
+ * 영상 업로드 시, 최초로 빈 스테이지 데이터를 생성한다.
+ */
+export const postStage: RouteHandler = async (request, reply) => {
   try {
     const newStage = await prismaService.stage.create({
-      data: { title, description, uploaderId: request.user.id },
+      data: {
+        title: "Untitled Stage",
+        description: "",
+        uploaderId: request.user.id,
+      },
     });
 
     return reply
       .status(201)
       .send({ message: "스테이지가 생성되었습니다.", stageId: newStage.id });
+  } catch (error) {
+    request.log.error({ error });
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
+export const patchStage: RouteHandler<{
+  Body: PatchStageBody;
+  Params: StageIdParams;
+}> = async (request, reply) => {
+  const { description, title } = request.body;
+  const { stageId } = request.params;
+
+  try {
+    const updatedStage = await prismaService.stage.update({
+      where: { id: stageId },
+      data: { title, description },
+    });
+
+    return reply.status(200).send({
+      message: "스테이지 정보가 업데이트되었습니다.",
+      stageId: updatedStage.id,
+    });
   } catch (error) {
     request.log.error({ error });
     return reply.status(500).send({ message: "서버 오류" });

@@ -11,9 +11,15 @@ const descriptionSchema = z
   .max(2000, "설명은 2000자 이하여야 합니다.")
   .default("");
 
-export const postStageSchema = z.object({
+export const stageIdParamSchema = z.object({
+  stageId: z.cuid("올바르지 않은 스테이지 ID 형식입니다."),
+});
+
+export const patchStageSchema = z.object({
   title: titleSchema,
   description: descriptionSchema,
 });
 
-export type PostStageBody = z.infer<typeof postStageSchema>;
+export type PatchStageBody = z.infer<typeof patchStageSchema>;
+
+export type StageIdParams = z.infer<typeof stageIdParamSchema>;
