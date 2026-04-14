@@ -71,7 +71,13 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
   }
 
   try {
-    await stageService.uploadVideo(stageId, fileData);
+    // 업로드 서비스 실행
+    const updatedStage = await stageService.uploadVideo(stageId, fileData);
+
+    return reply.status(200).send({
+      message: "업로드가 완료되었습니다.",
+      stageId: updatedStage.id,
+    });
   } catch (error: any) {
     if (error?.message === STAGE_SERVICE_ERROR_NOT_FOUND) {
       return reply

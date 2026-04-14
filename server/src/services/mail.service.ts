@@ -5,7 +5,6 @@ class MailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // 1. 서버 실행 시(이 파일이 로드될 때) 딱 한 번만 실행됨
     this.transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -14,12 +13,11 @@ class MailService {
       },
     });
 
-    // (선택 사항) 연결이 잘 되었는지 서버 시작 시 로그로 확인
     this.transporter.verify((error, success) => {
       if (error) {
         globalLogger.error({ msg: `메일 서버 연결 실패`, error });
       } else {
-        globalLogger.info("메일 서버가 준비되었습니다.");
+        globalLogger.info("Mail 서비스 준비 완료.");
       }
     });
   }

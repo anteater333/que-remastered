@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { patchStage, postStage } from "../controllers";
+import { patchStage, postStage, postStageVideo } from "../controllers";
 import {
   PatchStageBody,
   patchStageSchema,
@@ -34,7 +34,7 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
       },
       preHandler: [server.authenticate, server.authorizeOwner],
     },
-    () => {},
+    postStageVideo,
   );
 };
 

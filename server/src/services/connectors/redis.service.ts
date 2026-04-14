@@ -10,7 +10,7 @@ class RedisService {
     });
 
     this.redisClient.on("connect", () => {
-      globalLogger.info("Redis 연결 성공!");
+      globalLogger.info("Redis 연결 성공.");
     });
 
     this.redisClient.on("error", (error) => {
