@@ -22,8 +22,6 @@ class RedisService {
     this.redisClient.on("error", (error) => {
       globalLogger.error({ msg: "Redis 에러 ::", error });
     });
-
-    this.redisClient.connect().then();
   }
 
   getClient() {
