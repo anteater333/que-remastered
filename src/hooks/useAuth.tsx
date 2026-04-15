@@ -2,9 +2,11 @@ import { useUserProfileQuery } from "./queries/useWhoAmIQuery";
 import { toast } from "react-toastify";
 import { useLogoutMutation } from "./queries/useLogOutMutation";
 import type { UserProfileType } from "../types/User";
+import { QUE_USER_ROLE } from "../../shared/role";
 
 interface AuthProps {
   isLoggedIn: boolean;
+  isOwner: boolean;
   logout: () => void;
   userProfile: UserProfileType;
 }
@@ -17,10 +19,12 @@ export const useAuth = (): AuthProps => {
   const { mutateAsync: requestLogout } = useLogoutMutation();
 
   const isLoggedIn = !isError && !!data?.email;
-  const { email, handle, nickname, profilePictureUrl } = data ?? {
+  const { email, handle, role, nickname, profilePictureUrl } = data ?? {
     email: "",
     handle: "",
+    role: QUE_USER_ROLE.USER,
   };
+  const isOwner = role === QUE_USER_ROLE.OWNER;
 
   const logout = async () => {
     try {
@@ -31,9 +35,11 @@ export const useAuth = (): AuthProps => {
 
   return {
     isLoggedIn,
+    isOwner,
     logout,
     userProfile: {
       email: email,
+      role: role,
       handle: handle,
       nickname: nickname,
       profilePictureUrl: profilePictureUrl,

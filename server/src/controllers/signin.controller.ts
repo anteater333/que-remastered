@@ -26,7 +26,11 @@ export const postSignIn: RouteHandler<{ Body: PostSignInBody }> = async (
     return reply.code(401).send({ message: "인증 정보가 올바르지 않습니다." });
   }
 
-  const token = request.server.jwt.sign({ id: user.id, email: user.email });
+  const token = request.server.jwt.sign({
+    id: user.id,
+    email: user.email,
+    role: user.role,
+  });
 
   return reply
     .code(200)

@@ -1,0 +1,38 @@
+model Stage {
+  id          String @id @default(cuid())
+  title       String
+  description String @db.Text
+
+  // 영상 파일 관련
+  sourceUrl    String?
+  thumbnailUrl String?
+  length       Int     @default(0)
+
+  // 업로드 상태
+  status StageStatus @default(INITIATED)
+
+  viewCount  Int      @default(0)
+  uploadedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  uploaderId String
+  uploader   User     @relation(fields: [uploaderId], references: [id])
+
+  // 언젠가 기획이 된다면
+  // songId String?
+  // song   Song?   @relation(fields: [songId], references: [id])
+
+  // TODO: 추후 구현
+  // likes Like[]
+  // start Star[]
+
+  @@map("stages")
+}
+
+enum StageStatus {
+  INITIATED // 레코드 막 생성됨, 영상 업로드 시작 안됨
+  UPLOADING // 원본 영상 업로드 스트리밍 시작
+  QUEUED // 업로드 완료 후 큐에 등록 된 상태
+  PROCESSING // 워커에서 처리 중
+  DONE // 처리 완료
+  FAILED // 실패
+}

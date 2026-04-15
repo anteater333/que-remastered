@@ -3,10 +3,10 @@ import styles from "./navigation.module.scss";
 import { IcoTimeline } from "@/components/common/icon/IcoTimeline";
 import { IcoSetting } from "@/components/common/icon/IcoSetting";
 import { IcoUpload } from "@/components/common/icon/IcoUpload";
-import { useState } from "react";
+import { useAuth } from "../../../hooks/useAuth";
 
 export const FNB = () => {
-  const [isAdmin] = useState(true);
+  const { isOwner } = useAuth();
 
   return (
     <div className={styles.fnbContainer}>
@@ -16,7 +16,7 @@ export const FNB = () => {
             {({ isActive }) => <IcoTimeline isActive={isActive} />}
           </Link>
         </div>
-        {isAdmin && (
+        {isOwner && (
           <div className={styles.fnbCenter}>
             <Link className={styles.mainButton} to="/upload">
               {({}) => <IcoUpload />}
