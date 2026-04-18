@@ -9,6 +9,7 @@ import { videoQueueService } from "./connectors/queue.service";
 const VIDEO_SOURCE_PATH = process.env.VIDEO_SOURCE_PATH ?? "";
 
 export const STAGE_SERVICE_ERROR_NOT_FOUND = "STAGE_NOT_FOUND";
+export const STAGE_SERVICE_ERROR_ALREADY_QUEUED = "ALREADY_QUEUED";
 
 class StageService {
   /** 업로드 경로 */
@@ -29,6 +30,9 @@ class StageService {
       });
       if (!stage) {
         throw new Error(STAGE_SERVICE_ERROR_NOT_FOUND);
+      }
+      if (!(stage.status === "INITIATED" || stage.status === "FAILED")) {
+        throw new Error(STAGE_SERVICE_ERROR_ALREADY_QUEUED);
       }
 
       await prismaService.stage.update({
@@ -62,10 +66,18 @@ class StageService {
 
       return updatedStage;
     } catch (error) {
-      await prismaService.stage.update({
-        where: { id: stageId },
-        data: { status: "FAILED" },
-      });
+      if (
+        ![
+          STAGE_SERVICE_ERROR_ALREADY_QUEUED,
+          STAGE_SERVICE_ERROR_NOT_FOUND,
+        ].includes((error as any)?.message)
+      ) {
+        await prismaService.stage.update({
+          where: { id: stageId },
+          data: { status: "FAILED" },
+        });
+      }
+
       throw error;
     }
   }
