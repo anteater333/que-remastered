@@ -2,6 +2,7 @@ import { RouteHandler } from "fastify";
 import { PatchStageBody, StageIdParams } from "../schemes/stage.schema";
 import prismaService from "../services/connectors/prisma.service";
 import stageService, {
+  STAGE_SERVICE_ERROR_ALREADY_QUEUED,
   STAGE_SERVICE_ERROR_NOT_FOUND,
 } from "../services/stage.service";
 
@@ -83,6 +84,10 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
       return reply
         .status(404)
         .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
+    if (error?.message === STAGE_SERVICE_ERROR_ALREADY_QUEUED) {
+      return reply.status(409).send({ message: "이미 등록되었습니다." });
     }
 
     return reply.status(500).send({ message: "서버 오류" });
