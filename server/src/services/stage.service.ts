@@ -78,6 +78,9 @@ class StageService {
         });
       }
 
+      // Note. 요청 실패했을 때에도 버퍼 소비해줘야 무한대기에 걸리지 않음.
+      await fileData.toBuffer();
+
       throw error;
     }
   }
