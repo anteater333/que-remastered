@@ -10,12 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IntroRouteImport } from './routes/intro'
+import { Route as UploadLayoutRouteImport } from './routes/_uploadLayout'
 import { Route as LandingLayoutRouteImport } from './routes/_landingLayout'
 import { Route as AppLayoutRouteImport } from './routes/_appLayout'
 import { Route as AppLayoutIndexRouteImport } from './routes/_appLayout/index'
+import { Route as UploadLayoutUploadRouteImport } from './routes/_uploadLayout/upload'
 import { Route as LandingLayoutSignupRouteImport } from './routes/_landingLayout/signup'
 import { Route as LandingLayoutLoginRouteImport } from './routes/_landingLayout/login'
-import { Route as AppLayoutUploadRouteImport } from './routes/_appLayout/upload'
 import { Route as AppLayoutSettingRouteImport } from './routes/_appLayout/setting'
 import { Route as AppLayoutSearchRouteImport } from './routes/_appLayout/search'
 import { Route as AppLayoutAlertRouteImport } from './routes/_appLayout/alert'
@@ -31,6 +32,10 @@ const IntroRoute = IntroRouteImport.update({
   path: '/intro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UploadLayoutRoute = UploadLayoutRouteImport.update({
+  id: '/_uploadLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LandingLayoutRoute = LandingLayoutRouteImport.update({
   id: '/_landingLayout',
   getParentRoute: () => rootRouteImport,
@@ -44,6 +49,11 @@ const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const UploadLayoutUploadRoute = UploadLayoutUploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => UploadLayoutRoute,
+} as any)
 const LandingLayoutSignupRoute = LandingLayoutSignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -53,11 +63,6 @@ const LandingLayoutLoginRoute = LandingLayoutLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => LandingLayoutRoute,
-} as any)
-const AppLayoutUploadRoute = AppLayoutUploadRouteImport.update({
-  id: '/upload',
-  path: '/upload',
-  getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppLayoutSettingRoute = AppLayoutSettingRouteImport.update({
   id: '/setting',
@@ -113,9 +118,9 @@ export interface FileRoutesByFullPath {
   '/alert': typeof AppLayoutAlertRoute
   '/search': typeof AppLayoutSearchRoute
   '/setting': typeof AppLayoutSettingRoute
-  '/upload': typeof AppLayoutUploadRoute
   '/login': typeof LandingLayoutLoginRoute
   '/signup': typeof LandingLayoutSignupRoute
+  '/upload': typeof UploadLayoutUploadRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
@@ -128,9 +133,9 @@ export interface FileRoutesByTo {
   '/alert': typeof AppLayoutAlertRoute
   '/search': typeof AppLayoutSearchRoute
   '/setting': typeof AppLayoutSettingRoute
-  '/upload': typeof AppLayoutUploadRoute
   '/login': typeof LandingLayoutLoginRoute
   '/signup': typeof LandingLayoutSignupRoute
+  '/upload': typeof UploadLayoutUploadRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
@@ -142,14 +147,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_appLayout': typeof AppLayoutRouteWithChildren
   '/_landingLayout': typeof LandingLayoutRouteWithChildren
+  '/_uploadLayout': typeof UploadLayoutRouteWithChildren
   '/intro': typeof IntroRoute
   '/_appLayout/_studioLayout': typeof AppLayoutStudioLayoutRouteWithChildren
   '/_appLayout/alert': typeof AppLayoutAlertRoute
   '/_appLayout/search': typeof AppLayoutSearchRoute
   '/_appLayout/setting': typeof AppLayoutSettingRoute
-  '/_appLayout/upload': typeof AppLayoutUploadRoute
   '/_landingLayout/login': typeof LandingLayoutLoginRoute
   '/_landingLayout/signup': typeof LandingLayoutSignupRoute
+  '/_uploadLayout/upload': typeof UploadLayoutUploadRoute
   '/_appLayout/': typeof AppLayoutIndexRoute
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/_appLayout/_studioLayout/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
@@ -164,9 +170,9 @@ export interface FileRouteTypes {
     | '/alert'
     | '/search'
     | '/setting'
-    | '/upload'
     | '/login'
     | '/signup'
+    | '/upload'
     | '/'
     | '/stage/$stageId'
     | '/studio/$handle/board'
@@ -179,9 +185,9 @@ export interface FileRouteTypes {
     | '/alert'
     | '/search'
     | '/setting'
-    | '/upload'
     | '/login'
     | '/signup'
+    | '/upload'
     | '/'
     | '/stage/$stageId'
     | '/studio/$handle/board'
@@ -192,14 +198,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_appLayout'
     | '/_landingLayout'
+    | '/_uploadLayout'
     | '/intro'
     | '/_appLayout/_studioLayout'
     | '/_appLayout/alert'
     | '/_appLayout/search'
     | '/_appLayout/setting'
-    | '/_appLayout/upload'
     | '/_landingLayout/login'
     | '/_landingLayout/signup'
+    | '/_uploadLayout/upload'
     | '/_appLayout/'
     | '/_appLayout/stage/$stageId'
     | '/_appLayout/_studioLayout/studio/$handle/board'
@@ -211,6 +218,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppLayoutRoute: typeof AppLayoutRouteWithChildren
   LandingLayoutRoute: typeof LandingLayoutRouteWithChildren
+  UploadLayoutRoute: typeof UploadLayoutRouteWithChildren
   IntroRoute: typeof IntroRoute
 }
 
@@ -221,6 +229,13 @@ declare module '@tanstack/react-router' {
       path: '/intro'
       fullPath: '/intro'
       preLoaderRoute: typeof IntroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_uploadLayout': {
+      id: '/_uploadLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof UploadLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_landingLayout': {
@@ -244,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLayoutIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
+    '/_uploadLayout/upload': {
+      id: '/_uploadLayout/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadLayoutUploadRouteImport
+      parentRoute: typeof UploadLayoutRoute
+    }
     '/_landingLayout/signup': {
       id: '/_landingLayout/signup'
       path: '/signup'
@@ -257,13 +279,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/login'
       preLoaderRoute: typeof LandingLayoutLoginRouteImport
       parentRoute: typeof LandingLayoutRoute
-    }
-    '/_appLayout/upload': {
-      id: '/_appLayout/upload'
-      path: '/upload'
-      fullPath: '/upload'
-      preLoaderRoute: typeof AppLayoutUploadRouteImport
-      parentRoute: typeof AppLayoutRoute
     }
     '/_appLayout/setting': {
       id: '/_appLayout/setting'
@@ -359,7 +374,6 @@ interface AppLayoutRouteChildren {
   AppLayoutAlertRoute: typeof AppLayoutAlertRoute
   AppLayoutSearchRoute: typeof AppLayoutSearchRoute
   AppLayoutSettingRoute: typeof AppLayoutSettingRoute
-  AppLayoutUploadRoute: typeof AppLayoutUploadRoute
   AppLayoutIndexRoute: typeof AppLayoutIndexRoute
   AppLayoutStageStageIdRoute: typeof AppLayoutStageStageIdRoute
 }
@@ -369,7 +383,6 @@ const AppLayoutRouteChildren: AppLayoutRouteChildren = {
   AppLayoutAlertRoute: AppLayoutAlertRoute,
   AppLayoutSearchRoute: AppLayoutSearchRoute,
   AppLayoutSettingRoute: AppLayoutSettingRoute,
-  AppLayoutUploadRoute: AppLayoutUploadRoute,
   AppLayoutIndexRoute: AppLayoutIndexRoute,
   AppLayoutStageStageIdRoute: AppLayoutStageStageIdRoute,
 }
@@ -392,9 +405,22 @@ const LandingLayoutRouteWithChildren = LandingLayoutRoute._addFileChildren(
   LandingLayoutRouteChildren,
 )
 
+interface UploadLayoutRouteChildren {
+  UploadLayoutUploadRoute: typeof UploadLayoutUploadRoute
+}
+
+const UploadLayoutRouteChildren: UploadLayoutRouteChildren = {
+  UploadLayoutUploadRoute: UploadLayoutUploadRoute,
+}
+
+const UploadLayoutRouteWithChildren = UploadLayoutRoute._addFileChildren(
+  UploadLayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   AppLayoutRoute: AppLayoutRouteWithChildren,
   LandingLayoutRoute: LandingLayoutRouteWithChildren,
+  UploadLayoutRoute: UploadLayoutRouteWithChildren,
   IntroRoute: IntroRoute,
 }
 export const routeTree = rootRouteImport
