@@ -39,9 +39,12 @@ export const postSignUpVerificationMail: RouteHandler<{
 
   // Redis에 생성한 인증번호 + 메일 키 값 쌍 저장
   try {
-    await redisService.set(REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email), code, {
-      expiration: { type: "EX", value: 180 },
-    });
+    await redisService.set(
+      REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email),
+      code,
+      "EX",
+      180,
+    );
   } catch (error) {
     request.log.error(error);
     return reply
@@ -90,12 +93,12 @@ export const postSignUpVerificationCheck: RouteHandler<{
     await redisService.unlink(REDIS_VERIFICATION_EMAIL_KEY_PREFIX(email));
 
     // 인증 확인 되었음을 레디스에 기록
-    await redisService.set(REDIS_VERIFICATION_CHECK_KEY_PREFIX(email), 1, {
-      expiration: {
-        type: "EX",
-        value: 600,
-      },
-    });
+    await redisService.set(
+      REDIS_VERIFICATION_CHECK_KEY_PREFIX(email),
+      1,
+      "EX",
+      600,
+    );
 
     return reply.status(200).send({ message: "인증 성공" });
   } catch (error) {
