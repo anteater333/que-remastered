@@ -83,7 +83,9 @@ div#root {
 }
 
 div#appContainer {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   max-width: 720px;
   transform: translateZ(0);
   width: 100%;
@@ -94,6 +96,11 @@ div#appContainer {
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+
+  main#appLayoutContent {
+    flex: 1;
+    overflow-y: auto;
+  }
 }
 
 div#appContainer::-webkit-scrollbar {
