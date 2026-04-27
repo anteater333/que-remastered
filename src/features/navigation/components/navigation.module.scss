@@ -45,6 +45,16 @@
 .landingGnb {
   position: fixed;
   width: 100%;
+
+  .gnbCenter {
+    position: absolute;
+
+    .logo {
+      img {
+        height: 48px;
+      }
+    }
+  }
 }
 
 .fnbContainer {
