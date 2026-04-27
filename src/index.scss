@@ -101,6 +101,11 @@ div#appContainer {
     flex: 1;
     overflow-y: auto;
   }
+
+  main#stackedLayoutContent {
+    flex: 1;
+    overflow-y: auto;
+  }
 }
 
 div#appContainer::-webkit-scrollbar {

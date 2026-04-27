@@ -57,6 +57,16 @@
   }
 }
 
+.stackedGnb {
+  .gnbCenter {
+    position: absolute;
+
+    .title {
+      font-size: 24px;
+    }
+  }
+}
+
 .fnbContainer {
   position: sticky;
   bottom: 0;
