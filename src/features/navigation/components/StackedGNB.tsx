@@ -4,11 +4,11 @@ import styles from "./navigation.module.scss";
 import { Button } from "../../../components/Buttons/Button";
 
 interface StackedGNBProps {
-  confirmButtonText?: string;
+  buttonText?: string;
   title: string;
 }
 
-export const StackedGNB = ({ confirmButtonText, title }: StackedGNBProps) => {
+export const StackedGNB = ({ buttonText, title }: StackedGNBProps) => {
   return (
     <div id="header" className={clsx(styles.gnb, styles.stackedGnb)}>
       <div className={styles.gnbLeft}>
@@ -18,8 +18,8 @@ export const StackedGNB = ({ confirmButtonText, title }: StackedGNBProps) => {
         <h1 className={styles.title}>{title}</h1>
       </div>
       <div className={styles.gnbRight}>
-        <Button className={styles.confirmButton} disabled>
-          {confirmButtonText ?? "확인"}
+        <Button className={styles.confirmButton} buttonType="primary" disabled>
+          {buttonText ?? "확인"}
         </Button>
       </div>
     </div>
