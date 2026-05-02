@@ -5,8 +5,27 @@
   justify-content: center;
   align-items: center;
 
-  .uploadButton {
+  .buttonContainer {
     padding-bottom: 20%;
+  }
+
+  .uploadButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .uploadPreview {
+    width: 100%;
+    height: 240px;
+    background-color: $que-black;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   .uploadIcon > svg {
@@ -17,5 +36,10 @@
   .uploadText {
     font-size: 24px;
     font-weight: bold;
+  }
+
+  .uploadVideoName {
+    margin-top: 8px;
+    font-size: 16px;
   }
 }
