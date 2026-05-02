@@ -2,6 +2,11 @@ import styles from "./UploadModeSelectScene.module.scss";
 import { IcoUpload } from "../../../components/common/icon/IcoUpload";
 import React, { useRef, useState } from "react";
 import clsx from "clsx";
+import {
+  useStackedLayoutInitiator,
+  useStackedLayoutStore,
+} from "../../navigation/stores/stackedLayoutStore";
+import { requestPostStage } from "../api";
 
 /** FE측 파일 업로드 시점의 썸네일 추출 함수 */
 const extractThumbnail = (file: File): Promise<string> => {
@@ -23,6 +28,14 @@ const extractThumbnail = (file: File): Promise<string> => {
 };
 
 const UploadModeSelectScene = () => {
+  /** 현재 장면의 GNB 최초 상태 정의 */
+  useStackedLayoutInitiator({
+    title: "업로드",
+    buttonType: "primary",
+  });
+
+  const { setGnb } = useStackedLayoutStore();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -37,6 +50,15 @@ const UploadModeSelectScene = () => {
 
     // 동일 파일 선택 가능하도록 초기화
     e.target.value = "";
+
+    const toNextScene = () => {
+      // 현재 선택된 파일을 기반으로 스테이지 생성 + 파일 업로드 요청을 보냅니다.
+      console.log("🥕 :: ", file);
+      requestPostStage().then((res) => {
+        console.log("🥕 :: ", res);
+      });
+    };
+    setGnb({ buttonDisabled: false, onButtonClick: toNextScene });
   };
 
   const handleButtonClick = () => {
@@ -44,6 +66,8 @@ const UploadModeSelectScene = () => {
       fileInputRef.current.click();
     }
   };
+
+  const handleConfirmClick = () => {};
 
   return (
     <div className={styles.uploadModeSelectScene}>

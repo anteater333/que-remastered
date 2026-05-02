@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { create } from "zustand";
+import type { ButtonType } from "../../../components/Buttons/Button";
 
-interface StackedLayoutState {
-  title: string;
-  hideConfirmButton: boolean;
-  disableConfirmButton: boolean;
+export interface StackedLayoutState {
   buttonText: string;
+  buttonType: ButtonType;
+  buttonDisabled: boolean;
+  onButtonClick: () => void;
+  title: string;
 }
 
 interface StackedLayoutActions {
@@ -15,9 +17,10 @@ interface StackedLayoutActions {
 
 const initialState: StackedLayoutState = {
   title: "",
-  hideConfirmButton: false,
-  disableConfirmButton: false,
+  buttonDisabled: true,
   buttonText: "확인",
+  buttonType: "primary",
+  onButtonClick: () => {},
 };
 
 export const useStackedLayoutStore = create<

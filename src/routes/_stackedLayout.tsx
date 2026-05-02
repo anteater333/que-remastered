@@ -11,10 +11,10 @@ export const Route = createFileRoute("/_stackedLayout")({
  * Stacked GNB로 이루어진다.
  */
 function RouteComponent() {
-  const { title } = useStackedLayoutStore();
+  const layoutStore = useStackedLayoutStore();
   return (
     <>
-      <StackedGNB title={title} />
+      <StackedGNB {...layoutStore} />
       <main id="stackedLayoutContent">
         <Outlet />
       </main>

@@ -2,7 +2,7 @@ import styles from "./Button.module.scss";
 import clsx from "clsx";
 import type { ComponentProps } from "react";
 
-type ButtonType = "primary" | "default" | "border";
+export type ButtonType = "primary" | "default" | "border";
 
 interface ButtonProps extends ComponentProps<"button"> {
   buttonType?: ButtonType;
