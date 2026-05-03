@@ -14,13 +14,14 @@ import { Route as StackedLayoutRouteImport } from './routes/_stackedLayout'
 import { Route as LandingLayoutRouteImport } from './routes/_landingLayout'
 import { Route as AppLayoutRouteImport } from './routes/_appLayout'
 import { Route as AppLayoutIndexRouteImport } from './routes/_appLayout/index'
-import { Route as StackedLayoutUploadRouteImport } from './routes/_stackedLayout/upload'
 import { Route as LandingLayoutSignupRouteImport } from './routes/_landingLayout/signup'
 import { Route as LandingLayoutLoginRouteImport } from './routes/_landingLayout/login'
 import { Route as AppLayoutSettingRouteImport } from './routes/_appLayout/setting'
 import { Route as AppLayoutSearchRouteImport } from './routes/_appLayout/search'
 import { Route as AppLayoutAlertRouteImport } from './routes/_appLayout/alert'
 import { Route as AppLayoutStudioLayoutRouteImport } from './routes/_appLayout/_studioLayout'
+import { Route as StackedLayoutUploadIndexRouteImport } from './routes/_stackedLayout/upload/index'
+import { Route as StackedLayoutUploadStageIdRouteImport } from './routes/_stackedLayout/upload/$stageId'
 import { Route as AppLayoutStageStageIdRouteImport } from './routes/_appLayout/stage/$stageId'
 import { Route as AppLayoutStudioLayoutStudioHandleIndexRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle/index'
 import { Route as AppLayoutStudioLayoutStudioHandleStagesRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle/stages'
@@ -48,11 +49,6 @@ const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppLayoutRoute,
-} as any)
-const StackedLayoutUploadRoute = StackedLayoutUploadRouteImport.update({
-  id: '/upload',
-  path: '/upload',
-  getParentRoute: () => StackedLayoutRoute,
 } as any)
 const LandingLayoutSignupRoute = LandingLayoutSignupRouteImport.update({
   id: '/signup',
@@ -83,6 +79,18 @@ const AppLayoutStudioLayoutRoute = AppLayoutStudioLayoutRouteImport.update({
   id: '/_studioLayout',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const StackedLayoutUploadIndexRoute =
+  StackedLayoutUploadIndexRouteImport.update({
+    id: '/upload/',
+    path: '/upload/',
+    getParentRoute: () => StackedLayoutRoute,
+  } as any)
+const StackedLayoutUploadStageIdRoute =
+  StackedLayoutUploadStageIdRouteImport.update({
+    id: '/upload/$stageId',
+    path: '/upload/$stageId',
+    getParentRoute: () => StackedLayoutRoute,
+  } as any)
 const AppLayoutStageStageIdRoute = AppLayoutStageStageIdRouteImport.update({
   id: '/stage/$stageId',
   path: '/stage/$stageId',
@@ -120,9 +128,10 @@ export interface FileRoutesByFullPath {
   '/setting': typeof AppLayoutSettingRoute
   '/login': typeof LandingLayoutLoginRoute
   '/signup': typeof LandingLayoutSignupRoute
-  '/upload': typeof StackedLayoutUploadRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
+  '/upload/$stageId': typeof StackedLayoutUploadStageIdRoute
+  '/upload': typeof StackedLayoutUploadIndexRoute
   '/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   '/studio/$handle/reactions': typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   '/studio/$handle/stages': typeof AppLayoutStudioLayoutStudioHandleStagesRoute
@@ -135,9 +144,10 @@ export interface FileRoutesByTo {
   '/setting': typeof AppLayoutSettingRoute
   '/login': typeof LandingLayoutLoginRoute
   '/signup': typeof LandingLayoutSignupRoute
-  '/upload': typeof StackedLayoutUploadRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
+  '/upload/$stageId': typeof StackedLayoutUploadStageIdRoute
+  '/upload': typeof StackedLayoutUploadIndexRoute
   '/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   '/studio/$handle/reactions': typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   '/studio/$handle/stages': typeof AppLayoutStudioLayoutStudioHandleStagesRoute
@@ -155,9 +165,10 @@ export interface FileRoutesById {
   '/_appLayout/setting': typeof AppLayoutSettingRoute
   '/_landingLayout/login': typeof LandingLayoutLoginRoute
   '/_landingLayout/signup': typeof LandingLayoutSignupRoute
-  '/_stackedLayout/upload': typeof StackedLayoutUploadRoute
   '/_appLayout/': typeof AppLayoutIndexRoute
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
+  '/_stackedLayout/upload/$stageId': typeof StackedLayoutUploadStageIdRoute
+  '/_stackedLayout/upload/': typeof StackedLayoutUploadIndexRoute
   '/_appLayout/_studioLayout/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   '/_appLayout/_studioLayout/studio/$handle/reactions': typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   '/_appLayout/_studioLayout/studio/$handle/stages': typeof AppLayoutStudioLayoutStudioHandleStagesRoute
@@ -172,9 +183,10 @@ export interface FileRouteTypes {
     | '/setting'
     | '/login'
     | '/signup'
-    | '/upload'
     | '/'
     | '/stage/$stageId'
+    | '/upload/$stageId'
+    | '/upload'
     | '/studio/$handle/board'
     | '/studio/$handle/reactions'
     | '/studio/$handle/stages'
@@ -187,9 +199,10 @@ export interface FileRouteTypes {
     | '/setting'
     | '/login'
     | '/signup'
-    | '/upload'
     | '/'
     | '/stage/$stageId'
+    | '/upload/$stageId'
+    | '/upload'
     | '/studio/$handle/board'
     | '/studio/$handle/reactions'
     | '/studio/$handle/stages'
@@ -206,9 +219,10 @@ export interface FileRouteTypes {
     | '/_appLayout/setting'
     | '/_landingLayout/login'
     | '/_landingLayout/signup'
-    | '/_stackedLayout/upload'
     | '/_appLayout/'
     | '/_appLayout/stage/$stageId'
+    | '/_stackedLayout/upload/$stageId'
+    | '/_stackedLayout/upload/'
     | '/_appLayout/_studioLayout/studio/$handle/board'
     | '/_appLayout/_studioLayout/studio/$handle/reactions'
     | '/_appLayout/_studioLayout/studio/$handle/stages'
@@ -259,13 +273,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLayoutIndexRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_stackedLayout/upload': {
-      id: '/_stackedLayout/upload'
-      path: '/upload'
-      fullPath: '/upload'
-      preLoaderRoute: typeof StackedLayoutUploadRouteImport
-      parentRoute: typeof StackedLayoutRoute
-    }
     '/_landingLayout/signup': {
       id: '/_landingLayout/signup'
       path: '/signup'
@@ -307,6 +314,20 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AppLayoutStudioLayoutRouteImport
       parentRoute: typeof AppLayoutRoute
+    }
+    '/_stackedLayout/upload/': {
+      id: '/_stackedLayout/upload/'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof StackedLayoutUploadIndexRouteImport
+      parentRoute: typeof StackedLayoutRoute
+    }
+    '/_stackedLayout/upload/$stageId': {
+      id: '/_stackedLayout/upload/$stageId'
+      path: '/upload/$stageId'
+      fullPath: '/upload/$stageId'
+      preLoaderRoute: typeof StackedLayoutUploadStageIdRouteImport
+      parentRoute: typeof StackedLayoutRoute
     }
     '/_appLayout/stage/$stageId': {
       id: '/_appLayout/stage/$stageId'
@@ -406,11 +427,13 @@ const LandingLayoutRouteWithChildren = LandingLayoutRoute._addFileChildren(
 )
 
 interface StackedLayoutRouteChildren {
-  StackedLayoutUploadRoute: typeof StackedLayoutUploadRoute
+  StackedLayoutUploadStageIdRoute: typeof StackedLayoutUploadStageIdRoute
+  StackedLayoutUploadIndexRoute: typeof StackedLayoutUploadIndexRoute
 }
 
 const StackedLayoutRouteChildren: StackedLayoutRouteChildren = {
-  StackedLayoutUploadRoute: StackedLayoutUploadRoute,
+  StackedLayoutUploadStageIdRoute: StackedLayoutUploadStageIdRoute,
+  StackedLayoutUploadIndexRoute: StackedLayoutUploadIndexRoute,
 }
 
 const StackedLayoutRouteWithChildren = StackedLayoutRoute._addFileChildren(

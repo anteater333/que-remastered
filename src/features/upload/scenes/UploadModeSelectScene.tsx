@@ -7,6 +7,10 @@ import {
   useStackedLayoutStore,
 } from "../../navigation/stores/stackedLayoutStore";
 import { requestPostStage } from "../api";
+import { useCreateStageMutation } from "../hooks/queries";
+import { isAxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "@tanstack/react-router";
 
 /** FE측 파일 업로드 시점의 썸네일 추출 함수 */
 const extractThumbnail = (file: File): Promise<string> => {
@@ -28,6 +32,8 @@ const extractThumbnail = (file: File): Promise<string> => {
 };
 
 const UploadModeSelectScene = () => {
+  // TODO: 저장하지 않은 스테이지가 있으면 목록 보여주기
+
   /** 현재 장면의 GNB 최초 상태 정의 */
   useStackedLayoutInitiator({
     title: "업로드",
@@ -40,6 +46,9 @@ const UploadModeSelectScene = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
+  const { mutateAsync: createStage } = useCreateStageMutation();
+  const navigate = useNavigate();
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -51,12 +60,28 @@ const UploadModeSelectScene = () => {
     // 동일 파일 선택 가능하도록 초기화
     e.target.value = "";
 
-    const toNextScene = () => {
-      // 현재 선택된 파일을 기반으로 스테이지 생성 + 파일 업로드 요청을 보냅니다.
-      console.log("🥕 :: ", file);
-      requestPostStage().then((res) => {
-        console.log("🥕 :: ", res);
-      });
+    const toNextScene = async () => {
+      // 현재 선택된 파일을 기반으로 스테이지 생성 요청을 보낸 후 다음 씬으로 넘어갑니다.
+      try {
+        const { stageId } = await createStage();
+        toast.success("스테이지가 생성되었습니다.");
+        navigate({
+          to: "/upload/$stageId",
+          params: {
+            stageId,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        if (isAxiosError(error)) {
+          toast.error(
+            isAxiosError(error)
+              ? (error.response?.data?.message ??
+                  "스테이지 생성 요청 중 오류가 발생했습니다.")
+              : "스테이지 생성 중 서버 오류가 발생했습니다.",
+          );
+        }
+      }
     };
     setGnb({ buttonDisabled: false, onButtonClick: toNextScene });
   };
@@ -66,8 +91,6 @@ const UploadModeSelectScene = () => {
       fileInputRef.current.click();
     }
   };
-
-  const handleConfirmClick = () => {};
 
   return (
     <div className={styles.uploadModeSelectScene}>
