@@ -2,17 +2,12 @@ import clsx from "clsx";
 import { BackButton } from "../../../components/Buttons/BackButton";
 import styles from "./navigation.module.scss";
 import { Button } from "../../../components/Buttons/Button";
-import type { StackedLayoutState } from "../stores/stackedLayoutStore";
+import { useStackedLayoutStore } from "../stores/stackedLayoutStore";
 
-interface StackedGNBProps extends StackedLayoutState {}
+export const StackedGNB = () => {
+  const { buttonText, buttonType, buttonDisabled, title, onButtonClick } =
+    useStackedLayoutStore();
 
-export const StackedGNB = ({
-  buttonText,
-  buttonType,
-  buttonDisabled,
-  title,
-  onButtonClick,
-}: StackedGNBProps) => {
   return (
     <div id="header" className={clsx(styles.gnb, styles.stackedGnb)}>
       <div className={styles.gnbLeft}>

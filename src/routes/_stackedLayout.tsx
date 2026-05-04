@@ -1,6 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { StackedGNB } from "../features/navigation/components/StackedGNB";
-import { useStackedLayoutStore } from "../features/navigation/stores/stackedLayoutStore";
 
 export const Route = createFileRoute("/_stackedLayout")({
   component: RouteComponent,
@@ -11,10 +10,9 @@ export const Route = createFileRoute("/_stackedLayout")({
  * Stacked GNB로 이루어진다.
  */
 function RouteComponent() {
-  const layoutStore = useStackedLayoutStore();
   return (
     <>
-      <StackedGNB {...layoutStore} />
+      <StackedGNB />
       <main id="stackedLayoutContent">
         <Outlet />
       </main>

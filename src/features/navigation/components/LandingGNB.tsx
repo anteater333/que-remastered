@@ -2,8 +2,10 @@ import clsx from "clsx";
 import { BackButton } from "../../../components/Buttons/BackButton";
 import styles from "./navigation.module.scss";
 import { LogoText } from "../../../components/common/logo/LogoText";
+import { useLandingLayoutStore } from "../stores/landingLayoutStore";
 
-export const LandingGNB = ({ showLogo }: { showLogo?: boolean }) => {
+export const LandingGNB = () => {
+  const { showLogo } = useLandingLayoutStore();
   return (
     <div id="header" className={clsx(styles.gnb, styles.landingGnb)}>
       <div className={styles.gnbLeft}>
