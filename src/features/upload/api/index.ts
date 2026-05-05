@@ -11,7 +11,7 @@ export const requestPostStage = async () => {
 };
 // #endregion
 
-// #region 스테이지에 비디오 등록
+// #region 스테이지에 비디오 업로드
 export interface UploadProgressEvent {
   loaded: number;
   total: number;

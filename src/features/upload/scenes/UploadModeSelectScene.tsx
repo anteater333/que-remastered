@@ -6,10 +6,14 @@ import {
   useStackedLayoutInitiator,
   useStackedLayoutStore,
 } from "../../navigation/stores/stackedLayoutStore";
-import { useCreateStageMutation } from "../hooks/queries";
+import {
+  useCreateStageMutation,
+  useVideoUploadMutation,
+} from "../hooks/queries";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "@tanstack/react-router";
+import { useUploadSceneStore } from "../stores/uploadSceneStore";
 
 /** FE측 파일 업로드 시점의 썸네일 추출 함수 */
 const extractThumbnail = (file: File): Promise<string> => {
@@ -46,24 +50,29 @@ const UploadModeSelectScene = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
   const { mutateAsync: createStage } = useCreateStageMutation();
+  const { mutateAsync: uploadVideo } = useVideoUploadMutation();
   const navigate = useNavigate();
+  const { startUpload } = useUploadSceneStore();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
 
-    setSelectedFile(file);
-    const thumb = await extractThumbnail(file);
+    setSelectedFile(selectedFile);
+    const thumb = await extractThumbnail(selectedFile);
     setThumbnailUrl(thumb);
 
     // 동일 파일 선택 가능하도록 초기화
     e.target.value = "";
 
+    /** GNB의 확인 버튼 클릭 시 동작 정의 */
     const toNextScene = async () => {
       // 현재 선택된 파일을 기반으로 스테이지 생성 요청을 보낸 후 다음 씬으로 넘어갑니다.
       try {
         const { stageId } = await createStage();
         toast.success("스테이지가 생성되었습니다.");
+        startUpload(stageId, selectedFile);
+        uploadVideo({ stageId, videoFile: selectedFile });
         navigate({
           to: "/upload/$stageId",
           params: {
