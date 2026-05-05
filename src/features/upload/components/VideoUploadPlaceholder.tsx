@@ -1,0 +1,27 @@
+import styles from "./VideoUploadPlaceholder.module.scss";
+
+interface VideoUploadPlaceholderProps {
+  thumbnailUrl: string | null;
+  progress: number;
+}
+
+/**
+ * 업로드 -> 스테이지 설명 작성 화면에서 영상 업로드 중 상태를 나타내는 플레이스홀더 컴포넌트
+ */
+export const VideoUploadPlaceholder = ({
+  thumbnailUrl,
+  progress,
+}: VideoUploadPlaceholderProps) => {
+  console.log("asdf", progress);
+  return (
+    <div className={styles.placeholderContainer}>
+      <div className={styles.thumbnailContainer}>
+        <img src={thumbnailUrl ?? ""} />
+        <div className={styles.overlay} />
+      </div>
+      <div className={styles.progressBarTrack}>
+        <div className={styles.progressBar} style={{ width: `${progress}%` }} />
+      </div>
+    </div>
+  );
+};

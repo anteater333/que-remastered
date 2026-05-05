@@ -5,6 +5,7 @@ export type UploadStatus = "idle" | "uploading" | "done" | "error";
 export interface UploadSceneState {
   stageId: string | null;
   file: File | null;
+  thumbnail: string | null;
   status: UploadStatus;
   progress: number;
   error: string | null;
@@ -12,7 +13,7 @@ export interface UploadSceneState {
 
 interface UploadSceneActions {
   setFile: (file: File) => void;
-  startUpload: (stageId: string, file: File) => void;
+  startUpload: (stageId: string, file: File, thumbnail: string) => void;
   setProgress: (progress: number) => void;
   setStatus: (status: UploadStatus) => void;
   setError: (error: string) => void;
@@ -22,6 +23,7 @@ interface UploadSceneActions {
 const initialState: UploadSceneState = {
   stageId: null,
   file: null,
+  thumbnail: null,
   status: "idle",
   progress: 0,
   error: null,
@@ -32,10 +34,11 @@ export const useUploadSceneStore = create<
 >((set) => ({
   ...initialState,
   setFile: (file) => set({ file }),
-  startUpload: (stageId, file) =>
+  startUpload: (stageId, file, thumbnail) =>
     set({
       stageId,
       file,
+      thumbnail: thumbnail,
       status: "uploading",
       progress: 0,
       error: null,

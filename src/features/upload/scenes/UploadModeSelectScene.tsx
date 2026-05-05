@@ -71,7 +71,7 @@ const UploadModeSelectScene = () => {
       try {
         const { stageId } = await createStage();
         toast.success("스테이지가 생성되었습니다.");
-        startUpload(stageId, selectedFile);
+        startUpload(stageId, selectedFile, thumb);
         uploadVideo({ stageId, videoFile: selectedFile });
         navigate({
           to: "/upload/$stageId",
