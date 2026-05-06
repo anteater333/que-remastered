@@ -1,43 +1,43 @@
 import { Link } from "@tanstack/react-router";
-import type VideoType from "../../types/Video";
-import styles from "./VideoCard.module.scss";
+import type StageType from "../../types/Stage";
+import styles from "./StageCard.module.scss";
 import { formatCount, formatDate, formatTimer } from "../../utils/formatter";
 import { Profile } from "../Profile/Profile";
 import type UserType from "../../types/User";
 import { IcoThumb } from "../common/icon/IcoThumb";
 import { IcoStar } from "../common/icon/IcoStar";
 
-interface VideoCardProps {
-  video: VideoType;
+interface StageCardProps {
+  stage: StageType;
 }
 
 /**
  * 기본 비디오 정보 카드 컴포넌트
  */
-const VideoCard = ({ video }: VideoCardProps) => {
+const StageCard = ({ stage }: StageCardProps) => {
   return (
     <div>
       <div className={styles.cardHead}>
-        <CardOverlayView length={video.length} />
-        <Link to={`/stage/$stageId`} params={{ stageId: video.videoId ?? "" }}>
-          <CardThumbnailView thumbnailUrl={video.thumbnailUrl} />
+        <CardOverlayView length={stage.length} />
+        <Link to={`/stage/$stageId`} params={{ stageId: stage.id ?? "" }}>
+          <CardThumbnailView thumbnailUrl={stage.thumbnailUrl} />
         </Link>
       </div>
       <CardInfoView
-        title={video.title}
-        userId={video.uploader?.userId}
-        nickname={video.uploader?.nickname}
-        videoId={video.videoId}
-        viewCount={video.viewCount}
-        likeCount={video.likeCount}
-        starCount={video.starCount}
-        uploadedAt={video.uploadedAt}
+        title={stage.title}
+        userId={stage.uploader?.userId}
+        nickname={stage.uploader?.nickname}
+        videoId={stage.id}
+        viewCount={stage.viewCount}
+        likeCount={stage.likeCount}
+        starCount={stage.starCount}
+        uploadedAt={stage.uploadedAt}
       />
     </div>
   );
 };
 interface CardOverlayViewProps {
-  length: VideoType["length"];
+  length: StageType["length"];
 }
 
 const CardOverlayView = ({ length }: CardOverlayViewProps) => {
@@ -49,7 +49,7 @@ const CardOverlayView = ({ length }: CardOverlayViewProps) => {
 };
 
 interface CardThumbnailViewProps {
-  thumbnailUrl: VideoType["thumbnailUrl"];
+  thumbnailUrl: StageType["thumbnailUrl"];
 }
 
 /**
@@ -64,14 +64,14 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 };
 
 interface CardInfoViewProps {
-  title: VideoType["title"];
+  title: StageType["title"];
   userId: UserType["userId"];
   nickname: UserType["nickname"];
-  videoId: VideoType["videoId"];
-  viewCount: VideoType["viewCount"];
-  likeCount: VideoType["likeCount"];
-  starCount: VideoType["starCount"];
-  uploadedAt: VideoType["uploadedAt"];
+  videoId: StageType["id"];
+  viewCount: StageType["viewCount"];
+  likeCount: StageType["likeCount"];
+  starCount: StageType["starCount"];
+  uploadedAt: StageType["uploadedAt"];
 }
 
 /**
@@ -140,4 +140,4 @@ const CardInfoView = ({
   );
 };
 
-export default VideoCard;
+export default StageCard;

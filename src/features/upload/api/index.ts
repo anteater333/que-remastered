@@ -1,4 +1,5 @@
 import APIInstance from "../../../lib/axios";
+import type StageType from "../../../types/Stage";
 
 // #region 스테이지 생성
 export interface PostStageResponse {
@@ -61,4 +62,16 @@ export const requestPostStageVideo = async ({
     )
   ).data;
 };
+// #endregion
+
+// #region 단일 스테이지 조회
+export interface GetStageInfoResponse {
+  stage: StageType;
+}
+
+export const requestGetStageInfo = async ({ stageId }: { stageId: string }) => {
+  return (await APIInstance.get<GetStageInfoResponse>(`/stages/${stageId}`))
+    .data;
+};
+
 // #endregion

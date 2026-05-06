@@ -68,7 +68,7 @@ function UserPageScreen({
     const initialData = await QueResourceClient.getVideoCardDataByUserId(
       route.params.userId,
       initialDataLength,
-      0
+      0,
     );
     setVideoDataList(initialData);
 
@@ -93,7 +93,7 @@ function UserPageScreen({
     const newDataset = await QueResourceClient.getVideoCardDataByUserId(
       route.params.userId,
       cardPerPage,
-      1
+      1,
     );
     setVideoDataList((prev) => {
       return [...prev, ...newDataset];

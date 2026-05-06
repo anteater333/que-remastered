@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import VideoCardList from "./components/VideoCardList";
-import type VideoType from "@/types/Video";
-import { getTimelineVideoList } from "./api";
+import StageCardList from "./components/StageCardList";
+import type StageType from "@/types/Stage";
+import { getTimelineStageList } from "./api";
 
 const Timeline = () => {
-  const [dataList, setDataList] = useState<VideoType[]>([]);
+  const [dataList, setDataList] = useState<StageType[]>([]);
   useEffect(() => {
-    setDataList(getTimelineVideoList());
+    setDataList(getTimelineStageList());
   }, []);
 
-  return <VideoCardList data={dataList} />;
+  return <StageCardList data={dataList} />;
 };
 
 export default Timeline;

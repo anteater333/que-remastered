@@ -1,5 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import { requestPostStage, requestPostStageVideo } from "../../api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  requestGetStageInfo,
+  requestPostStage,
+  requestPostStageVideo,
+} from "../../api";
 import { useUploadSceneStore } from "../../stores/uploadSceneStore";
 
 export const useCreateStageMutation = () => {
@@ -37,5 +41,21 @@ export const useVideoUploadMutation = () => {
         setError("업로드에 실패했습니다.");
       }
     },
+  });
+};
+
+export const QUERY_KEY_STAGE_INFO_FOR_EDIT = (stageId: string) => [
+  "stageInfo",
+  "editor",
+  stageId,
+];
+
+/**
+ * 스테이지 정보 조회 쿼리
+ */
+export const useStageInfoQuery = (stageId: string) => {
+  return useQuery({
+    queryKey: QUERY_KEY_STAGE_INFO_FOR_EDIT(stageId),
+    queryFn: () => requestGetStageInfo({ stageId }),
   });
 };
