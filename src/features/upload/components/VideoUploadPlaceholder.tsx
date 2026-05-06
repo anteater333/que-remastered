@@ -12,7 +12,6 @@ export const VideoUploadPlaceholder = ({
   thumbnailUrl,
   progress,
 }: VideoUploadPlaceholderProps) => {
-  console.log("asdf", progress);
   return (
     <div className={styles.placeholderContainer}>
       <div className={styles.thumbnailContainer}>

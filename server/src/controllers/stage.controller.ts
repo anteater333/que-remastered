@@ -93,3 +93,51 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
     return reply.status(500).send({ message: "서버 오류" });
   }
 };
+
+// #region 조회 영역
+
+export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
+  request,
+  reply,
+) => {
+  const { stageId } = request.params;
+
+  try {
+    const stage = await prismaService.stage.findUnique({
+      where: { id: stageId },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        sourceUrl: true,
+        thumbnailUrl: true,
+        length: true,
+        status: true,
+        viewCount: true,
+        uploadedAt: true,
+        updatedAt: true,
+        uploader: {
+          select: {
+            id: true,
+            handle: true,
+            nickname: true,
+            profilePictureUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!stage) {
+      return reply
+        .status(404)
+        .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
+    return reply.status(200).send({ stage });
+  } catch (error) {
+    request.log.error(error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
+// #endregion
