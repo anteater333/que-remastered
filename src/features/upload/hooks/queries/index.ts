@@ -57,5 +57,6 @@ export const useStageInfoQuery = (stageId: string) => {
   return useQuery({
     queryKey: QUERY_KEY_STAGE_INFO_FOR_EDIT(stageId),
     queryFn: () => requestGetStageInfo({ stageId }),
+    enabled: stageId !== "",
   });
 };
