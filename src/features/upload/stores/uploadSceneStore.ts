@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type UploadStatus = "idle" | "uploading" | "done" | "error";
+export type UploadStatus = "idle" | "uploading" | "encoding" | "done" | "error";
 
 export interface UploadSceneState {
   stageId: string | null;

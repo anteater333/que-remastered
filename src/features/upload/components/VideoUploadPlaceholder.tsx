@@ -1,8 +1,11 @@
+import type { UploadStatus } from "../stores/uploadSceneStore";
 import styles from "./VideoUploadPlaceholder.module.scss";
 
 interface VideoUploadPlaceholderProps {
   thumbnailUrl: string | null;
   progress: number;
+  status: UploadStatus;
+  error: string | null;
 }
 
 /**
@@ -11,6 +14,8 @@ interface VideoUploadPlaceholderProps {
 export const VideoUploadPlaceholder = ({
   thumbnailUrl,
   progress,
+  status,
+  error,
 }: VideoUploadPlaceholderProps) => {
   return (
     <div className={styles.placeholderContainer}>

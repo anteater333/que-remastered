@@ -13,6 +13,8 @@ import { usePreventLeave } from "../../../hooks/utils/usePreventLeave";
 import z from "zod";
 import { useForm } from "@tanstack/react-form";
 import { useEffect } from "react";
+import clsx from "clsx";
+import { TextArea } from "../../../components/Inputs/TextArea";
 
 const uploadEditorFormSchema = z.object({
   title: z.string().min(1, "제목을 입력해주세요"),
@@ -67,7 +69,7 @@ const UploadEditorScene = () => {
   }
 
   return (
-    <div>
+    <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
         {status === "done" ? (
           <VideoPlayer />
@@ -75,17 +77,16 @@ const UploadEditorScene = () => {
           <VideoUploadPlaceholder
             thumbnailUrl={thumbnail}
             progress={progress}
+            status={status}
+            error={error}
           />
         )}
       </div>
-      <textarea
-        style={{ width: "540px", height: "540px" }}
-        value={JSON.stringify(data, null, 4)}
-      />
       <form id="que-stage-editor" className={styles.infoContainer}>
         <form.Field name="title">
           {(field) => (
             <TextInput
+              className={styles.infoInput}
               type="text"
               placeholder="제목"
               value={field.state.value}
@@ -96,8 +97,8 @@ const UploadEditorScene = () => {
         </form.Field>
         <form.Field name="description">
           {(field) => (
-            <TextInput
-              type="text"
+            <TextArea
+              className={clsx(styles.infoInput, styles.infoDescription)}
               placeholder="설명"
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
@@ -108,6 +109,7 @@ const UploadEditorScene = () => {
         <form.Field name="song">
           {(field) => (
             <TextInput
+              className={styles.infoInput}
               type="text"
               placeholder="노래"
               value={field.state.value}
