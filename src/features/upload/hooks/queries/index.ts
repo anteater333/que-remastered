@@ -1,15 +1,31 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   requestGetStageInfo,
+  requestPatchStage,
   requestPostStage,
   requestPostStageVideo,
 } from "../../api";
 import { useUploadSceneStore } from "../../stores/uploadSceneStore";
+import type StageType from "../../../../types/Stage";
 
 export const useCreateStageMutation = () => {
   return useMutation({
     mutationFn: () => {
       return requestPostStage();
+    },
+  });
+};
+
+interface UpdateStageMutationProps {
+  title: StageType["title"];
+  description: StageType["description"];
+  // song: StageType["song"];
+}
+
+export const useUpdateStageMutation = (stageId: string) => {
+  return useMutation({
+    mutationFn: (props: UpdateStageMutationProps) => {
+      return requestPatchStage({ stageId, ...props });
     },
   });
 };

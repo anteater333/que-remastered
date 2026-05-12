@@ -13,7 +13,7 @@ const uploadEditorFormSchema = z.object({
   song: z.string(),
 });
 
-type UploadEditorFormValues = z.infer<typeof uploadEditorFormSchema>;
+export type UploadEditorFormValues = z.infer<typeof uploadEditorFormSchema>;
 
 type UploadEditorFormProps = UploadEditorFormValues & {
   onSubmit: (value: UploadEditorFormValues) => Promise<void>;

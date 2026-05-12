@@ -12,6 +12,23 @@ export const requestPostStage = async () => {
 };
 // #endregion
 
+// #region 스테이지 정보 수정
+export interface PatchStageParams {
+  stageId: string;
+  title: StageType["title"];
+  description: StageType["description"];
+  // song: StageType["song"];
+}
+
+export const requestPatchStage = async (props: PatchStageParams) => {
+  const { stageId, ...body } = props;
+
+  return (
+    await APIInstance.patch<PostStageResponse>(`/stages/${stageId}`, body)
+  ).data;
+};
+// #endregion
+
 // #region 스테이지에 비디오 업로드
 export interface UploadProgressEvent {
   loaded: number;
