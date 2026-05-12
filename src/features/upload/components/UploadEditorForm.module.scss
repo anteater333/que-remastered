@@ -1,0 +1,14 @@
+.infoFormContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+
+  .infoInput {
+    font-size: 24px;
+
+    &.infoDescription {
+      height: 240px;
+    }
+  }
+}

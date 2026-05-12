@@ -9,7 +9,9 @@ function RouteComponent() {
   return (
     <>
       <GNB />
-      <Outlet />
+      <main id="appLayoutContent">
+        <Outlet />
+      </main>
       <FNB />
     </>
   );

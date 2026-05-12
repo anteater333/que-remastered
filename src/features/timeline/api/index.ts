@@ -1,5 +1,5 @@
 import mockVideoCardData from "@/potato/mockData/VideoCardData";
 
-export const getTimelineVideoList = () => {
+export const getTimelineStageList = () => {
   return mockVideoCardData;
 };

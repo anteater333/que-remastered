@@ -13,4 +13,14 @@
   &.disabled {
     opacity: 0.3;
   }
+
+  &:not(.disabled).primary {
+    background: linear-gradient(
+      -115deg,
+      $que-gardient-primary 0%,
+      $que-gradient-secondary 100%
+    );
+    border: none;
+    color: white;
+  }
 }

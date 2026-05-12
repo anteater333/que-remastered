@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TextInput } from "../../../components/Inputs/TextInput";
 import styles from "../signup.module.scss";
 
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
 import { RESERVED_HANDLES } from "@shared/keywords";
+import { useLandingLayoutStore } from "../../navigation/stores/landingLayoutStore";
 
 interface HandleFailReason {
   isValidated: boolean;
@@ -175,6 +176,13 @@ const PasswordScene = ({
     }
     setIsLoading(false);
   }, [email, handle, password, step, passwordCheck]);
+
+  /** 현재 페이지 로드될 때 GNB 상태 조작 */
+  const { setGnb, reset } = useLandingLayoutStore();
+  useEffect(() => {
+    setGnb({ showLogo: true });
+    return () => reset();
+  }, []);
 
   return (
     <>
