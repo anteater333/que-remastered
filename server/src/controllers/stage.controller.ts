@@ -140,4 +140,31 @@ export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
   }
 };
 
+/**
+ * 영상 인코딩 완료 상태를 조회한다. (Server Side Event)
+ */
+export const getStageVideoStatus: RouteHandler<{
+  Params: StageIdParams;
+}> = async (request, reply) => {
+  const { stageId } = request.params;
+
+  try {
+    const stage = await prismaService.stage.findUnique({
+      where: { id: stageId },
+      select: { status: true, thumbnailUrl: true, sourceUrl: true },
+    });
+
+    if (!stage) {
+      return reply
+        .status(404)
+        .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
+    reply.sse.send(stageService.streamStatus(stageId, stage.status));
+  } catch (error) {
+    request.log.error(error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
 // #endregion

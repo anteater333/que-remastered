@@ -1,6 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 import {
   getStage,
+  getStageVideoStatus,
   patchStage,
   postStage,
   postStageVideo,
@@ -49,6 +50,15 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
       },
     },
     getStage,
+  );
+  server.get<{ Params: StageIdParams }>(
+    "/:stageId/video/status",
+    {
+      schema: {
+        params: stageIdParamSchema,
+      },
+    },
+    getStageVideoStatus,
   );
 };
 

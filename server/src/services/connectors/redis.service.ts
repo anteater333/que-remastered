@@ -3,8 +3,10 @@ import { globalLogger } from "../../server";
 
 class RedisService {
   private redisClient;
+  private redisSubscriberClient;
 
   constructor() {
+    // #region 일반 Redis 클라이언트 설정
     this.redisClient = new Redis({
       host: process.env.REDIS_HOST,
       port: Number(process.env.REDIS_PORT),
@@ -22,11 +24,34 @@ class RedisService {
     this.redisClient.on("error", (error) => {
       globalLogger.error({ msg: "Redis 에러 ::", error });
     });
+    // #endregion
+
+    // #region Subscribe 전용 Redis 클라이언트 설정
+    this.redisSubscriberClient = new Redis({
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT),
+      username: process.env.REDIS_USERNAME,
+      password: process.env.REDIS_PASSWORD,
+      db: 0,
+    });
+
+    this.redisSubscriberClient.on("connect", () => {
+      globalLogger.info("Redis(Subscriber) 연결 성공.");
+    });
+
+    this.redisSubscriberClient.on("error", (error) => {
+      globalLogger.error({ msg: "Redis(Subscriber) 에러 ::", error });
+    });
+    // #endregion
   }
 
   getClient() {
     return this.redisClient;
   }
+
+  getSubscriberClient() {
+    return this.redisSubscriberClient;
+  }
 }
 
-export default new RedisService().getClient();
+export default new RedisService();
