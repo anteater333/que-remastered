@@ -1,10 +1,10 @@
-import type { UploadStatus } from "../stores/uploadSceneStore";
+import type { VideoUploadStatus } from "../../../types/Stage";
 import styles from "./VideoUploadPlaceholder.module.scss";
 
 interface VideoUploadPlaceholderProps {
   thumbnailUrl: string | null;
   progress: number;
-  status: UploadStatus;
+  status: VideoUploadStatus;
   error: string | null;
 }
 

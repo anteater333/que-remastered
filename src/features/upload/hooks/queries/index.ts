@@ -51,9 +51,9 @@ export const useVideoUploadMutation = () => {
             setProgress(event.percentage);
           },
         });
-        setStatus("encoding");
+        setStatus("PROCESSING");
       } catch (error) {
-        setStatus("error");
+        setStatus("FAILED");
         setProgress(0);
         setError("업로드에 실패했습니다.");
       }

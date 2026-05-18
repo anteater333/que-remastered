@@ -15,6 +15,7 @@ import {
 } from "../components/UploadEditorForm";
 import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
+import { useCheckVideoUpdateStatus } from "../hooks/useCheckVideoUploadStatus";
 
 const UploadEditorScene = () => {
   /** 현재 장면의 GNB 최초 상태 정의 */
@@ -49,6 +50,9 @@ const UploadEditorScene = () => {
   /** 페이지 이탈 방어 */
   usePreventLeave({ enabled: true });
 
+  /** 업로드 상태 확인용 Event Source 생성 */
+  useCheckVideoUpdateStatus(stageId ?? "", status);
+
   if (!stageId) {
     navigate({ to: "/upload" });
   }
@@ -56,7 +60,7 @@ const UploadEditorScene = () => {
   return (
     <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
-        {status === "done" ? (
+        {status === "DONE" ? (
           <VideoPlayer />
         ) : (
           <VideoUploadPlaceholder

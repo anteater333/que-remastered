@@ -57,6 +57,7 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
       schema: {
         params: stageIdParamSchema,
       },
+      sse: true,
     },
     getStageVideoStatus,
   );
