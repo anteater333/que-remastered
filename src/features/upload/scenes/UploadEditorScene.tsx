@@ -25,7 +25,13 @@ const UploadEditorScene = () => {
   });
 
   const navigate = useNavigate();
-  const { progress, thumbnail, error, stageId, status } = useUploadSceneStore();
+  const {
+    progress,
+    thumbnail,
+    error,
+    stageId,
+    status: initialStatus,
+  } = useUploadSceneStore();
   const { data } = useStageInfoQuery(stageId ?? "");
   const { mutateAsync: updateStage } = useUpdateStageMutation(stageId ?? "");
 
@@ -50,8 +56,13 @@ const UploadEditorScene = () => {
   /** 페이지 이탈 방어 */
   usePreventLeave({ enabled: true });
 
-  /** 업로드 상태 확인용 Event Source 생성 */
-  useCheckVideoUpdateStatus(stageId ?? "", status);
+  /** 서버로부터 구독한 업로드 상태값 */
+  const subscribedStatus = useCheckVideoUpdateStatus(
+    stageId ?? "",
+    initialStatus,
+  );
+
+  console.log("🥕 :: ", subscribedStatus);
 
   if (!stageId) {
     navigate({ to: "/upload" });
@@ -60,13 +71,13 @@ const UploadEditorScene = () => {
   return (
     <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
-        {status === "DONE" ? (
+        {subscribedStatus === "DONE" ? (
           <VideoPlayer />
         ) : (
           <VideoUploadPlaceholder
             thumbnailUrl={thumbnail}
             progress={progress}
-            status={status}
+            status={subscribedStatus}
             error={error}
           />
         )}

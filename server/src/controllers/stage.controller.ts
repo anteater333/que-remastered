@@ -160,10 +160,11 @@ export const getStageVideoStatus: RouteHandler<{
         .send({ message: "스테이지를 찾을 수 없습니다." });
     }
 
-    reply.sse.send(stageService.streamStatus(stageId, stage.status));
+    await reply.sse.send(stageService.streamStatus(stageId, stage.status));
   } catch (error) {
     request.log.error(error);
-    return reply.status(500).send({ message: "서버 오류" });
+
+    if (!reply.sent) return reply.status(500).send({ message: "서버 오류" });
   }
 };
 

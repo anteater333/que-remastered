@@ -98,7 +98,6 @@ class StageService {
     stageId: string,
     initialStatus: StageStatusEvent["status"],
   ): AsyncGenerator<{ event: string; data: string }> {
-    console.log("🥕 :: ", stageId, initialStatus);
     // 스트림 생성과 함께 현재 상태 즉시 전송
     yield {
       event: "videoStatus",
@@ -110,12 +109,11 @@ class StageService {
 
     const channel = `stage:${stageId}`;
     const subscriber = redisService.getSubscriberClient().duplicate();
-    await subscriber.connect();
+    if (subscriber.status === "wait") await subscriber.connect();
 
     try {
       const nextStatus = await new Promise<string>((resolve, reject) => {
         const handler = (chan: string, message: string) => {
-          console.log("🥕 :: ", chan, channel, message);
           if (chan === channel) {
             subscriber.off("message", handler);
             resolve(message);
@@ -127,12 +125,8 @@ class StageService {
           reject(err);
         });
 
-        subscriber
-          .subscribe(channel)
-          .then(() => {
-            subscriber.on("message", handler);
-          })
-          .catch(reject);
+        subscriber.on("message", handler);
+        subscriber.subscribe(channel).catch(reject);
       });
 
       yield {
