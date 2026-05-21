@@ -62,8 +62,6 @@ const UploadEditorScene = () => {
     initialStatus,
   );
 
-  console.log("🥕 :: ", subscribedStatus);
-
   if (!stageId) {
     navigate({ to: "/upload" });
   }

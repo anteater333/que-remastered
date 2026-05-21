@@ -30,7 +30,6 @@ export function useCheckVideoUpdateStatus(
     es.addEventListener("videoStatus", (e) => {
       const { status: newStatus } = safeSSEParse(e.data);
       setStatus(newStatus);
-      console.log("🥕🥕🥕 :: ", newStatus, JSON.parse(e.data));
     });
 
     es.onerror = () => es.close();
