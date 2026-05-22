@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { VideoUploadStatus } from "../../../types/Stage";
 import { createVideoUploadStatusEventSource } from "../api";
+import { toast } from "react-toastify";
 
 const safeSSEParse = (rawMessage: string) => {
   try {
@@ -30,6 +31,9 @@ export function useCheckVideoUpdateStatus(
     es.addEventListener("videoStatus", (e) => {
       const { status: newStatus } = safeSSEParse(e.data);
       setStatus(newStatus);
+      if ((newStatus as VideoUploadStatus) === "DONE") {
+        toast.success("인코딩이 완료되었습니다.");
+      }
     });
 
     es.onerror = () => es.close();
