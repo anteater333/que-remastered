@@ -8,6 +8,7 @@ import { videoQueueService } from "./connectors/queue.service";
 import { StageStatus } from "@prisma/client";
 import redisService from "./connectors/redis.service";
 import { string } from "zod";
+import domains from "../constants/domains";
 
 const VIDEO_SOURCE_PATH = process.env.VIDEO_SOURCE_PATH ?? "";
 
@@ -67,7 +68,7 @@ class StageService {
       const updatedStage = await prismaService.stage.update({
         where: { id: stageId },
         data: {
-          sourceUrl: uploadPath, // TODO: 임시 코드, 실제로는 원본 영상은 사용자 단에서 안쓰임
+          sourceUrl: domains.MEDIA + "/" + stageId + "/master.m3u8",
           status: "QUEUED",
         },
       });

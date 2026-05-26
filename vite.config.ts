@@ -50,7 +50,9 @@ export default defineConfig(({ mode }) => {
 
             const stat = fs.statSync(filePath);
             if (stat.isDirectory()) {
-              return next();
+              res.writeHead(404, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ error: "Not ready yet" }));
+              return;
             }
 
             // MIME 타입 설정
