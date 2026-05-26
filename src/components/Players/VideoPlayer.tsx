@@ -1,13 +1,19 @@
 // 코어 컴포넌트 - 비디오 플레이어
 
 import Hls from "hls.js";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ComponentProps } from "react";
+import styles from "./VideoPlayer.module.scss";
+import clsx from "clsx";
 
-type VideoPlayerProps = {
+interface VideoPlayerProps extends ComponentProps<"div"> {
   sourceUrl: string;
-};
+}
 
-export const VideoPlayer = ({ sourceUrl }: VideoPlayerProps) => {
+export const VideoPlayer = ({
+  className,
+  sourceUrl,
+  ...props
+}: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -18,7 +24,7 @@ export const VideoPlayer = ({ sourceUrl }: VideoPlayerProps) => {
       const hls = new Hls();
       hls.loadSource(sourceUrl);
       hls.attachMedia(video);
-      return () => hls.destroy;
+      return () => hls.destroy();
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       // Safari
       video.src = sourceUrl;
@@ -27,5 +33,11 @@ export const VideoPlayer = ({ sourceUrl }: VideoPlayerProps) => {
     return () => {};
   }, [sourceUrl]);
 
-  return <video ref={videoRef} controls></video>;
+  return (
+    <div className={clsx(styles.videoPlayerContainer, className)} {...props}>
+      <video ref={videoRef} controls />
+      <div className={styles.overlay}></div>
+      <div className={styles.controls}></div>
+    </div>
+  );
 };
