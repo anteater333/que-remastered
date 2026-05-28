@@ -17,11 +17,23 @@ export const VideoUploadPlaceholder = ({
   status,
   error,
 }: VideoUploadPlaceholderProps) => {
+  console.log(status);
   return (
     <div className={styles.placeholderContainer}>
       <div className={styles.thumbnailContainer}>
         <img src={thumbnailUrl ?? ""} />
         <div className={styles.overlay} />
+        {status === "PROCESSING" && (
+          <div className={styles.indicatorContainer}>
+            <div className={styles.spinner} />
+            <span>인코딩 중</span>
+          </div>
+        )}
+        {status === "FAILED" && (
+          <div className={styles.indicatorContainer}>
+            <span>{error || "오류가 발생했습니다."}</span>
+          </div>
+        )}
       </div>
       <div className={styles.progressBarTrack}>
         <div className={styles.progressBar} style={{ width: `${progress}%` }} />

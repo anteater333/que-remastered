@@ -113,27 +113,22 @@ class StageService {
     if (subscriber.status === "wait") await subscriber.connect();
 
     try {
-      const nextStatus = await new Promise<string>((resolve, reject) => {
-        const handler = (chan: string, message: string) => {
-          if (chan === channel) {
-            subscriber.off("message", handler);
-            resolve(message);
-          }
-        };
+      await subscriber.subscribe(channel);
 
-        subscriber.on("error", (err) => {
-          subscriber.off("message", handler);
-          reject(err);
+      // DONE / FAILED가 올 때까지 반복
+      while (true) {
+        const nextMessage = await new Promise<string>((resolve, reject) => {
+          subscriber.once("message", (chan, message) => {
+            if (chan === channel) resolve(message);
+          });
+          subscriber.once("error", reject);
         });
 
-        subscriber.on("message", handler);
-        subscriber.subscribe(channel).catch(reject);
-      });
+        yield { event: "videoStatus", data: nextMessage };
 
-      yield {
-        event: "videoStatus",
-        data: nextStatus,
-      };
+        const parsed = JSON.parse(nextMessage) as StageStatusEvent;
+        if (parsed.status === "DONE" || parsed.status === "FAILED") break;
+      }
     } finally {
       // 연결 해제 처리
       await subscriber.unsubscribe(channel);
