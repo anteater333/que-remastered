@@ -99,7 +99,9 @@ const UploadEditorScene = () => {
     <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
         {subscribedStatus === "DONE" ? (
-          <VideoPlayer sourceUrl={data?.stage.sourceUrl ?? ""} />
+          <div className={styles.videoPreviewContainer}>
+            <VideoPlayer sourceUrl={data?.stage.sourceUrl ?? ""} />
+          </div>
         ) : (
           <VideoUploadPlaceholder
             thumbnailUrl={thumbnail}

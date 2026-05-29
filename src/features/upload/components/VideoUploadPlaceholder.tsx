@@ -17,7 +17,6 @@ export const VideoUploadPlaceholder = ({
   status,
   error,
 }: VideoUploadPlaceholderProps) => {
-  console.log(status);
   return (
     <div className={styles.placeholderContainer}>
       <div className={styles.thumbnailContainer}>
