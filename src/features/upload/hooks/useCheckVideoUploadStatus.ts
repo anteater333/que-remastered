@@ -19,10 +19,8 @@ const safeSSEParse = (rawMessage: string) => {
 
 export function useCheckVideoUpdateStatus(
   stageId: string,
-  initialStatus: VideoUploadStatus,
+  setStatus: (status: VideoUploadStatus) => void,
 ) {
-  const [status, setStatus] = useState<VideoUploadStatus>(initialStatus);
-
   useEffect(() => {
     if (!stageId || status === "DONE" || status === "FAILED") return;
 
@@ -40,6 +38,4 @@ export function useCheckVideoUpdateStatus(
 
     return () => es.close();
   }, [stageId]);
-
-  return status;
 }

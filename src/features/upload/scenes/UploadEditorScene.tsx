@@ -28,13 +28,8 @@ const UploadEditorScene = () => {
   const navigate = useNavigate();
 
   // #region 최초 접근 시 데이터 조회 및 초기 form 상태 관리
-  const {
-    progress,
-    thumbnail,
-    error,
-    stageId,
-    status: initialStatus,
-  } = useUploadSceneStore();
+  const { progress, thumbnail, error, stageId, status, setStatus } =
+    useUploadSceneStore();
   const { data, refetch: refetchStage } = useStageInfoQuery(stageId ?? "");
   /**
    * 최초 data 로드되었을 때 form에 세팅해줄 초기 상태
@@ -78,17 +73,14 @@ const UploadEditorScene = () => {
   usePreventLeave({ enabled: true });
 
   // #region 영상 업로드 상태 구독 및 업로드 완료 시 비디오 URL 설정
-  /** 서버로부터 구독한 업로드 상태값 */
-  const subscribedStatus = useCheckVideoUpdateStatus(
-    stageId ?? "",
-    initialStatus,
-  );
+  /** status를 서버 상태에 구독 */
+  useCheckVideoUpdateStatus(stageId ?? "", setStatus);
 
   useEffect(() => {
-    if (subscribedStatus === "DONE") {
+    if (status === "DONE") {
       refetchStage();
     }
-  }, [subscribedStatus]);
+  }, [status]);
   // #endregion
 
   if (!stageId) {
@@ -98,7 +90,7 @@ const UploadEditorScene = () => {
   return (
     <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
-        {subscribedStatus === "DONE" ? (
+        {status === "DONE" ? (
           <div className={styles.videoPreviewContainer}>
             <VideoPlayer sourceUrl={data?.stage.sourceUrl ?? ""} />
           </div>
@@ -106,7 +98,7 @@ const UploadEditorScene = () => {
           <VideoUploadPlaceholder
             thumbnailUrl={thumbnail}
             progress={progress}
-            status={subscribedStatus}
+            status={status}
             error={error}
           />
         )}

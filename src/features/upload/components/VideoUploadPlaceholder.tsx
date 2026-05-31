@@ -8,6 +8,15 @@ interface VideoUploadPlaceholderProps {
   error: string | null;
 }
 
+const SPINNER_TEXT: Record<VideoUploadStatus, string> = {
+  INITIATED: "업로드 대기 중",
+  UPLOADING: "업로드 중",
+  QUEUED: "인코딩 대기 중",
+  PROCESSING: "인코딩 중",
+  DONE: "인코딩 완료",
+  FAILED: "오류가 발생했습니다.",
+};
+
 /**
  * 업로드 -> 스테이지 설명 작성 화면에서 영상 업로드 중 상태를 나타내는 플레이스홀더 컴포넌트
  */
@@ -22,10 +31,10 @@ export const VideoUploadPlaceholder = ({
       <div className={styles.thumbnailContainer}>
         <img src={thumbnailUrl ?? ""} />
         <div className={styles.overlay} />
-        {status === "PROCESSING" && (
+        {status !== "FAILED" && (
           <div className={styles.indicatorContainer}>
             <div className={styles.spinner} />
-            <span>인코딩 중</span>
+            <span>{SPINNER_TEXT[status]}</span>
           </div>
         )}
         {status === "FAILED" && (

@@ -51,7 +51,7 @@ export const useVideoUploadMutation = () => {
             setProgress(event.percentage);
           },
         });
-        setStatus("PROCESSING");
+        setStatus("QUEUED");
       } catch (error) {
         setStatus("FAILED");
         setProgress(0);
