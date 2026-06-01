@@ -54,7 +54,7 @@ const UploadEditorScene = () => {
   const handleSubmit = async (value: UploadEditorFormValues) => {
     try {
       await updateStage(value);
-      toast.success("스테이지 정보가 업데이트되었습니다.");
+      toast.success("스테이지 정보가 등록되었습니다.");
       navigate({ to: "/" });
     } catch (error) {
       console.error(error);

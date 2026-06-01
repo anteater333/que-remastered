@@ -38,7 +38,7 @@ export const patchStage: RouteHandler<{
   try {
     const updatedStage = await prismaService.stage.update({
       where: { id: stageId },
-      data: { title, description },
+      data: { title, description, isPublished: true },
     });
 
     if (!updatedStage) {
