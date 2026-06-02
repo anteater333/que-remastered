@@ -1,6 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 import {
   getStage,
+  getStageList,
   getStageVideoStatus,
   patchStage,
   postStage,
@@ -14,6 +15,7 @@ import {
 } from "../schemes/stage.schema";
 
 const stageRoutes: FastifyPluginAsync = async (server, options) => {
+  server.get("/", { schema: {} }, getStageList);
   server.post(
     "/",
     {

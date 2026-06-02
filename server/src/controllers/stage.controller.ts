@@ -96,6 +96,12 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
 
 // #region 조회 영역
 
+export const getStageList: RouteHandler<{}> = async (request, reply) => {
+  console.log(request);
+
+  return reply.status(501).send();
+};
+
 export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
   request,
   reply,
