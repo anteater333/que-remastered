@@ -1,5 +1,9 @@
 import { RouteHandler } from "fastify";
-import { PatchStageBody, StageIdParams } from "../schemes/stage.schema";
+import {
+  GetStageListQuery,
+  PatchStageBody,
+  StageIdParams,
+} from "../schemes/stage.schema";
 import prismaService from "../services/connectors/prisma.service";
 import stageService, {
   STAGE_SERVICE_ERROR_ALREADY_QUEUED,
@@ -96,8 +100,12 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
 
 // #region 조회 영역
 
-export const getStageList: RouteHandler<{}> = async (request, reply) => {
-  console.log(request);
+export const getStageList: RouteHandler<{
+  Querystring: GetStageListQuery;
+}> = async (request, reply) => {
+  const { cursor, limit, sort } = request.query;
+
+  console.log(cursor, limit, sort);
 
   return reply.status(501).send();
 };

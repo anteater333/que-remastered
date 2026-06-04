@@ -1,4 +1,5 @@
 import z from "zod";
+import { STAGE_SORT } from "../constants/queryKeys";
 
 const titleSchema = z
   .string()
@@ -23,3 +24,13 @@ export const patchStageSchema = z.object({
 export type PatchStageBody = z.infer<typeof patchStageSchema>;
 
 export type StageIdParams = z.infer<typeof stageIdParamSchema>;
+
+export const getStageListQuerySchema = z.object({
+  cursor: z.cuid("올바르지 않은 커서 형식입니다.").optional(),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+  sort: z
+    .enum(Object.values(STAGE_SORT) as [string, ...string[]])
+    .default(STAGE_SORT.LATEST),
+});
+
+export type GetStageListQuery = z.infer<typeof getStageListQuerySchema>;
