@@ -95,5 +95,5 @@ export const requestGetStageInfo = async ({ stageId }: { stageId: string }) => {
 
 // #region 영상 업로드/처리 상태 조회용 EventSource
 export const createVideoUploadStatusEventSource = (stageId: string) =>
-  new EventSource(`${API_SERVER_BASE_URL}stages/${stageId}/video/status`);
+  new EventSource(`${API_SERVER_BASE_URL}/stages/${stageId}/video/status`);
 // #endregion
