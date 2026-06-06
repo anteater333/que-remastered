@@ -3,7 +3,7 @@ import StageCardList from "./components/StageCardList";
 import { useStageListQuery } from "./hooks/queries";
 
 const Timeline = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStageListQuery();
 
   const sentinelRef = useIntersectionObserver(fetchNextPage, !!hasNextPage);
