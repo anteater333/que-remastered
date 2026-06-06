@@ -1,5 +1,5 @@
 import z from "zod";
-import { STAGE_SORT } from "../constants/queryKeys";
+import { STAGE_SORT } from "@shared/filters";
 
 const titleSchema = z
   .string()

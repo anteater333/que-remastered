@@ -9,7 +9,7 @@ import stageService, {
   STAGE_SERVICE_ERROR_ALREADY_QUEUED,
   STAGE_SERVICE_ERROR_NOT_FOUND,
 } from "../services/stage.service";
-import { STAGE_SORT } from "../constants/queryKeys";
+import { STAGE_SORT } from "@shared/filters";
 
 /**
  * 영상 업로드 시, 최초로 빈 스테이지 데이터를 생성한다.

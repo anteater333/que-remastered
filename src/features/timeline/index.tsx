@@ -1,15 +1,22 @@
-import { useEffect, useState } from "react";
+import { useIntersectionObserver } from "../../hooks/utils/useIntersectionObserver";
 import StageCardList from "./components/StageCardList";
-import type StageType from "@/types/Stage";
-import { getTimelineStageList } from "./api";
+import { useStageListQuery } from "./hooks/queries";
 
 const Timeline = () => {
-  const [dataList, setDataList] = useState<StageType[]>([]);
-  useEffect(() => {
-    setDataList(getTimelineStageList());
-  }, []);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useStageListQuery();
 
-  return <StageCardList data={dataList} />;
+  const sentinelRef = useIntersectionObserver(fetchNextPage, !!hasNextPage);
+
+  const items = data?.pages.flatMap((page) => page.items) ?? [];
+
+  return (
+    <>
+      <StageCardList data={items} />
+      <div ref={sentinelRef} />
+      {isFetchingNextPage && <div>로딩 중...</div>}
+    </>
+  );
 };
 
 export default Timeline;

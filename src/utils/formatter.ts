@@ -42,10 +42,13 @@ function addZeroPadding(str: string, length = 2) {
  * Date 객체를 받아 yyyy-mm-dd 형식의 문자열로 변환합니다.
  * @param sourceDate
  */
-export function formatDate(sourceDate: Date, separator = "-") {
-  const year = sourceDate.getFullYear();
-  let month = addZeroPadding((sourceDate.getMonth() + 1).toString());
-  let day = addZeroPadding(sourceDate.getDate().toString());
+export function formatDate(sourceDate: Date | string, separator = "-") {
+  const date =
+    typeof sourceDate === "string" ? new Date(sourceDate) : sourceDate;
+
+  const year = date.getFullYear();
+  let month = addZeroPadding((date.getMonth() + 1).toString());
+  let day = addZeroPadding(date.getDate().toString());
 
   return [year, month, day].join(separator);
 }
