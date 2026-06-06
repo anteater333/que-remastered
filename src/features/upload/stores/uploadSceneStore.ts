@@ -1,12 +1,11 @@
 import { create } from "zustand";
-
-export type UploadStatus = "idle" | "uploading" | "encoding" | "done" | "error";
+import type { VideoUploadStatus } from "../../../types/Stage";
 
 export interface UploadSceneState {
   stageId: string | null;
   file: File | null;
   thumbnail: string | null;
-  status: UploadStatus;
+  status: VideoUploadStatus;
   progress: number;
   error: string | null;
 }
@@ -15,7 +14,7 @@ interface UploadSceneActions {
   setFile: (file: File) => void;
   startUpload: (stageId: string, file: File, thumbnail: string) => void;
   setProgress: (progress: number) => void;
-  setStatus: (status: UploadStatus) => void;
+  setStatus: (status: VideoUploadStatus) => void;
   setError: (error: string) => void;
   reset: () => void;
 }
@@ -24,7 +23,7 @@ const initialState: UploadSceneState = {
   stageId: null,
   file: null,
   thumbnail: null,
-  status: "idle",
+  status: "INITIATED",
   progress: 0,
   error: null,
 };
@@ -39,12 +38,12 @@ export const useUploadSceneStore = create<
       stageId,
       file,
       thumbnail: thumbnail,
-      status: "uploading",
+      status: "UPLOADING",
       progress: 0,
       error: null,
     }),
   setProgress: (progress) => set({ progress }),
   setStatus: (status) => set({ status }),
-  setError: (error) => set({ status: "error", error }),
+  setError: (error) => set({ status: "FAILED", error }),
   reset: () => set(initialState),
 }));

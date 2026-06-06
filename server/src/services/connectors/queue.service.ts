@@ -9,7 +9,7 @@ class VideoQueueService {
 
   constructor() {
     this.queue = new Queue(VIDEO_QUEUE_NAME, {
-      connection: redisService,
+      connection: redisService.getClient(),
       defaultJobOptions: {
         removeOnComplete: true,
         attempts: 3,

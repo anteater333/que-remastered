@@ -1,12 +1,21 @@
-import type { UploadStatus } from "../stores/uploadSceneStore";
+import type { VideoUploadStatus } from "../../../types/Stage";
 import styles from "./VideoUploadPlaceholder.module.scss";
 
 interface VideoUploadPlaceholderProps {
   thumbnailUrl: string | null;
   progress: number;
-  status: UploadStatus;
+  status: VideoUploadStatus;
   error: string | null;
 }
+
+const SPINNER_TEXT: Record<VideoUploadStatus, string> = {
+  INITIATED: "업로드 대기 중",
+  UPLOADING: "업로드 중",
+  QUEUED: "인코딩 대기 중",
+  PROCESSING: "인코딩 중",
+  DONE: "인코딩 완료",
+  FAILED: "오류가 발생했습니다.",
+};
 
 /**
  * 업로드 -> 스테이지 설명 작성 화면에서 영상 업로드 중 상태를 나타내는 플레이스홀더 컴포넌트
@@ -22,6 +31,17 @@ export const VideoUploadPlaceholder = ({
       <div className={styles.thumbnailContainer}>
         <img src={thumbnailUrl ?? ""} />
         <div className={styles.overlay} />
+        {status !== "FAILED" && (
+          <div className={styles.indicatorContainer}>
+            <div className={styles.spinner} />
+            <span>{SPINNER_TEXT[status]}</span>
+          </div>
+        )}
+        {status === "FAILED" && (
+          <div className={styles.indicatorContainer}>
+            <span>{error || "오류가 발생했습니다."}</span>
+          </div>
+        )}
       </div>
       <div className={styles.progressBarTrack}>
         <div className={styles.progressBar} style={{ width: `${progress}%` }} />

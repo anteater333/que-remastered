@@ -5,11 +5,20 @@ import { createWriteStream, existsSync, mkdirSync } from "fs";
 import { globalLogger } from "../server";
 import { pipeline } from "stream/promises";
 import { videoQueueService } from "./connectors/queue.service";
+import { StageStatus } from "@prisma/client";
+import redisService from "./connectors/redis.service";
+import { string } from "zod";
+import domains from "../constants/domains";
 
 const VIDEO_SOURCE_PATH = process.env.VIDEO_SOURCE_PATH ?? "";
 
 export const STAGE_SERVICE_ERROR_NOT_FOUND = "STAGE_NOT_FOUND";
 export const STAGE_SERVICE_ERROR_ALREADY_QUEUED = "ALREADY_QUEUED";
+
+export interface StageStatusEvent {
+  status: StageStatus;
+  stageId: string;
+}
 
 class StageService {
   /** 업로드 경로 */
@@ -59,7 +68,9 @@ class StageService {
       const updatedStage = await prismaService.stage.update({
         where: { id: stageId },
         data: {
-          sourceUrl: uploadPath, // TODO: 임시 코드, 실제로는 원본 영상은 사용자 단에서 안쓰임
+          sourceUrl: `${domains.MEDIA}/${stageId}/master.m3u8`,
+          thumbnailUrl: `${domains.MEDIA}/${stageId}/thumbnail_large.webp`,
+          thumbnailUrlMedium: `${domains.MEDIA}/${stageId}/thumbnail_medium.webp`,
           status: "QUEUED",
         },
       });
@@ -82,6 +93,48 @@ class StageService {
       await fileData.toBuffer();
 
       throw error;
+    }
+  }
+
+  /** 상태 전달 SSE 동작 함수 */
+  async *streamStatus(
+    stageId: string,
+    initialStatus: StageStatusEvent["status"],
+  ): AsyncGenerator<{ event: string; data: string }> {
+    // 스트림 생성과 함께 현재 상태 즉시 전송
+    yield {
+      event: "videoStatus",
+      data: JSON.stringify({ status: initialStatus, stageId }),
+    };
+
+    // 현재 상태가 더 기다릴 것 없는 상태라면 즉시 종료
+    if (initialStatus === "DONE" || initialStatus === "FAILED") return;
+
+    const channel = `stage:${stageId}`;
+    const subscriber = redisService.getSubscriberClient().duplicate();
+    if (subscriber.status === "wait") await subscriber.connect();
+
+    try {
+      await subscriber.subscribe(channel);
+
+      // DONE / FAILED가 올 때까지 반복
+      while (true) {
+        const nextMessage = await new Promise<string>((resolve, reject) => {
+          subscriber.once("message", (chan, message) => {
+            if (chan === channel) resolve(message);
+          });
+          subscriber.once("error", reject);
+        });
+
+        yield { event: "videoStatus", data: nextMessage };
+
+        const parsed = JSON.parse(nextMessage) as StageStatusEvent;
+        if (parsed.status === "DONE" || parsed.status === "FAILED") break;
+      }
+    } finally {
+      // 연결 해제 처리
+      await subscriber.unsubscribe(channel);
+      await subscriber.quit();
     }
   }
 }

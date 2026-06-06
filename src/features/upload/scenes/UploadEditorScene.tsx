@@ -15,6 +15,8 @@ import {
 } from "../components/UploadEditorForm";
 import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
+import { useCheckVideoUpdateStatus } from "../hooks/useCheckVideoUploadStatus";
+import { useEffect, useState } from "react";
 
 const UploadEditorScene = () => {
   /** 현재 장면의 GNB 최초 상태 정의 */
@@ -24,14 +26,35 @@ const UploadEditorScene = () => {
   });
 
   const navigate = useNavigate();
-  const { progress, thumbnail, error, stageId, status } = useUploadSceneStore();
-  const { data } = useStageInfoQuery(stageId ?? "");
+
+  // #region 최초 접근 시 데이터 조회 및 초기 form 상태 관리
+  const { progress, thumbnail, error, stageId, status, setStatus } =
+    useUploadSceneStore();
+  const { data, refetch: refetchStage } = useStageInfoQuery(stageId ?? "");
+  /**
+   * 최초 data 로드되었을 때 form에 세팅해줄 초기 상태
+   */
+  const [formInitialValues, setFormInitialValues] =
+    useState<UploadEditorFormValues | null>(null);
+
+  // data 조회에 맞춰 초기 상태 설정
+  useEffect(() => {
+    if (data && !formInitialValues) {
+      setFormInitialValues({
+        title: data.stage.title,
+        description: data.stage.description,
+        song: "", // TBD
+      });
+    }
+  }, [data]);
+  // #endregion
+
   const { mutateAsync: updateStage } = useUpdateStageMutation(stageId ?? "");
 
   const handleSubmit = async (value: UploadEditorFormValues) => {
     try {
       await updateStage(value);
-      toast.success("스테이지 정보가 업데이트되었습니다.");
+      toast.success("스테이지 정보가 등록되었습니다.");
       navigate({ to: "/" });
     } catch (error) {
       console.error(error);
@@ -49,6 +72,17 @@ const UploadEditorScene = () => {
   /** 페이지 이탈 방어 */
   usePreventLeave({ enabled: true });
 
+  // #region 영상 업로드 상태 구독 및 업로드 완료 시 비디오 URL 설정
+  /** status를 서버 상태에 구독 */
+  useCheckVideoUpdateStatus(stageId ?? "", setStatus);
+
+  useEffect(() => {
+    if (status === "DONE") {
+      refetchStage();
+    }
+  }, [status]);
+  // #endregion
+
   if (!stageId) {
     navigate({ to: "/upload" });
   }
@@ -56,8 +90,10 @@ const UploadEditorScene = () => {
   return (
     <div className={styles.uploadModeSelectScene}>
       <div className={styles.videoContainer}>
-        {status === "done" ? (
-          <VideoPlayer />
+        {status === "DONE" ? (
+          <div className={styles.videoPreviewContainer}>
+            <VideoPlayer sourceUrl={data?.stage.sourceUrl ?? ""} />
+          </div>
         ) : (
           <VideoUploadPlaceholder
             thumbnailUrl={thumbnail}
@@ -69,9 +105,9 @@ const UploadEditorScene = () => {
       </div>
       {!!data ? (
         <UploadEditorForm
-          title={data.stage.title}
-          description={data.stage.description}
-          song=""
+          title={formInitialValues?.title ?? ""}
+          description={formInitialValues?.description ?? ""}
+          song={formInitialValues?.song ?? ""}
           onSubmit={handleSubmit}
         />
       ) : (

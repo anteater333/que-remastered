@@ -1,10 +1,15 @@
 import { RouteHandler } from "fastify";
-import { PatchStageBody, StageIdParams } from "../schemes/stage.schema";
+import {
+  GetStageListQuery,
+  PatchStageBody,
+  StageIdParams,
+} from "../schemes/stage.schema";
 import prismaService from "../services/connectors/prisma.service";
 import stageService, {
   STAGE_SERVICE_ERROR_ALREADY_QUEUED,
   STAGE_SERVICE_ERROR_NOT_FOUND,
 } from "../services/stage.service";
+import { STAGE_SORT } from "@shared/filters";
 
 /**
  * 영상 업로드 시, 최초로 빈 스테이지 데이터를 생성한다.
@@ -38,7 +43,7 @@ export const patchStage: RouteHandler<{
   try {
     const updatedStage = await prismaService.stage.update({
       where: { id: stageId },
-      data: { title, description },
+      data: { title, description, isPublished: true },
     });
 
     if (!updatedStage) {
@@ -96,6 +101,52 @@ export const postStageVideo: RouteHandler<{ Params: StageIdParams }> = async (
 
 // #region 조회 영역
 
+export const getStageList: RouteHandler<{
+  Querystring: GetStageListQuery;
+}> = async (request, reply) => {
+  const { cursor, limit, sort } = request.query;
+
+  const orderBy =
+    sort === STAGE_SORT.POPULAR
+      ? [{ viewCount: "desc" as const }, { uploadedAt: "desc" as const }]
+      : [{ uploadedAt: "desc" as const }];
+
+  try {
+    const stages = await prismaService.stage.findMany({
+      where: { isPublished: true },
+      take: limit + 1,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy,
+      select: {
+        id: true,
+        title: true,
+        thumbnailUrl: true,
+        length: true,
+        viewCount: true,
+        uploadedAt: true,
+        uploader: {
+          select: {
+            id: true,
+            handle: true,
+            nickname: true,
+            profilePictureUrl: true,
+          },
+        },
+      },
+    });
+
+    const hasMore = stages.length > limit;
+    const items = hasMore ? stages.slice(0, -1) : stages;
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    return reply.status(200).send({ items, nextCursor });
+  } catch (error) {
+    request.log.error(error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
 export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
   request,
   reply,
@@ -137,6 +188,34 @@ export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
   } catch (error) {
     request.log.error(error);
     return reply.status(500).send({ message: "서버 오류" });
+  }
+};
+
+/**
+ * 영상 인코딩 완료 상태를 조회한다. (Server Side Event)
+ */
+export const getStageVideoStatus: RouteHandler<{
+  Params: StageIdParams;
+}> = async (request, reply) => {
+  const { stageId } = request.params;
+
+  try {
+    const stage = await prismaService.stage.findUnique({
+      where: { id: stageId },
+      select: { status: true, thumbnailUrl: true, sourceUrl: true },
+    });
+
+    if (!stage) {
+      return reply
+        .status(404)
+        .send({ message: "스테이지를 찾을 수 없습니다." });
+    }
+
+    await reply.sse.send(stageService.streamStatus(stageId, stage.status));
+  } catch (error) {
+    request.log.error(error);
+
+    if (!reply.sent) return reply.status(500).send({ message: "서버 오류" });
   }
 };
 

@@ -1,4 +1,4 @@
-import APIInstance from "../../../lib/axios";
+import APIInstance, { API_SERVER_BASE_URL } from "../../../lib/axios";
 import type StageType from "../../../types/Stage";
 
 // #region 스테이지 생성
@@ -91,4 +91,9 @@ export const requestGetStageInfo = async ({ stageId }: { stageId: string }) => {
     .data;
 };
 
+// #endregion
+
+// #region 영상 업로드/처리 상태 조회용 EventSource
+export const createVideoUploadStatusEventSource = (stageId: string) =>
+  new EventSource(`${API_SERVER_BASE_URL}stages/${stageId}/video/status`);
 // #endregion

@@ -1,7 +1,7 @@
 .placeholderContainer {
   position: relative;
   width: 100%;
-  max-height: 480px;
+  aspect-ratio: 16 / 9;
 
   .progressBarTrack {
     position: absolute;
@@ -40,6 +40,39 @@
       inset: 0;
       background: $que-black;
       opacity: 0.3;
+    }
+  }
+
+  .indicatorContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 18px; // overlay 아래쪽에 배치
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 }

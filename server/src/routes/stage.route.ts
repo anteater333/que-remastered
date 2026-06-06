@@ -1,11 +1,14 @@
 import { FastifyPluginAsync } from "fastify";
 import {
   getStage,
+  getStageList,
+  getStageVideoStatus,
   patchStage,
   postStage,
   postStageVideo,
 } from "../controllers";
 import {
+  getStageListQuerySchema,
   PatchStageBody,
   patchStageSchema,
   StageIdParams,
@@ -13,6 +16,11 @@ import {
 } from "../schemes/stage.schema";
 
 const stageRoutes: FastifyPluginAsync = async (server, options) => {
+  server.get(
+    "/",
+    { schema: { querystring: getStageListQuerySchema } },
+    getStageList,
+  );
   server.post(
     "/",
     {
@@ -49,6 +57,16 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
       },
     },
     getStage,
+  );
+  server.get<{ Params: StageIdParams }>(
+    "/:stageId/video/status",
+    {
+      schema: {
+        params: stageIdParamSchema,
+      },
+      sse: true,
+    },
+    getStageVideoStatus,
   );
 };
 

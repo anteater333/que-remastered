@@ -1,6 +1,6 @@
 import type UserType from "./User";
 
-type UploadStatus =
+export type VideoUploadStatus =
   | "INITIATED"
   | "UPLOADING"
   | "QUEUED"
@@ -45,5 +45,5 @@ export default interface StageType {
   /** 업로드한 날짜 */
   uploadedAt: Date;
   /** 영상 업로드 상태 */
-  status: UploadStatus;
+  status: VideoUploadStatus;
 }
