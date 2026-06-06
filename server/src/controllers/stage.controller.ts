@@ -9,6 +9,7 @@ import stageService, {
   STAGE_SERVICE_ERROR_ALREADY_QUEUED,
   STAGE_SERVICE_ERROR_NOT_FOUND,
 } from "../services/stage.service";
+import { STAGE_SORT } from "../constants/queryKeys";
 
 /**
  * 영상 업로드 시, 최초로 빈 스테이지 데이터를 생성한다.
@@ -105,9 +106,45 @@ export const getStageList: RouteHandler<{
 }> = async (request, reply) => {
   const { cursor, limit, sort } = request.query;
 
-  console.log(cursor, limit, sort);
+  const orderBy =
+    sort === STAGE_SORT.POPULAR
+      ? [{ viewCount: "desc" as const }, { uploadedAt: "desc" as const }]
+      : [{ uploadedAt: "desc" as const }];
 
-  return reply.status(501).send();
+  try {
+    const stages = await prismaService.stage.findMany({
+      where: { isPublished: true },
+      take: limit + 1,
+      skip: cursor ? 1 : 0,
+      cursor: cursor ? { id: cursor } : undefined,
+      orderBy,
+      select: {
+        id: true,
+        title: true,
+        thumbnailUrl: true,
+        length: true,
+        viewCount: true,
+        uploadedAt: true,
+        uploader: {
+          select: {
+            id: true,
+            handle: true,
+            nickname: true,
+            profilePictureUrl: true,
+          },
+        },
+      },
+    });
+
+    const hasMore = stages.length > limit;
+    const items = hasMore ? stages.slice(0, -1) : stages;
+    const nextCursor = hasMore ? items[items.length - 1].id : null;
+
+    return reply.status(200).send({ items, nextCursor });
+  } catch (error) {
+    request.log.error(error);
+    return reply.status(500).send({ message: "서버 오류" });
+  }
 };
 
 export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
