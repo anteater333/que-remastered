@@ -5,7 +5,7 @@ import { LogoText } from "../../components/common/logo/LogoText";
 
 /** TODO: 어드민 설정 가능하도록 만들기 */
 const CATCHPHRASE = `내 방에서 열리는 콘서트`;
-const BG_IMG = `https://i.postimg.cc/mgdFtJd5/welcome.gif`;
+const BG_IMG = `https://que.anteater-lab.link/media/resources/que_intro.webp`;
 
 const IntroPage = () => {
   return (
