@@ -4,9 +4,10 @@ model Stage {
   description String @db.Text
 
   // 영상 파일 관련
-  sourceUrl    String?
-  thumbnailUrl String?
-  length       Int     @default(0)
+  sourceUrl          String?
+  thumbnailUrl       String?
+  thumbnailUrlMedium String?
+  length             Int     @default(0)
 
   // 업로드 상태
   status StageStatus @default(INITIATED)

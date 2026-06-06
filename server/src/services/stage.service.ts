@@ -68,7 +68,9 @@ class StageService {
       const updatedStage = await prismaService.stage.update({
         where: { id: stageId },
         data: {
-          sourceUrl: domains.MEDIA + "/" + stageId + "/master.m3u8",
+          sourceUrl: `${domains.MEDIA}/${stageId}/master.m3u8`,
+          thumbnailUrl: `${domains.MEDIA}/${stageId}/thumbnail_large.webp`,
+          thumbnailUrlMedium: `${domains.MEDIA}/${stageId}/thumbnail_medium.webp`,
           status: "QUEUED",
         },
       });
