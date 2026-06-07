@@ -25,7 +25,7 @@ const StageCard = ({ stage }: StageCardProps) => {
       </div>
       <CardInfoView
         title={stage.title}
-        userId={stage.uploader?.userId}
+        userId={stage.uploader?.id}
         nickname={stage.uploader?.nickname}
         videoId={stage.id}
         viewCount={stage.viewCount}
@@ -65,7 +65,7 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 
 interface CardInfoViewProps {
   title: StageType["title"];
-  userId: UserType["userId"];
+  userId: UserType["id"];
   nickname: UserType["nickname"];
   videoId: StageType["id"];
   viewCount: StageType["viewCount"];
@@ -105,13 +105,13 @@ const CardInfoView = ({
         <Profile />
       </Link>
       <div className={styles.infoCenter}>
-        <p className={styles.title}>{title}</p>
-        <p className={styles.subInfo}>
+        <span className={styles.title}>{title}</span>
+        <span className={styles.subInfo}>
           <Link to="/studio/$handle" params={{ handle: userId! }}>
-            {nickname}
+            {nickname ?? "알 수 없는 사용자"}
           </Link>
-          <p>{formatDate(uploadedAt)}</p>
-        </p>
+          <span>{formatDate(uploadedAt)}</span>
+        </span>
       </div>
       <div
         onClick={(event) => {
@@ -127,13 +127,13 @@ const CardInfoView = ({
           <button>
             <IcoThumb className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subText}>{formatCount(likeCount)}</p>
+          <p className={styles.subText}>{formatCount(likeCount ?? 0)}</p>
         </div>
         <div className={styles.countContainer}>
           <button>
             <IcoStar className={styles.icon} isActive={false} />
           </button>
-          <p className={styles.subText}>{formatCount(starCount)}</p>
+          <p className={styles.subText}>{formatCount(starCount ?? 0)}</p>
         </div>
       </div>
     </div>

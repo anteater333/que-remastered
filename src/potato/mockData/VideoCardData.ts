@@ -20,7 +20,7 @@ const mockVideoCardData: StageType[] = [
     likeCount: 0,
     // viewed: false,
     uploader: {
-      userId: "BeZWAJbum6QXGcpf0S4XaFsLY1b2",
+      id: "BeZWAJbum6QXGcpf0S4XaFsLY1b2",
       nickname: "testData",
     },
     uploadedAt: new Date("2021-12-17T03:24:00"),

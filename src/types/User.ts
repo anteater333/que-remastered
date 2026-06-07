@@ -10,7 +10,7 @@ import type UserStatus from "./UserStatus";
  */
 export default interface UserType {
   /** 사용자 고유 UUID */
-  userId?: string;
+  id?: string;
   /** 사용자 고유 핸들 (readable ID) */
   handle: string;
   /** 사용자 권한 정보 */
