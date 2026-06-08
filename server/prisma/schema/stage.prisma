@@ -7,7 +7,8 @@ model Stage {
   sourceUrl          String?
   thumbnailUrl       String?
   thumbnailUrlMedium String?
-  length             Int     @default(0)
+  length             Int              @default(0)
+  orientation        StageOrientation @default(UNSET)
 
   // 업로드 상태
   status StageStatus @default(INITIATED)
@@ -42,5 +43,11 @@ enum StageStatus {
   QUEUED // 업로드 완료 후 큐에 등록 된 상태
   PROCESSING // 워커에서 처리 중
   DONE // 처리 완료
-  FAILED // 실패
+  FAILED // 실패  
+}
+
+enum StageOrientation {
+  UNSET
+  VERTICAL
+  HORIZONTAL
 }
