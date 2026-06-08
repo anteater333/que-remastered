@@ -48,6 +48,7 @@ enum StageStatus {
 
 enum StageOrientation {
   UNSET
-  VERTICAL
-  HORIZONTAL
+  PORTRAIT
+  LANDSCAPE
+  SQUARE
 }

@@ -43,7 +43,7 @@ interface CardOverlayViewProps {
 const CardOverlayView = ({ length }: CardOverlayViewProps) => {
   return (
     <div className={styles.overlay}>
-      <div className={styles.time}>{formatTimer(length)}</div>
+      <div className={styles.time}>{formatTimer(length * 1000)}</div>
     </div>
   );
 };
