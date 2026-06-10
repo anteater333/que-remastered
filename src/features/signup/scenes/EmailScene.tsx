@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import { LogoText } from "../../../components/common/logo/LogoText";
 import { TextInput } from "../../../components/Inputs/TextInput";
 import { formatTimer } from "../../../utils/formatter";
-import { SignUpFNB } from "../components/SignUpFNB";
 import type { SignUpSceneProps } from "../types";
+import { SignUpFNB } from "../../navigation/components/SignUpFNB";
 
 const INITIAL_TIME = 180;
 

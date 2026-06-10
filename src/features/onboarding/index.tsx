@@ -1,21 +1,23 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useAuth } from "../../hooks/useAuth";
+import { TextArea } from "../../components/Inputs/TextArea";
+import { TextInput } from "../../components/Inputs/TextInput";
+import { SignUpFNB } from "../navigation/components/SignUpFNB";
+import styles from "./onboarding.module.scss";
 
 const OnBoardingPage = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
   return (
     <>
-      <button
-        style={{ position: "absolute", top: "50%" }}
-        onClick={() => {
-          logout();
-          navigate({ to: "/" });
-        }}
-      >
-        로그아웃 (임시)
-      </button>
+      <form className={styles.onBoardingContainer}>
+        <div>profile image placeholder</div>
+        <TextInput placeholder="당신의 이름은?" />
+        <TextArea placeholder="자기소개를 작성해주세요." />
+      </form>
+      <SignUpFNB
+        isNextEnabled={true}
+        isPrevEnabled={false}
+        onNext={() => {}}
+        onPrev={() => {}}
+        showPrev={false}
+      />
     </>
   );
 };
