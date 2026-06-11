@@ -2,5 +2,32 @@
   display: flex;
   flex-direction: column;
 
-  padding-top: 72px;
+  align-items: center;
+
+  padding: 88px 16px 16px 16px;
+
+  gap: 32px;
+
+  .profileContainer {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 6px #444;
+    overflow: hidden;
+  }
+
+  .input {
+    font-size: 24px;
+    text-align: center;
+
+    &.name {
+      width: 60%;
+    }
+
+    &.description {
+      display: block;
+      width: 90%;
+      height: 240px;
+    }
+  }
 }
