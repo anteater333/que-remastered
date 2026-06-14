@@ -1,47 +1,40 @@
-import clsx from "clsx";
-import { TextArea } from "../../components/Inputs/TextArea";
-import { TextInput } from "../../components/Inputs/TextInput";
+import { useEffect } from "react";
+import { useLandingLayoutStore } from "../navigation/stores/landingLayoutStore";
+import { OnBoardingForm } from "./components/OnBoardingForm";
 import { SignUpFNB } from "../navigation/components/SignUpFNB";
-import styles from "./onboarding.module.scss";
-import Avatar from "boring-avatars";
-import { useForm } from "@tanstack/react-form";
+import { useAuth } from "../../hooks/useAuth";
+import { usePreventLeave } from "../../hooks/utils/usePreventLeave";
+import { useNavigate } from "@tanstack/react-router";
 
 const OnBoardingPage = () => {
-  const form = useForm({});
+  // TODO: API 호출
+
+  const navigate = useNavigate();
+
+  const { logout } = useAuth();
+
+  /** 현재 페이지 로드될 때 GNB 상태 조작 */
+  const { setGnb, reset } = useLandingLayoutStore();
+  useEffect(() => {
+    setGnb({ showLogo: true });
+    return () => reset();
+  }, []);
+
+  usePreventLeave({ enabled: true });
 
   return (
     <>
-      <form id="que-onboarding" className={styles.onBoardingContainer}>
-        <div>
-          <button onClick={() => {}}>
-            <div className={styles.profileContainer}>
-              <Avatar name={"anteater333"} size={"100%"} variant="beam" />
-            </div>
-          </button>
-        </div>
-        <form.Field name="nickname">
-          {(field) => (
-            <TextInput
-              className={clsx(styles.input, styles.name)}
-              placeholder="당신의 이름은?"
-            />
-          )}
-        </form.Field>
-        <form.Field name="nickname">
-          {(field) => (
-            <TextArea
-              className={clsx(styles.input, styles.description)}
-              placeholder="자기소개를 작성해주세요."
-            />
-          )}
-        </form.Field>
-      </form>
+      <OnBoardingForm description="" nickname="" onSubmit={async () => {}} />
       <SignUpFNB
         isNextEnabled={true}
-        isPrevEnabled={false}
+        isPrevEnabled={true}
         onNext={() => {}}
-        onPrev={() => {}}
-        showPrev={false}
+        onPrev={() => {
+          navigate({ to: "/" });
+          logout();
+        }}
+        showPrev={true}
+        prevText="로그아웃"
       />
     </>
   );

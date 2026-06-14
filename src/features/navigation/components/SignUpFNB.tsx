@@ -4,6 +4,7 @@ import styles from "./SignUpFNB.module.scss";
 interface SignUpFNBProps {
   onNext: () => void;
   onPrev: () => void;
+  prevText?: string;
   isNextEnabled: boolean;
   isPrevEnabled: boolean;
   showPrev: boolean;
@@ -15,6 +16,7 @@ interface SignUpFNBProps {
 export const SignUpFNB = ({
   onNext,
   onPrev,
+  prevText,
   isNextEnabled,
   isPrevEnabled,
   showPrev,
@@ -28,7 +30,7 @@ export const SignUpFNB = ({
             onClick={onPrev}
             disabled={!isPrevEnabled}
           >
-            이전
+            {prevText ?? "이전"}
           </Button>
         )}
         <Button
