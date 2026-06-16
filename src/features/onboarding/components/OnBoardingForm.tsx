@@ -1,11 +1,17 @@
-import { useForm } from "@tanstack/react-form";
+import { useForm, useStore } from "@tanstack/react-form";
 import styles from "./OnBoardingForm.module.scss";
 import z from "zod";
 import Avatar from "boring-avatars";
 import { TextInput } from "../../../components/Inputs/TextInput";
 import clsx from "clsx";
 import { TextArea } from "../../../components/Inputs/TextArea";
-import { useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 const onBoardingFormSchema = z.object({
   nickname: z.string().min(1, "닉네임을 입력해주세요"),
@@ -14,13 +20,24 @@ const onBoardingFormSchema = z.object({
 
 export type OnBoardingFormValues = z.infer<typeof onBoardingFormSchema>;
 
+export type OnBoardingFormRef = {
+  submit: () => void;
+  isValid: boolean;
+};
+
 type OnBoardingFormProps = OnBoardingFormValues & {
+  ref?: React.Ref<OnBoardingFormRef>;
   onSubmit: (
     value: OnBoardingFormValues & { profileImage: File | null },
   ) => Promise<void>;
+  onValidChange?: (isValid: boolean) => void;
 };
 
-export const OnBoardingForm = ({ onSubmit }: OnBoardingFormProps) => {
+export const OnBoardingForm = ({
+  onSubmit,
+  onValidChange,
+  ref,
+}: OnBoardingFormProps) => {
   const [profileImage, setProfileImage] = useState<File | null>(null); // Note. 파일은 form 대신 별도 상태로 관리
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -42,6 +59,17 @@ export const OnBoardingForm = ({ onSubmit }: OnBoardingFormProps) => {
       await onSubmit?.({ ...value, profileImage });
     },
   });
+
+  useImperativeHandle(ref, () => ({
+    submit: () => form.handleSubmit(),
+    isValid: form.state.isValid,
+  }));
+
+  const isValid = useStore(form.store, (state) => state.isValid);
+
+  useEffect(() => {
+    onValidChange?.(isValid);
+  }, [isValid]);
 
   return (
     <>
@@ -72,15 +100,22 @@ export const OnBoardingForm = ({ onSubmit }: OnBoardingFormProps) => {
           {(field) => (
             <TextInput
               className={clsx(styles.input, styles.name)}
+              type="text"
               placeholder="당신의 이름은?"
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
             />
           )}
         </form.Field>
-        <form.Field name="nickname">
+        <form.Field name="description">
           {(field) => (
             <TextArea
               className={clsx(styles.input, styles.description)}
               placeholder="자기소개를 작성해주세요."
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
             />
           )}
         </form.Field>

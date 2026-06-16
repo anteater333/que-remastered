@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLandingLayoutStore } from "../navigation/stores/landingLayoutStore";
-import { OnBoardingForm } from "./components/OnBoardingForm";
+import {
+  OnBoardingForm,
+  type OnBoardingFormRef,
+} from "./components/OnBoardingForm";
 import { SignUpFNB } from "../navigation/components/SignUpFNB";
 import { useAuth } from "../../hooks/useAuth";
 import { usePreventLeave } from "../../hooks/utils/usePreventLeave";
@@ -20,15 +23,26 @@ const OnBoardingPage = () => {
     return () => reset();
   }, []);
 
+  const formRef = useRef<OnBoardingFormRef>(null);
+  const [isFormValid, setIsFormValid] = useState(false);
+
   usePreventLeave({ enabled: true });
 
   return (
     <>
-      <OnBoardingForm description="" nickname="" onSubmit={async () => {}} />
+      <OnBoardingForm
+        description=""
+        nickname=""
+        ref={formRef}
+        onSubmit={async (value) => {
+          console.log("🥕 :: value", value);
+        }}
+        onValidChange={setIsFormValid}
+      />
       <SignUpFNB
-        isNextEnabled={true}
+        isNextEnabled={isFormValid}
         isPrevEnabled={true}
-        onNext={() => {}}
+        onNext={() => formRef.current?.submit()}
         onPrev={() => {
           navigate({ to: "/" });
           logout();
