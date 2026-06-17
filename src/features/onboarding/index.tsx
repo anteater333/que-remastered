@@ -14,7 +14,7 @@ const OnBoardingPage = () => {
 
   const navigate = useNavigate();
 
-  const { logout } = useAuth();
+  const { logout, isLoggedIn } = useAuth();
 
   /** 현재 페이지 로드될 때 GNB 상태 조작 */
   const { setGnb, reset } = useLandingLayoutStore();
@@ -27,6 +27,10 @@ const OnBoardingPage = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   usePreventLeave({ enabled: true });
+
+  if (!isLoggedIn) {
+    navigate({ to: "/" });
+  }
 
   return (
     <>
@@ -43,9 +47,9 @@ const OnBoardingPage = () => {
         isNextEnabled={isFormValid}
         isPrevEnabled={true}
         onNext={() => formRef.current?.submit()}
-        onPrev={() => {
+        onPrev={async () => {
+          await logout();
           navigate({ to: "/" });
-          logout();
         }}
         showPrev={true}
         prevText="로그아웃"

@@ -7,7 +7,7 @@ import { QUE_USER_ROLE } from "../../shared/role";
 interface AuthProps {
   isLoggedIn: boolean;
   isOwner: boolean;
-  logout: () => void;
+  logout: () => Promise<void>;
   userProfile: UserProfileType;
 }
 
