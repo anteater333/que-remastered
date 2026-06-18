@@ -33,6 +33,8 @@ type OnBoardingFormProps = OnBoardingFormValues & {
   onValidChange?: (isValid: boolean) => void;
 };
 
+const MAX_PROFILE_SIZE = 5 * 1024 * 1024;
+
 export const OnBoardingForm = ({
   onSubmit,
   onValidChange,
@@ -87,14 +89,29 @@ export const OnBoardingForm = ({
           {/* hidden file input */}
           <input
             type="file"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/webp"
             style={{ display: "none" }}
             ref={fileInputRef}
             onChange={(e) => {
               const file = e.target.files?.[0] ?? null;
-              setProfileImage(file);
+
+              if (file) {
+                if (file.size > MAX_PROFILE_SIZE) {
+                  alert(
+                    `프로필 사진 크기는 최대 ${MAX_PROFILE_SIZE / 1024 / 1024}MB까지 가능해요.`,
+                  );
+                  e.target.value = "";
+                  return;
+                }
+
+                setProfileImage(file);
+              }
             }}
           />
+          <div className={styles.profileHint}>
+            <p>JPG · PNG · WEBP · 최대 5MB</p>
+            <p>정사각형 이미지를 권장해요.</p>
+          </div>
         </div>
         <form.Field name="nickname">
           {(field) => (
