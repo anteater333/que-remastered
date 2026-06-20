@@ -14,8 +14,8 @@ import {
 } from "react";
 
 const onBoardingFormSchema = z.object({
-  nickname: z.string().min(1, "닉네임을 입력해주세요"),
-  description: z.string(),
+  nickname: z.string().min(2, "닉네임을 입력해주세요"),
+  description: z.string().max(500),
 });
 
 export type OnBoardingFormValues = z.infer<typeof onBoardingFormSchema>;
