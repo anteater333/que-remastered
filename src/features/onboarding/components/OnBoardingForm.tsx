@@ -111,6 +111,7 @@ export const OnBoardingForm = ({
           <div className={styles.profileHint}>
             <p>JPG · PNG · WEBP · 최대 5MB</p>
             <p>정사각형 이미지를 권장해요.</p>
+            <p>업로드 후 이미지 크기는 최적화돼요.</p>
           </div>
         </div>
         <form.Field name="nickname">

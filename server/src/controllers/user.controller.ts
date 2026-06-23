@@ -2,6 +2,9 @@ import { RouteHandler } from "fastify";
 import prismaService from "../services/connectors/prisma.service";
 import { PostOnBoardingProfileBody } from "../schemes/user.schema";
 import { Prisma } from "@prisma/client";
+import sharp from "sharp";
+import { randomUUID } from "crypto";
+import userService from "../services/user.service";
 
 export const getMe: RouteHandler = async (request, reply) => {
   const userId = request.user.id;
@@ -57,5 +60,23 @@ export const postOnBoardingProfile: RouteHandler<{
       .status(500)
       .send({ message: "사용자 프로필 등록에 실패하였습니다." });
   }
+};
+
+export const postOnBoardingProfileImage: RouteHandler = async (
+  request,
+  reply,
+) => {
+  const userId = request.user.id;
+
+  const fileData = await request.file();
+  if (!fileData) {
+    return reply
+      .status(400)
+      .send({ message: "업로드할 프로필 이미지가 없습니다." });
+  }
+
+  const updatedProfile = await userService.uploadProfileImage(userId, fileData);
+
+  return reply.status(501).send();
 };
 // #endregion

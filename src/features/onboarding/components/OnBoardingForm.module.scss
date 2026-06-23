@@ -12,6 +12,11 @@
   overflow-y: auto;
 
   .profileInput {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     .profileContainer {
       width: 160px;
       height: 160px;

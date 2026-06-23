@@ -1,5 +1,9 @@
 import { FastifyPluginAsync } from "fastify";
-import { getMe, postOnBoardingProfile } from "../controllers";
+import {
+  getMe,
+  postOnBoardingProfile,
+  postOnBoardingProfileImage,
+} from "../controllers";
 import {
   PostOnBoardingProfileBody,
   postOnBoardingProfileScheme,
@@ -14,6 +18,13 @@ const userRoutes: FastifyPluginAsync = async (server, options) => {
       onRequest: [server.authenticate],
     },
     postOnBoardingProfile,
+  );
+  server.post(
+    "/onboarding/profile/image",
+    {
+      onRequest: [server.authenticate],
+    },
+    postOnBoardingProfileImage,
   );
 };
 
