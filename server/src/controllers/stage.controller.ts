@@ -116,7 +116,7 @@ export const getStageList: RouteHandler<{
       where: { isPublished: true },
       take: limit + 1,
       skip: cursor ? 1 : 0,
-      cursor: cursor ? { id: cursor } : undefined,
+      ...(cursor && { cursor: { id: cursor } }),
       orderBy,
       select: {
         id: true,
