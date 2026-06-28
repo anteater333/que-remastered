@@ -4,7 +4,9 @@ import { PostOnBoardingProfileBody } from "../schemes/user.schema";
 import { Prisma } from "@prisma/client";
 import sharp from "sharp";
 import { randomUUID } from "crypto";
-import userService from "../services/user.service";
+import userService, {
+  USER_SERVICE_ERROR_NOT_FOUND,
+} from "../services/user.service";
 
 export const getMe: RouteHandler = async (request, reply) => {
   const userId = request.user.id;
@@ -75,8 +77,20 @@ export const postOnBoardingProfileImage: RouteHandler = async (
       .send({ message: "업로드할 프로필 이미지가 없습니다." });
   }
 
-  const updatedProfile = await userService.uploadProfileImage(userId, fileData);
+  try {
+    const updatedProfilePath = await userService.uploadProfileImage(
+      userId,
+      fileData,
+    );
 
-  return reply.status(501).send();
+    return reply.status(201).send({
+      message: "업로드가 완료되었습니다.",
+      profileImage: updatedProfilePath,
+    });
+  } catch (error: any) {
+    if (error?.message === USER_SERVICE_ERROR_NOT_FOUND) {
+      return reply.status(404).send({ message: "사용자를 찾을 수 없습니다." });
+    }
+  }
 };
 // #endregion

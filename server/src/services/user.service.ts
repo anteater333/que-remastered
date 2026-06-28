@@ -5,11 +5,22 @@ import { globalLogger } from "../server";
 import { MultipartFile } from "@fastify/multipart";
 import sharp from "sharp";
 import { writeFile } from "fs/promises";
+import { existsSync, mkdirSync } from "fs";
+import path from "path";
+import domains from "../constants/domains";
 
 export type UserWithoutPassword = Omit<User, "password">;
 
+/** 프로필 이미지 업로드 경로 */
+const PROFILE_UPLOAD_PATH = process.env.PROFILE_UPLOAD_PATH ?? "";
+
+export const USER_SERVICE_ERROR_NOT_FOUND = "USER_NOT_FOUND";
+
 class UserService {
   constructor() {
+    if (!existsSync(PROFILE_UPLOAD_PATH)) {
+      mkdirSync(PROFILE_UPLOAD_PATH, { recursive: true });
+    }
     globalLogger.info("User 서비스 생성.");
   }
 
@@ -40,16 +51,29 @@ class UserService {
     try {
       const buffer = await fileData.toBuffer();
 
-      const processed = await sharp(buffer)
+      const processedImage = await sharp(buffer)
         .resize(512, 512, { fit: "cover", position: "center" })
         .toFormat("webp")
         .toBuffer();
 
-      const filename = `${userId}.webp`;
-      const filepath = `/home/anteater/projects/que-remastered/server/dist/tmp/${filename}`; // 동작 확인용 개발 환경 임시 경로
+      const fileName = `${userId}.webp`;
+      const uploadPath = path.join(PROFILE_UPLOAD_PATH, fileName);
 
-      await writeFile(filepath, processed);
-    } catch (error) {}
+      await writeFile(uploadPath, processedImage);
+
+      const updatedUser = await prismaService.user.update({
+        where: { id: userId },
+        data: {
+          profilePictureUrl: `${domains.MEDIA}/profile/${fileName}`,
+        },
+      });
+
+      return updatedUser.profilePictureUrl;
+    } catch (error) {
+      await fileData.toBuffer();
+
+      throw error;
+    }
   }
 }
 
