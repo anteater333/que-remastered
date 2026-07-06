@@ -2,8 +2,6 @@ import { RouteHandler } from "fastify";
 import prismaService from "../services/connectors/prisma.service";
 import { PostOnBoardingProfileBody } from "../schemes/user.schema";
 import { Prisma } from "@prisma/client";
-import sharp from "sharp";
-import { randomUUID } from "crypto";
 import userService, {
   USER_SERVICE_ERROR_NOT_FOUND,
 } from "../services/user.service";

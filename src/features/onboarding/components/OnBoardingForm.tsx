@@ -75,7 +75,15 @@ export const OnBoardingForm = ({
 
   return (
     <>
-      <form id="que-onboarding" className={styles.onBoardingContainer}>
+      <form
+        id="que-onboarding"
+        className={styles.onBoardingContainer}
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          form.handleSubmit();
+        }}
+      >
         <div className={styles.profileInput}>
           <button type="button" onClick={() => fileInputRef.current?.click()}>
             <div className={styles.profileContainer}>

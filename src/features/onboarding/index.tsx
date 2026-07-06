@@ -3,11 +3,13 @@ import { useLandingLayoutStore } from "../navigation/stores/landingLayoutStore";
 import {
   OnBoardingForm,
   type OnBoardingFormRef,
+  type OnBoardingFormValues,
 } from "./components/OnBoardingForm";
 import { SignUpFNB } from "../navigation/components/SignUpFNB";
 import { useAuth } from "../../hooks/useAuth";
 import { usePreventLeave } from "../../hooks/utils/usePreventLeave";
 import { useNavigate } from "@tanstack/react-router";
+import { useConfirm } from "../../hooks/useConfirm";
 
 const OnBoardingPage = () => {
   // TODO: API 호출
@@ -25,7 +27,17 @@ const OnBoardingPage = () => {
 
   const formRef = useRef<OnBoardingFormRef>(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const confirm = useConfirm();
 
+  const handleSubmit = async (value: OnBoardingFormValues) => {
+    if (await confirm({ title: "테스트" })) {
+    }
+    try {
+      console.log(value);
+    } catch (error) {}
+  };
+
+  /** 페이지 이탈 방어 */
   usePreventLeave({ enabled: true });
 
   if (!isLoggedIn) {
@@ -38,9 +50,7 @@ const OnBoardingPage = () => {
         description=""
         nickname=""
         ref={formRef}
-        onSubmit={async (value) => {
-          console.log("🥕 :: value", value);
-        }}
+        onSubmit={handleSubmit}
         onValidChange={setIsFormValid}
       />
       <SignUpFNB

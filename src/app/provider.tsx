@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import { toastConfig } from "../config/toast";
+import { ConfirmProvider } from "./providers/ConfirmProvider";
 
 type RootProviderProps = {
   children: ReactNode;
@@ -17,11 +18,13 @@ const queryClient = new QueryClient();
 const RootProvider = ({ children }: RootProviderProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <QueSplashProvider>
-        {children}
-        <ToastContainer {...toastConfig} />
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-      </QueSplashProvider>
+      <ConfirmProvider>
+        <QueSplashProvider>
+          {children}
+          <ToastContainer {...toastConfig} />
+          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        </QueSplashProvider>
+      </ConfirmProvider>
     </QueryClientProvider>
   );
 };
