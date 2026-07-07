@@ -47,8 +47,8 @@ export const ConfirmProvider = ({
         open={!!pending}
         title={pending?.options.title ?? ""}
         description={pending?.options.description}
-        confirmText={pending?.options.confirmText}
-        cancelText={pending?.options.cancelText}
+        confirmText={pending?.options.confirmText ?? "확인"}
+        cancelText={pending?.options.cancelText ?? "취소"}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />

@@ -1,5 +1,6 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import styles from "./Dialog.module.scss";
+import { Button } from "../Buttons/Button";
 
 export type ConfirmDialogProps = {
   open: boolean;
@@ -40,22 +41,18 @@ export const ConfirmDialog = ({
           )}
           <div className={styles.actions}>
             <AlertDialog.Cancel asChild>
-              <button
-                type="button"
-                className={styles.cancelButton}
-                onClick={onCancel}
-              >
+              <Button className={styles.cancelButton} onClick={onCancel}>
                 {cancelText}
-              </button>
+              </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action asChild>
-              <button
-                type="button"
+              <Button
                 className={styles.confirmButton}
+                buttonType="fill"
                 onClick={onConfirm}
               >
                 {confirmText}
-              </button>
+              </Button>
             </AlertDialog.Action>
           </div>
         </AlertDialog.Content>

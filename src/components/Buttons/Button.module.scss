@@ -21,6 +21,16 @@
       $que-gradient-secondary 100%
     );
     border: none;
-    color: white;
+    color: $que-white;
+  }
+
+  &:not(.disabled).fill {
+    background: $que-black;
+    color: $que-white;
+  }
+
+  &:not(.disabled):active.fill {
+    background-color: $que-white;
+    color: $que-black;
   }
 }

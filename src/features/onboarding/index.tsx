@@ -30,7 +30,12 @@ const OnBoardingPage = () => {
   const confirm = useConfirm();
 
   const handleSubmit = async (value: OnBoardingFormValues) => {
-    if (await confirm({ title: "테스트" })) {
+    if (
+      await confirm({
+        title: "프로필을 등록하시겠습니까?",
+        description: "나중에 언제든 수정할 수 있어요.",
+      })
+    ) {
     }
     try {
       console.log(value);
@@ -63,6 +68,7 @@ const OnBoardingPage = () => {
         }}
         showPrev={true}
         prevText="로그아웃"
+        nextText="완료"
       />
     </>
   );
