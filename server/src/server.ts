@@ -32,6 +32,25 @@ const server: FastifyInstance = Fastify({
 server.setValidatorCompiler(validatorCompiler);
 server.setSerializerCompiler(serializerCompiler);
 
+// Zod 에러 핸들러
+server.setErrorHandler((error, request, reply) => {
+  if (error.validation) {
+    const errors = error.validation.map((issue) => ({
+      field:
+        issue.instancePath.replace(/^\//, "").replace(/\//g, ".") ||
+        issue.params?.missingProperty,
+      message: issue.message,
+      code: issue.keyword,
+    }));
+
+    return reply.status(400).send({
+      error: "VALIDATION_ERROR",
+      errors,
+    });
+  }
+  reply.send(error);
+});
+
 // 서버 설정
 server.register(fastifyCors, {
   origin: [process.env.WWW_HOST],

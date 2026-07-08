@@ -37,7 +37,7 @@ export const postOnBoardingProfile: RouteHandler<{
   Body: PostOnBoardingProfileBody;
 }> = async (request, reply) => {
   const userId = request.user.id;
-  const { nickname, description, profilePictureUrl } = request.body;
+  const { nickname, description } = request.body;
 
   try {
     const updatedUser = await prismaService.user.update({
@@ -45,7 +45,6 @@ export const postOnBoardingProfile: RouteHandler<{
       data: {
         nickname,
         description: description ? description : Prisma.skip,
-        profilePictureUrl: profilePictureUrl ? profilePictureUrl : Prisma.skip,
       },
     });
 

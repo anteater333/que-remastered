@@ -17,12 +17,9 @@ const userDescriptionSchema = z
   .max(500, "설명은 500자 이하여야 합니다.")
   .default("");
 
-const profilePictureUrlSchema = z.string().url();
-
 export const postOnBoardingProfileScheme = z.object({
   nickname: nicknameSchema,
   description: userDescriptionSchema.optional(),
-  profilePictureUrl: profilePictureUrlSchema.optional(),
 });
 
 export type PostOnBoardingProfileBody = z.infer<

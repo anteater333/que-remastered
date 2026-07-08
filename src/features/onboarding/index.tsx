@@ -10,10 +10,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { usePreventLeave } from "../../hooks/utils/usePreventLeave";
 import { useNavigate } from "@tanstack/react-router";
 import { useConfirm } from "../../hooks/useConfirm";
+import {
+  requestPostOnBoardingProfile,
+  requestPostOnBoardingProfileImage,
+} from "./api";
+import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
 
 const OnBoardingPage = () => {
-  // TODO: API 호출
-
   const navigate = useNavigate();
 
   const { logout, isLoggedIn } = useAuth();
@@ -29,17 +33,50 @@ const OnBoardingPage = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const confirm = useConfirm();
 
-  const handleSubmit = async (value: OnBoardingFormValues) => {
+  const handleSubmit = async (
+    value: OnBoardingFormValues & { profileImage: File | null },
+  ) => {
     if (
-      await confirm({
+      !(await confirm({
         title: "프로필을 등록하시겠습니까?",
         description: "나중에 언제든 수정할 수 있어요.",
-      })
+      }))
     ) {
+      return;
     }
+
+    // 프로필 정보는 업데이트 대기
     try {
-      console.log(value);
-    } catch (error) {}
+      await requestPostOnBoardingProfile(value.nickname, value.description);
+
+      toast.success("프로필을 작성했습니다.");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.data?.error === "VALIDATION_ERROR")
+          toast.error(error.response?.data?.errors[0]?.message);
+        else toast.error(error.response?.data?.message);
+      } else {
+        console.error(error);
+        toast.error("오류가 발생했습니다.");
+      }
+
+      return;
+    }
+
+    // 프로필 이미지는 Fire & Forget
+    if (value.profileImage) {
+      requestPostOnBoardingProfileImage(value.profileImage).catch((error) => {
+        toast.error("프로필 이미지 업로드에 실패했습니다.");
+        if (isAxiosError(error)) {
+          toast.error(error.response?.data?.message);
+        } else {
+          console.error(error);
+          toast.error("오류가 발생했습니다.");
+        }
+      });
+    }
+
+    navigate({ to: "/" });
   };
 
   /** 페이지 이탈 방어 */
