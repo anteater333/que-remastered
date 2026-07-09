@@ -12,6 +12,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { useAuth } from "../../../hooks/useAuth";
+import { AvatarProfile } from "../../../components/Profile/AvatarProfile";
 
 const onBoardingFormSchema = z.object({
   nickname: z.string().min(2, "닉네임을 입력해주세요"),
@@ -40,6 +42,7 @@ export const OnBoardingForm = ({
   onValidChange,
   ref,
 }: OnBoardingFormProps) => {
+  const { userProfile } = useAuth();
   const [profileImage, setProfileImage] = useState<File | null>(null); // Note. 파일은 form 대신 별도 상태로 관리
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -90,7 +93,7 @@ export const OnBoardingForm = ({
               {previewImage ? (
                 <img src={previewImage} className={styles.profileImage} />
               ) : (
-                <Avatar name={"anteater333"} size={"100%"} variant="beam" />
+                <AvatarProfile name={userProfile.handle} />
               )}
             </div>
           </button>

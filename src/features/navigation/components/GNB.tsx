@@ -38,7 +38,12 @@ export const GNB = () => {
               to="/studio/$handle"
               params={{ handle: userProfile.handle }}
             >
-              {({}) => <Profile />}
+              {({}) => (
+                <Profile
+                  profilePictureUrl={userProfile.profilePictureUrl}
+                  userHandle={userProfile.handle}
+                />
+              )}
             </Link>
           </>
         ) : (

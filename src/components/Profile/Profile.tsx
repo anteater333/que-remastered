@@ -1,10 +1,19 @@
+import { AvatarProfile } from "./AvatarProfile";
 import styles from "./Profile.module.scss";
-import img from "@/assets/dev/profile.png";
 
-export const Profile = () => {
+type ProfileProps = {
+  profilePictureUrl?: string;
+  userHandle?: string;
+};
+
+export const Profile = ({ profilePictureUrl, userHandle }: ProfileProps) => {
   return (
     <div className={styles.profile}>
-      <img src={img} />
+      {profilePictureUrl ? (
+        <img src={profilePictureUrl} />
+      ) : (
+        <AvatarProfile name={userHandle ?? ""} />
+      )}
     </div>
   );
 };
