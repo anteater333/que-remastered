@@ -1,7 +1,6 @@
 import { useForm, useStore } from "@tanstack/react-form";
 import styles from "./OnBoardingForm.module.scss";
 import z from "zod";
-import Avatar from "boring-avatars";
 import { TextInput } from "../../../components/Inputs/TextInput";
 import clsx from "clsx";
 import { TextArea } from "../../../components/Inputs/TextArea";

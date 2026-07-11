@@ -20,7 +20,7 @@ import { isAxiosError } from "axios";
 const OnBoardingPage = () => {
   const navigate = useNavigate();
 
-  const { logout, isLoggedIn } = useAuth();
+  const { logout, isLoggedIn, refetchProfile } = useAuth();
 
   /** 현재 페이지 로드될 때 GNB 상태 조작 */
   const { setGnb, reset } = useLandingLayoutStore();
@@ -75,6 +75,8 @@ const OnBoardingPage = () => {
         }
       });
     }
+
+    await refetchProfile();
 
     navigate({ to: "/" });
   };
