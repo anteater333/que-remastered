@@ -1,0 +1,52 @@
+// TODO: 스타일 조정
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  z-index: 101;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.description {
+  font-size: 14px;
+  color: #888888;
+  margin: 0 0 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.cancelButton,
+.confirmButton {
+  padding: 4px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancelButton {
+}
+
+.confirmButton {
+}

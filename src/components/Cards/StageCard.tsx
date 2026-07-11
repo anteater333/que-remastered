@@ -26,6 +26,8 @@ const StageCard = ({ stage }: StageCardProps) => {
       <CardInfoView
         title={stage.title}
         userId={stage.uploader?.id}
+        userHandle={stage.uploader?.handle}
+        profilePictureUrl={stage.uploader?.profilePictureUrl}
         nickname={stage.uploader?.nickname}
         videoId={stage.id}
         viewCount={stage.viewCount}
@@ -66,6 +68,8 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 interface CardInfoViewProps {
   title: StageType["title"];
   userId: UserType["id"];
+  userHandle?: UserType["handle"];
+  profilePictureUrl: UserType["profilePictureUrl"];
   nickname: UserType["nickname"];
   videoId: StageType["id"];
   viewCount: StageType["viewCount"];
@@ -80,6 +84,8 @@ interface CardInfoViewProps {
 const CardInfoView = ({
   title,
   userId,
+  userHandle,
+  profilePictureUrl,
   nickname,
   videoId,
   viewCount,
@@ -102,12 +108,15 @@ const CardInfoView = ({
         to="/studio/$handle"
         params={{ handle: userId! }}
       >
-        <Profile />
+        <Profile
+          profilePictureUrl={profilePictureUrl}
+          userHandle={userHandle}
+        />
       </Link>
       <div className={styles.infoCenter}>
         <span className={styles.title}>{title}</span>
         <span className={styles.subInfo}>
-          <Link to="/studio/$handle" params={{ handle: userId! }}>
+          <Link to="/studio/$handle" params={{ handle: userHandle! }}>
             {nickname ?? "알 수 없는 사용자"}
           </Link>
           <span>{formatDate(uploadedAt)}</span>

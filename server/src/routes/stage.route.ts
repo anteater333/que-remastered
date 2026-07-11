@@ -24,7 +24,8 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
   server.post(
     "/",
     {
-      preHandler: [server.authenticate, server.authorizeOwner],
+      onRequest: [server.authenticate],
+      preHandler: [server.authorizeOwner],
     },
     postStage,
   );
@@ -35,7 +36,8 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
         params: stageIdParamSchema,
         body: patchStageSchema,
       },
-      preHandler: [server.authenticate, server.authorizeOwner],
+      onRequest: [server.authenticate],
+      preHandler: [server.authorizeOwner],
     },
     patchStage,
   );
@@ -45,7 +47,8 @@ const stageRoutes: FastifyPluginAsync = async (server, options) => {
       schema: {
         params: stageIdParamSchema,
       },
-      preHandler: [server.authenticate, server.authorizeOwner],
+      onRequest: [server.authenticate],
+      preHandler: [server.authorizeOwner],
     },
     postStageVideo,
   );

@@ -3,19 +3,21 @@ import { toast } from "react-toastify";
 import { useLogoutMutation } from "./queries/useLogOutMutation";
 import type { UserProfileType } from "../types/User";
 import { QUE_USER_ROLE } from "../../shared/role";
+import type { QueryObserverResult } from "@tanstack/react-query";
 
-interface AuthProps {
+interface QueAuthType {
   isLoggedIn: boolean;
   isOwner: boolean;
-  logout: () => void;
+  refetchProfile: () => Promise<QueryObserverResult<UserProfileType, Error>>;
+  logout: () => Promise<void>;
   userProfile: UserProfileType;
 }
 
 /**
  * 로그인 한 사용자의 정보를 가져와 사용하는 훅
  */
-export const useAuth = (): AuthProps => {
-  const { data, isError } = useUserProfileQuery();
+export const useAuth = (): QueAuthType => {
+  const { data, isError, refetch } = useUserProfileQuery();
   const { mutateAsync: requestLogout } = useLogoutMutation();
 
   const isLoggedIn = !isError && !!data?.email;
@@ -37,6 +39,7 @@ export const useAuth = (): AuthProps => {
     isLoggedIn,
     isOwner,
     logout,
+    refetchProfile: refetch,
     userProfile: {
       email: email,
       role: role,

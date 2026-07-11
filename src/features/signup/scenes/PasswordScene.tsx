@@ -3,12 +3,12 @@ import { TextInput } from "../../../components/Inputs/TextInput";
 import styles from "../signup.module.scss";
 
 import type { SignUpSceneProps } from "../types";
-import { SignUpFNB } from "../components/SignUpFNB";
 import { toast } from "react-toastify";
 import { useSignUpMutation } from "../hooks/queries";
 import { isAxiosError } from "axios";
 import { RESERVED_HANDLES } from "@shared/keywords";
 import { useLandingLayoutStore } from "../../navigation/stores/landingLayoutStore";
+import { SignUpFNB } from "../../navigation/components/SignUpFNB";
 
 interface HandleFailReason {
   isValidated: boolean;

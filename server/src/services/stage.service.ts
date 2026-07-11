@@ -7,9 +7,9 @@ import { pipeline } from "stream/promises";
 import { videoQueueService } from "./connectors/queue.service";
 import { StageStatus } from "@prisma/client";
 import redisService from "./connectors/redis.service";
-import { string } from "zod";
 import domains from "../constants/domains";
 
+/** 영상 업로드 경로 */
 const VIDEO_SOURCE_PATH = process.env.VIDEO_SOURCE_PATH ?? "";
 
 export const STAGE_SERVICE_ERROR_NOT_FOUND = "STAGE_NOT_FOUND";
@@ -21,12 +21,9 @@ export interface StageStatusEvent {
 }
 
 class StageService {
-  /** 업로드 경로 */
-  uploadDir: string;
   constructor() {
-    this.uploadDir = VIDEO_SOURCE_PATH;
-    if (!existsSync(this.uploadDir)) {
-      mkdirSync(this.uploadDir, { recursive: true });
+    if (!existsSync(VIDEO_SOURCE_PATH)) {
+      mkdirSync(VIDEO_SOURCE_PATH, { recursive: true });
     }
     globalLogger.info("Stage 서비스 생성.");
   }
@@ -53,7 +50,7 @@ class StageService {
 
       const ext = path.extname(fileData.filename).toLowerCase();
       const fileName = `${stageId}${ext}`;
-      const uploadPath = path.join(this.uploadDir, fileName);
+      const uploadPath = path.join(VIDEO_SOURCE_PATH, fileName);
 
       // 2. 업로드 파이프라인 생성
       await pipeline(fileData.file, createWriteStream(uploadPath));

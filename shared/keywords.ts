@@ -16,3 +16,10 @@ export const RESERVED_HANDLES = [
   "que",
   "undefined",
 ];
+
+export const FORBIDDEN_NICKNAMES = new Set([
+  "admin",
+  "관리자",
+  "운영자",
+  "que",
+]);

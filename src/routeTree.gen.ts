@@ -15,6 +15,7 @@ import { Route as LandingLayoutRouteImport } from './routes/_landingLayout'
 import { Route as AppLayoutRouteImport } from './routes/_appLayout'
 import { Route as AppLayoutIndexRouteImport } from './routes/_appLayout/index'
 import { Route as LandingLayoutSignupRouteImport } from './routes/_landingLayout/signup'
+import { Route as LandingLayoutOnboardingRouteImport } from './routes/_landingLayout/onboarding'
 import { Route as LandingLayoutLoginRouteImport } from './routes/_landingLayout/login'
 import { Route as AppLayoutSettingRouteImport } from './routes/_appLayout/setting'
 import { Route as AppLayoutSearchRouteImport } from './routes/_appLayout/search'
@@ -53,6 +54,11 @@ const AppLayoutIndexRoute = AppLayoutIndexRouteImport.update({
 const LandingLayoutSignupRoute = LandingLayoutSignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => LandingLayoutRoute,
+} as any)
+const LandingLayoutOnboardingRoute = LandingLayoutOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => LandingLayoutRoute,
 } as any)
 const LandingLayoutLoginRoute = LandingLayoutLoginRouteImport.update({
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof AppLayoutSearchRoute
   '/setting': typeof AppLayoutSettingRoute
   '/login': typeof LandingLayoutLoginRoute
+  '/onboarding': typeof LandingLayoutOnboardingRoute
   '/signup': typeof LandingLayoutSignupRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/search': typeof AppLayoutSearchRoute
   '/setting': typeof AppLayoutSettingRoute
   '/login': typeof LandingLayoutLoginRoute
+  '/onboarding': typeof LandingLayoutOnboardingRoute
   '/signup': typeof LandingLayoutSignupRoute
   '/': typeof AppLayoutIndexRoute
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/_appLayout/search': typeof AppLayoutSearchRoute
   '/_appLayout/setting': typeof AppLayoutSettingRoute
   '/_landingLayout/login': typeof LandingLayoutLoginRoute
+  '/_landingLayout/onboarding': typeof LandingLayoutOnboardingRoute
   '/_landingLayout/signup': typeof LandingLayoutSignupRoute
   '/_appLayout/': typeof AppLayoutIndexRoute
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/setting'
     | '/login'
+    | '/onboarding'
     | '/signup'
     | '/'
     | '/stage/$stageId'
@@ -198,6 +208,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/setting'
     | '/login'
+    | '/onboarding'
     | '/signup'
     | '/'
     | '/stage/$stageId'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/_appLayout/search'
     | '/_appLayout/setting'
     | '/_landingLayout/login'
+    | '/_landingLayout/onboarding'
     | '/_landingLayout/signup'
     | '/_appLayout/'
     | '/_appLayout/stage/$stageId'
@@ -278,6 +290,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof LandingLayoutSignupRouteImport
+      parentRoute: typeof LandingLayoutRoute
+    }
+    '/_landingLayout/onboarding': {
+      id: '/_landingLayout/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof LandingLayoutOnboardingRouteImport
       parentRoute: typeof LandingLayoutRoute
     }
     '/_landingLayout/login': {
@@ -414,11 +433,13 @@ const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
 
 interface LandingLayoutRouteChildren {
   LandingLayoutLoginRoute: typeof LandingLayoutLoginRoute
+  LandingLayoutOnboardingRoute: typeof LandingLayoutOnboardingRoute
   LandingLayoutSignupRoute: typeof LandingLayoutSignupRoute
 }
 
 const LandingLayoutRouteChildren: LandingLayoutRouteChildren = {
   LandingLayoutLoginRoute: LandingLayoutLoginRoute,
+  LandingLayoutOnboardingRoute: LandingLayoutOnboardingRoute,
   LandingLayoutSignupRoute: LandingLayoutSignupRoute,
 }
 
