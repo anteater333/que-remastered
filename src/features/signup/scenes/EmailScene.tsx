@@ -17,7 +17,7 @@ const INITIAL_TIME = 180;
 /**
  * 로그인 -> 이메일 입력 및 인증번호 확인 단계
  */
-const EmailStep = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
+const EmailScene = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIME);
@@ -182,4 +182,4 @@ const EmailStep = ({ onValidated }: SignUpSceneProps<{ email: string }>) => {
   );
 };
 
-export default EmailStep;
+export default EmailScene;

@@ -1,16 +1,12 @@
-import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
-import { StudioSubGNB } from "../../features/studio/components/StudioSubGNB";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_appLayout/_studioLayout")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { handle } = useParams({ strict: false });
-
   return (
     <>
-      <StudioSubGNB handle={handle!} />
       <Outlet />
     </>
   );

@@ -24,6 +24,7 @@ import { Route as AppLayoutStudioLayoutRouteImport } from './routes/_appLayout/_
 import { Route as StackedLayoutUploadIndexRouteImport } from './routes/_stackedLayout/upload/index'
 import { Route as StackedLayoutUploadStageIdRouteImport } from './routes/_stackedLayout/upload/$stageId'
 import { Route as AppLayoutStageStageIdRouteImport } from './routes/_appLayout/stage/$stageId'
+import { Route as AppLayoutStudioLayoutStudioHandleRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle'
 import { Route as AppLayoutStudioLayoutStudioHandleIndexRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle/index'
 import { Route as AppLayoutStudioLayoutStudioHandleStagesRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle/stages'
 import { Route as AppLayoutStudioLayoutStudioHandleReactionsRouteImport } from './routes/_appLayout/_studioLayout/studio/$handle/reactions'
@@ -102,29 +103,35 @@ const AppLayoutStageStageIdRoute = AppLayoutStageStageIdRouteImport.update({
   path: '/stage/$stageId',
   getParentRoute: () => AppLayoutRoute,
 } as any)
+const AppLayoutStudioLayoutStudioHandleRoute =
+  AppLayoutStudioLayoutStudioHandleRouteImport.update({
+    id: '/studio/$handle',
+    path: '/studio/$handle',
+    getParentRoute: () => AppLayoutStudioLayoutRoute,
+  } as any)
 const AppLayoutStudioLayoutStudioHandleIndexRoute =
   AppLayoutStudioLayoutStudioHandleIndexRouteImport.update({
-    id: '/studio/$handle/',
-    path: '/studio/$handle/',
-    getParentRoute: () => AppLayoutStudioLayoutRoute,
+    id: '/',
+    path: '/',
+    getParentRoute: () => AppLayoutStudioLayoutStudioHandleRoute,
   } as any)
 const AppLayoutStudioLayoutStudioHandleStagesRoute =
   AppLayoutStudioLayoutStudioHandleStagesRouteImport.update({
-    id: '/studio/$handle/stages',
-    path: '/studio/$handle/stages',
-    getParentRoute: () => AppLayoutStudioLayoutRoute,
+    id: '/stages',
+    path: '/stages',
+    getParentRoute: () => AppLayoutStudioLayoutStudioHandleRoute,
   } as any)
 const AppLayoutStudioLayoutStudioHandleReactionsRoute =
   AppLayoutStudioLayoutStudioHandleReactionsRouteImport.update({
-    id: '/studio/$handle/reactions',
-    path: '/studio/$handle/reactions',
-    getParentRoute: () => AppLayoutStudioLayoutRoute,
+    id: '/reactions',
+    path: '/reactions',
+    getParentRoute: () => AppLayoutStudioLayoutStudioHandleRoute,
   } as any)
 const AppLayoutStudioLayoutStudioHandleBoardRoute =
   AppLayoutStudioLayoutStudioHandleBoardRouteImport.update({
-    id: '/studio/$handle/board',
-    path: '/studio/$handle/board',
-    getParentRoute: () => AppLayoutStudioLayoutRoute,
+    id: '/board',
+    path: '/board',
+    getParentRoute: () => AppLayoutStudioLayoutStudioHandleRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -139,10 +146,11 @@ export interface FileRoutesByFullPath {
   '/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/upload/$stageId': typeof StackedLayoutUploadStageIdRoute
   '/upload': typeof StackedLayoutUploadIndexRoute
+  '/studio/$handle': typeof AppLayoutStudioLayoutStudioHandleRouteWithChildren
   '/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   '/studio/$handle/reactions': typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   '/studio/$handle/stages': typeof AppLayoutStudioLayoutStudioHandleStagesRoute
-  '/studio/$handle': typeof AppLayoutStudioLayoutStudioHandleIndexRoute
+  '/studio/$handle/': typeof AppLayoutStudioLayoutStudioHandleIndexRoute
 }
 export interface FileRoutesByTo {
   '/intro': typeof IntroRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/_appLayout/stage/$stageId': typeof AppLayoutStageStageIdRoute
   '/_stackedLayout/upload/$stageId': typeof StackedLayoutUploadStageIdRoute
   '/_stackedLayout/upload/': typeof StackedLayoutUploadIndexRoute
+  '/_appLayout/_studioLayout/studio/$handle': typeof AppLayoutStudioLayoutStudioHandleRouteWithChildren
   '/_appLayout/_studioLayout/studio/$handle/board': typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   '/_appLayout/_studioLayout/studio/$handle/reactions': typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   '/_appLayout/_studioLayout/studio/$handle/stages': typeof AppLayoutStudioLayoutStudioHandleStagesRoute
@@ -197,10 +206,11 @@ export interface FileRouteTypes {
     | '/stage/$stageId'
     | '/upload/$stageId'
     | '/upload'
+    | '/studio/$handle'
     | '/studio/$handle/board'
     | '/studio/$handle/reactions'
     | '/studio/$handle/stages'
-    | '/studio/$handle'
+    | '/studio/$handle/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/intro'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/_appLayout/stage/$stageId'
     | '/_stackedLayout/upload/$stageId'
     | '/_stackedLayout/upload/'
+    | '/_appLayout/_studioLayout/studio/$handle'
     | '/_appLayout/_studioLayout/studio/$handle/board'
     | '/_appLayout/_studioLayout/studio/$handle/reactions'
     | '/_appLayout/_studioLayout/studio/$handle/stages'
@@ -355,53 +366,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLayoutStageStageIdRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_appLayout/_studioLayout/studio/$handle/': {
-      id: '/_appLayout/_studioLayout/studio/$handle/'
+    '/_appLayout/_studioLayout/studio/$handle': {
+      id: '/_appLayout/_studioLayout/studio/$handle'
       path: '/studio/$handle'
       fullPath: '/studio/$handle'
-      preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleIndexRouteImport
+      preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleRouteImport
       parentRoute: typeof AppLayoutStudioLayoutRoute
+    }
+    '/_appLayout/_studioLayout/studio/$handle/': {
+      id: '/_appLayout/_studioLayout/studio/$handle/'
+      path: '/'
+      fullPath: '/studio/$handle/'
+      preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleIndexRouteImport
+      parentRoute: typeof AppLayoutStudioLayoutStudioHandleRoute
     }
     '/_appLayout/_studioLayout/studio/$handle/stages': {
       id: '/_appLayout/_studioLayout/studio/$handle/stages'
-      path: '/studio/$handle/stages'
+      path: '/stages'
       fullPath: '/studio/$handle/stages'
       preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleStagesRouteImport
-      parentRoute: typeof AppLayoutStudioLayoutRoute
+      parentRoute: typeof AppLayoutStudioLayoutStudioHandleRoute
     }
     '/_appLayout/_studioLayout/studio/$handle/reactions': {
       id: '/_appLayout/_studioLayout/studio/$handle/reactions'
-      path: '/studio/$handle/reactions'
+      path: '/reactions'
       fullPath: '/studio/$handle/reactions'
       preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleReactionsRouteImport
-      parentRoute: typeof AppLayoutStudioLayoutRoute
+      parentRoute: typeof AppLayoutStudioLayoutStudioHandleRoute
     }
     '/_appLayout/_studioLayout/studio/$handle/board': {
       id: '/_appLayout/_studioLayout/studio/$handle/board'
-      path: '/studio/$handle/board'
+      path: '/board'
       fullPath: '/studio/$handle/board'
       preLoaderRoute: typeof AppLayoutStudioLayoutStudioHandleBoardRouteImport
-      parentRoute: typeof AppLayoutStudioLayoutRoute
+      parentRoute: typeof AppLayoutStudioLayoutStudioHandleRoute
     }
   }
 }
 
-interface AppLayoutStudioLayoutRouteChildren {
+interface AppLayoutStudioLayoutStudioHandleRouteChildren {
   AppLayoutStudioLayoutStudioHandleBoardRoute: typeof AppLayoutStudioLayoutStudioHandleBoardRoute
   AppLayoutStudioLayoutStudioHandleReactionsRoute: typeof AppLayoutStudioLayoutStudioHandleReactionsRoute
   AppLayoutStudioLayoutStudioHandleStagesRoute: typeof AppLayoutStudioLayoutStudioHandleStagesRoute
   AppLayoutStudioLayoutStudioHandleIndexRoute: typeof AppLayoutStudioLayoutStudioHandleIndexRoute
 }
 
+const AppLayoutStudioLayoutStudioHandleRouteChildren: AppLayoutStudioLayoutStudioHandleRouteChildren =
+  {
+    AppLayoutStudioLayoutStudioHandleBoardRoute:
+      AppLayoutStudioLayoutStudioHandleBoardRoute,
+    AppLayoutStudioLayoutStudioHandleReactionsRoute:
+      AppLayoutStudioLayoutStudioHandleReactionsRoute,
+    AppLayoutStudioLayoutStudioHandleStagesRoute:
+      AppLayoutStudioLayoutStudioHandleStagesRoute,
+    AppLayoutStudioLayoutStudioHandleIndexRoute:
+      AppLayoutStudioLayoutStudioHandleIndexRoute,
+  }
+
+const AppLayoutStudioLayoutStudioHandleRouteWithChildren =
+  AppLayoutStudioLayoutStudioHandleRoute._addFileChildren(
+    AppLayoutStudioLayoutStudioHandleRouteChildren,
+  )
+
+interface AppLayoutStudioLayoutRouteChildren {
+  AppLayoutStudioLayoutStudioHandleRoute: typeof AppLayoutStudioLayoutStudioHandleRouteWithChildren
+}
+
 const AppLayoutStudioLayoutRouteChildren: AppLayoutStudioLayoutRouteChildren = {
-  AppLayoutStudioLayoutStudioHandleBoardRoute:
-    AppLayoutStudioLayoutStudioHandleBoardRoute,
-  AppLayoutStudioLayoutStudioHandleReactionsRoute:
-    AppLayoutStudioLayoutStudioHandleReactionsRoute,
-  AppLayoutStudioLayoutStudioHandleStagesRoute:
-    AppLayoutStudioLayoutStudioHandleStagesRoute,
-  AppLayoutStudioLayoutStudioHandleIndexRoute:
-    AppLayoutStudioLayoutStudioHandleIndexRoute,
+  AppLayoutStudioLayoutStudioHandleRoute:
+    AppLayoutStudioLayoutStudioHandleRouteWithChildren,
 }
 
 const AppLayoutStudioLayoutRouteWithChildren =

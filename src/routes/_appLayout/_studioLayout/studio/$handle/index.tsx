@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import StudioHomeScene from "../../../../../features/studio/scenes/StudioHomeScene";
 
 export const Route = createFileRoute(
   "/_appLayout/_studioLayout/studio/$handle/",
@@ -10,11 +11,5 @@ export const Route = createFileRoute(
  * 스튜디오 > 홈
  */
 function Index() {
-  const { handle } = Route.useParams();
-
-  return (
-    <div>
-      <h3>Welcome {handle}'s Studio</h3>
-    </div>
-  );
+  return <StudioHomeScene />;
 }
