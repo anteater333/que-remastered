@@ -83,7 +83,6 @@ interface CardInfoViewProps {
  */
 const CardInfoView = ({
   title,
-  userId,
   userHandle,
   profilePictureUrl,
   nickname,
