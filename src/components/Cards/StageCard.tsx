@@ -106,7 +106,7 @@ const CardInfoView = ({
       <Link
         className={styles.profile}
         to="/studio/$handle"
-        params={{ handle: userId! }}
+        params={{ handle: userHandle! }}
       >
         <Profile
           profilePictureUrl={profilePictureUrl}
