@@ -3,5 +3,21 @@ model Studio {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
+  preferredGenres  String[]
+  preferredArtists String[]
+
+  recommendedTrackArtist String?
+  recommendedTrackTitle  String?
+  recommendedTrackLink   String?
+
+  avgVocalScore    Decimal? @default(0)
+  avgVisualScore   Decimal? @default(0)
+  avgVibeScore     Decimal? @default(0)
+  totalScore       Int      @default(0)
+  totalLikes       Int      @default(0)
+  totalViews       Int      @default(0)
+  
+  stages Stage[]
+
   @@map("studios")
 }

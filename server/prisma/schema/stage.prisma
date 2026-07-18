@@ -16,8 +16,8 @@ model Stage {
   viewCount  Int      @default(0)
   uploadedAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  uploaderId String
-  uploader   User     @relation(fields: [uploaderId], references: [id])
+  studioId   String
+  studio     Studio   @relation(fields: [studioId], references: [id])
 
   isPublished Boolean @default(false)
 
@@ -25,9 +25,9 @@ model Stage {
   // songId String?
   // song   Song?   @relation(fields: [songId], references: [id])
 
-  // TODO: 추후 구현
-  // likes Like[]
-  // start Star[]
+  likes   StageLikes[]
+  scores  StageScore[]
+  views   StageView[]
 
   // 인덱스 설정 구역
   @@index([isPublished, uploadedAt(sort: Desc)]) // 일반 유저 리스트 조회 + 최신순 정렬 최적화
@@ -51,4 +51,45 @@ enum StageOrientation {
   PORTRAIT
   LANDSCAPE
   SQUARE
+}
+
+model StageLikes {
+  id       String @id @default(cuid())
+  stageId  String
+  userId   String
+  stage    Stage  @relation(fields: [stageId], references: [id])
+  user     User   @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([stageId, userId]) // 중복 방지
+  @@index([userId])
+  @@map("stageLikes")
+}
+
+model StageScore {
+  id          String @id @default(cuid())
+  stageId     String
+  userId      String
+  stage       Stage  @relation(fields: [stageId], references: [id])
+  user        User   @relation(fields: [userId], references: [id])
+  vocalScore  Int
+  visualScore Int
+  vibeScore   Int
+  createdAt   DateTime @default(now())
+
+  @@unique([stageId, userId]) // 중복 방지
+  @@index([userId])
+  @@map("stageScores")
+}
+
+model StageView {
+  id        String   @id @default(cuid())
+  stageId   String
+  userId    String?  // 비로그인 시청 허용, nullable
+  stage     Stage    @relation(fields: [stageId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([stageId])
+  @@map("stageViews")
 }
