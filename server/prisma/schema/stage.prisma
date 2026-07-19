@@ -25,14 +25,14 @@ model Stage {
   // songId String?
   // song   Song?   @relation(fields: [songId], references: [id])
 
-  likes   StageLikes[]
-  scores  StageScore[]
-  views   StageView[]
+  likes  StageLikes[]
+  scores StageScore[]
+  views  StageView[]
 
   // 인덱스 설정 구역
   @@index([isPublished, uploadedAt(sort: Desc)]) // 일반 유저 리스트 조회 + 최신순 정렬 최적화
   @@index([status]) // 백엔드 워커(인코딩 큐) 상태 조회 최적화
-  @@index([uploaderId]) // "내가 업로드한 영상 목록" 조회 최적화
+  @@index([studioId]) // "내가 업로드한 영상 목록" 조회 최적화
   // db mapping
   @@map("stages")
 }
@@ -54,11 +54,11 @@ enum StageOrientation {
 }
 
 model StageLikes {
-  id       String @id @default(cuid())
-  stageId  String
-  userId   String
-  stage    Stage  @relation(fields: [stageId], references: [id])
-  user     User   @relation(fields: [userId], references: [id])
+  id        String   @id @default(cuid())
+  stageId   String
+  userId    String
+  stage     Stage    @relation(fields: [stageId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 
   @@unique([stageId, userId]) // 중복 방지
@@ -67,11 +67,11 @@ model StageLikes {
 }
 
 model StageScore {
-  id          String @id @default(cuid())
+  id          String   @id @default(cuid())
   stageId     String
   userId      String
-  stage       Stage  @relation(fields: [stageId], references: [id])
-  user        User   @relation(fields: [userId], references: [id])
+  stage       Stage    @relation(fields: [stageId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
   vocalScore  Int
   visualScore Int
   vibeScore   Int
@@ -85,7 +85,7 @@ model StageScore {
 model StageView {
   id        String   @id @default(cuid())
   stageId   String
-  userId    String?  // 비로그인 시청 허용, nullable
+  userId    String? // 비로그인 시청 허용, nullable
   stage     Stage    @relation(fields: [stageId], references: [id])
   createdAt DateTime @default(now())
 
