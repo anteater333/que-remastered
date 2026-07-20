@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { isAxiosError } from "axios";
 import { useCheckVideoUpdateStatus } from "../hooks/useCheckVideoUploadStatus";
 import { useEffect, useState } from "react";
+import { useConfirm } from "../../../hooks/useConfirm";
 
 const UploadEditorScene = () => {
   /** 현재 장면의 GNB 최초 상태 정의 */
@@ -26,6 +27,7 @@ const UploadEditorScene = () => {
   });
 
   const navigate = useNavigate();
+  const confirm = useConfirm();
 
   // #region 최초 접근 시 데이터 조회 및 초기 form 상태 관리
   const { progress, thumbnail, error, stageId, status, setStatus } =
@@ -52,6 +54,10 @@ const UploadEditorScene = () => {
   const { mutateAsync: updateStage } = useUpdateStageMutation(stageId ?? "");
 
   const handleSubmit = async (value: UploadEditorFormValues) => {
+    if (!(await confirm({ title: "스테이지를 등록하시겠습니까?" }))) {
+      return;
+    }
+
     try {
       await updateStage(value);
       toast.success("스테이지 정보가 등록되었습니다.");
