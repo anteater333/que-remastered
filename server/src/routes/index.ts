@@ -2,6 +2,7 @@ import server from "../server";
 import signInRoutes from "./signin.route";
 import signUpRoutes from "./signup.route";
 import stageRoutes from "./stage.route";
+import studioRoutes from "./studio.route";
 import userRoutes from "./user.route";
 
 /** Health Check */
@@ -13,3 +14,4 @@ server.register(signUpRoutes, { prefix: "/signup" });
 server.register(signInRoutes, { prefix: "/signin" });
 server.register(userRoutes, { prefix: "/users" });
 server.register(stageRoutes, { prefix: "/stages" });
+server.register(studioRoutes, { prefix: "/studios" });
