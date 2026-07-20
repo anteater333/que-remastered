@@ -25,10 +25,9 @@ const StageCard = ({ stage }: StageCardProps) => {
       </div>
       <CardInfoView
         title={stage.title}
-        userId={stage.uploader?.id}
-        userHandle={stage.uploader?.handle}
-        profilePictureUrl={stage.uploader?.profilePictureUrl}
-        nickname={stage.uploader?.nickname}
+        userHandle={stage.studio?.user.handle}
+        profilePictureUrl={stage.studio?.user.profilePictureUrl}
+        nickname={stage.studio?.user.nickname}
         videoId={stage.id}
         viewCount={stage.viewCount}
         likeCount={stage.likeCount}
@@ -67,7 +66,6 @@ const CardThumbnailView = ({ thumbnailUrl }: CardThumbnailViewProps) => {
 
 interface CardInfoViewProps {
   title: StageType["title"];
-  userId: UserType["id"];
   userHandle?: UserType["handle"];
   profilePictureUrl: UserType["profilePictureUrl"];
   nickname: UserType["nickname"];

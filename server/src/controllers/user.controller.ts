@@ -45,6 +45,12 @@ export const postOnBoardingProfile: RouteHandler<{
       data: {
         nickname,
         description: description ? description : Prisma.skip,
+        studio: {
+          connectOrCreate: {
+            where: { userId },
+            create: {},
+          },
+        },
       },
     });
 

@@ -20,7 +20,9 @@ export const postStage: RouteHandler = async (request, reply) => {
       data: {
         title: "Untitled Stage",
         description: "",
-        uploaderId: request.user.id,
+        studio: {
+          connect: { userId: request.user.id },
+        },
       },
     });
 
@@ -125,12 +127,16 @@ export const getStageList: RouteHandler<{
         length: true,
         viewCount: true,
         uploadedAt: true,
-        uploader: {
+        studio: {
           select: {
             id: true,
-            handle: true,
-            nickname: true,
-            profilePictureUrl: true,
+            user: {
+              select: {
+                handle: true,
+                nickname: true,
+                profilePictureUrl: true,
+              },
+            },
           },
         },
       },
@@ -167,12 +173,16 @@ export const getStage: RouteHandler<{ Params: StageIdParams }> = async (
         viewCount: true,
         uploadedAt: true,
         updatedAt: true,
-        uploader: {
+        studio: {
           select: {
             id: true,
-            handle: true,
-            nickname: true,
-            profilePictureUrl: true,
+            user: {
+              select: {
+                handle: true,
+                nickname: true,
+                profilePictureUrl: true,
+              },
+            },
           },
         },
       },

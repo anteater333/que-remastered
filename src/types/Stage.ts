@@ -1,4 +1,4 @@
-import type UserType from "./User";
+import type StudioType from "./Studio";
 
 export type VideoUploadStatus =
   | "INITIATED"
@@ -26,8 +26,8 @@ export default interface StageType {
   length: number;
   // /** 영상 노래 정보 */
   // song?: Partial<Song>;
-  /** 업로드 한 사용자 */
-  uploader?: Partial<UserType>;
+  /** 업로드 한 사용자(스튜디오) */
+  studio?: StudioType;
   /** 총 시청 수 */
   viewCount: number;
   /** 총 좋아요 수 */
