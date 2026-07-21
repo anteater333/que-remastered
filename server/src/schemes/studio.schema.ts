@@ -1,7 +1,7 @@
 import z from "zod";
 
-export const studioIdParamSchema = z.object({
-  studioId: z.uuid("올바르지 않은 스튜디오 ID 형식입니다."),
+export const studioHandleParamSchema = z.object({
+  handle: z.string().min(1, "올바르지 않은 스튜디오 handle 형식입니다."),
 });
 
-export type StudioIdParams = z.infer<typeof studioIdParamSchema>;
+export type StudioHandleParams = z.infer<typeof studioHandleParamSchema>;

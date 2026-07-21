@@ -1,16 +1,16 @@
 import { RouteHandler } from "fastify";
-import { StudioIdParams } from "../schemes/studio.schema";
+import { StudioHandleParams } from "../schemes/studio.schema";
 import prismaService from "../services/connectors/prisma.service";
 
-export const getStudio: RouteHandler<{ Params: StudioIdParams }> = async (
+export const getStudio: RouteHandler<{ Params: StudioHandleParams }> = async (
   request,
   reply,
 ) => {
-  const { studioId } = request.params;
+  const { handle } = request.params;
 
   try {
-    const studio = await prismaService.studio.findUnique({
-      where: { id: studioId },
+    const studio = await prismaService.studio.findFirst({
+      where: { user: { handle } },
       select: {
         id: true,
         preferredGenres: true,

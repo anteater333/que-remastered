@@ -27,7 +27,9 @@ export default interface StageType {
   // /** 영상 노래 정보 */
   // song?: Partial<Song>;
   /** 업로드 한 사용자(스튜디오) */
-  studio?: StudioType;
+  studio?: Pick<StudioType, "id"> & {
+    user: Pick<StudioType["user"], "handle" | "nickname" | "profilePictureUrl">;
+  };
   /** 총 시청 수 */
   viewCount: number;
   /** 총 좋아요 수 */

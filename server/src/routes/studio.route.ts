@@ -1,13 +1,16 @@
 import { FastifyPluginAsync } from "fastify";
 import { getStudio } from "../controllers";
-import { StudioIdParams, studioIdParamSchema } from "../schemes/studio.schema";
+import {
+  StudioHandleParams,
+  studioHandleParamSchema,
+} from "../schemes/studio.schema";
 
 const studioRoutes: FastifyPluginAsync = async (server, options) => {
-  server.get<{ Params: StudioIdParams }>(
-    "/:studioId",
+  server.get<{ Params: StudioHandleParams }>(
+    "/:handle",
     {
       schema: {
-        params: studioIdParamSchema,
+        params: studioHandleParamSchema,
       },
     },
     getStudio,
