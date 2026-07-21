@@ -4,6 +4,7 @@ import {
   Outlet,
   useParams,
 } from "@tanstack/react-router";
+import { getStudioInfo } from "../../../../features/studio/api";
 import StudioNotFoundScene from "../../../../features/studio/scenes/StudioNotFoundScene";
 import { StudioSubGNB } from "../../../../features/studio/components/StudioSubGNB";
 
@@ -14,11 +15,12 @@ export const Route = createFileRoute(
   "/_appLayout/_studioLayout/studio/$handle",
 )({
   loader: async ({ params }) => {
-    const profile = null; // TODO: API 호출을 통한 스튜디오 존재 여부 확인
-    if (!profile) {
+    try {
+      const { studio } = await getStudioInfo({ handle: params.handle });
+      return { studio };
+    } catch {
       throw notFound();
     }
-    return { studioProfile: profile };
   },
   notFoundComponent: () => <StudioNotFoundScene />,
 

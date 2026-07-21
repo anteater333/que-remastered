@@ -33,3 +33,6 @@ dist-ssr
 
 # Tanstack Router
 .tanstack/
+
+# Claude Code local settings
+.claude/settings.local.json
