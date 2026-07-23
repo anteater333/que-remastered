@@ -1,14 +1,21 @@
+import clsx from "clsx";
+import type { ComponentProps } from "react";
 import { AvatarProfile } from "./AvatarProfile";
 import styles from "./Profile.module.scss";
 
-type ProfileProps = {
+interface ProfileProps extends ComponentProps<"div"> {
   profilePictureUrl?: string;
   userHandle?: string;
-};
+}
 
-export const Profile = ({ profilePictureUrl, userHandle }: ProfileProps) => {
+export const Profile = ({
+  className,
+  profilePictureUrl,
+  userHandle,
+  ...rest
+}: ProfileProps) => {
   return (
-    <div className={styles.profile}>
+    <div className={clsx(styles.profile, className)} {...rest}>
       {profilePictureUrl ? (
         <img src={profilePictureUrl} />
       ) : (

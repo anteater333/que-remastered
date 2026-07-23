@@ -1,0 +1,80 @@
+.article {
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  gap: 20px;
+
+  .profileImage {
+    width: 144px;
+    height: 144px;
+  }
+
+  .bioContainer {
+    flex: 1;
+    min-width: 0;
+    padding-right: 8px;
+
+    .nameContainer {
+      .nameContainerUpper {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        h1 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 900;
+          cursor: pointer;
+        }
+        .memberCounterContainer {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          .memberCounter {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+      .handle {
+        display: block;
+        padding: 0;
+        color: #44474f;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+
+    .descriptionContainer {
+      margin-top: 8px;
+
+      .description {
+        font-size: 12px;
+        line-height: 1.4;
+        max-height: 5.6em; // line-height(1.4) * 3줄
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .descriptionExpanded {
+        -webkit-line-clamp: unset;
+        overflow-y: auto;
+      }
+
+      .descriptionToggle {
+        display: block;
+        margin-top: 4px;
+        padding: 0;
+        border: none;
+        background: none;
+        color: #44474f;
+        font-size: 13px;
+        font-family: inherit;
+        cursor: pointer;
+      }
+    }
+  }
+}
