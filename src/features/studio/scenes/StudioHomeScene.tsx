@@ -6,11 +6,17 @@ import { toast } from "react-toastify";
 import clsx from "clsx";
 import { Profile } from "../../../components/Profile/Profile";
 import { IcoPersonAdd } from "../../../components/common/icon/IcoPersonAdd";
+import { useUserCountQuery } from "../../../hooks/queries/useUserCountQuery";
+import { formatCount } from "../../../utils/formatter";
+import { QUE_USER_ROLE } from "@shared/role";
 
 const StudioHomeScene = () => {
   const { studio } = useLoaderData({
     from: "/_appLayout/_studioLayout/studio/$handle",
   });
+
+  const isOwnerStudio = studio.user.role === QUE_USER_ROLE.OWNER;
+  const { data: userCount } = useUserCountQuery(isOwnerStudio);
 
   const handleCopyLink = useCallback(() => {
     navigator.clipboard.writeText(window.location.href);
@@ -41,11 +47,14 @@ const StudioHomeScene = () => {
           <div className={styles.nameContainer}>
             <div className={styles.nameContainerUpper}>
               <h1 onClick={handleCopyLink}>{studio.user.nickname}</h1>
-              <span className={styles.memberCounterContainer}>
-                <IcoPersonAdd />
-                {/* TODO: OWNER에 한해서 회원 수 표시 */}
-                <p className={styles.memberCounter}>{"4.5k"}</p>
-              </span>
+              {isOwnerStudio && userCount !== undefined && (
+                <span className={styles.memberCounterContainer}>
+                  <IcoPersonAdd />
+                  <p className={styles.memberCounter}>
+                    {formatCount(userCount)}
+                  </p>
+                </span>
+              )}
             </div>
             <button
               type="button"

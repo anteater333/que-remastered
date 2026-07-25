@@ -9,3 +9,8 @@ export const requestUserProfile = async () => {
 export const requestLogOut = async () => {
   return await APIInstance.post("/signin/signout");
 };
+
+export const requestUserCount = async () => {
+  return (await APIInstance.get<{ count: number }>("/users/count")).data
+    .count;
+};

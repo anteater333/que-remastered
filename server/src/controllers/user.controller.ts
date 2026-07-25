@@ -6,6 +6,19 @@ import userService, {
   USER_SERVICE_ERROR_NOT_FOUND,
 } from "../services/user.service";
 
+export const getUserCount: RouteHandler = async (request, reply) => {
+  try {
+    const count = await prismaService.user.count();
+
+    return reply.code(200).send({ count });
+  } catch (error) {
+    request.log.error(error);
+    return reply
+      .status(500)
+      .send({ message: "회원 수 조회에 실패하였습니다." });
+  }
+};
+
 export const getMe: RouteHandler = async (request, reply) => {
   const userId = request.user.id;
 
