@@ -1,0 +1,37 @@
+.graph {
+  --studio-score-graph-guide-color: rgba(0, 0, 0, 0.12);
+  --studio-score-graph-axis-color: rgba(0, 0, 0, 0.08);
+  --studio-score-graph-fill-color: rgb(0 115 245 / 35%);
+  --studio-score-graph-stroke-color: #{$que-gradient-primary};
+  --studio-score-graph-label-color: #44474f;
+
+  overflow: visible;
+}
+
+.guide {
+  fill: none;
+  stroke: var(--studio-score-graph-guide-color);
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: var(--studio-score-graph-axis-color);
+  stroke-width: 1;
+}
+
+.score {
+  fill: var(--studio-score-graph-fill-color);
+  stroke: var(--studio-score-graph-stroke-color);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.scoreDot {
+  fill: var(--studio-score-graph-stroke-color);
+}
+
+.label {
+  fill: var(--studio-score-graph-label-color);
+  font-size: 11px;
+  font-weight: 600;
+}

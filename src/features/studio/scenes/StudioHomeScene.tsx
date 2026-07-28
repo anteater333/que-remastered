@@ -9,6 +9,7 @@ import { IcoPersonAdd } from "../../../components/common/icon/IcoPersonAdd";
 import { useUserCountQuery } from "../../../hooks/queries/useUserCountQuery";
 import { formatCount } from "../../../utils/formatter";
 import { QUE_USER_ROLE } from "@shared/role";
+import { StudioScoreGraph } from "../components/StudioScoreGraph";
 
 const StudioHomeScene = () => {
   const { studio } = useLoaderData({
@@ -101,15 +102,6 @@ const StudioHomeScene = () => {
             {studio.recommendedTrackLink})
           </dd>
 
-          <dt>보컬 평균 점수</dt>
-          <dd>{studio.avgVocalScore}</dd>
-
-          <dt>비주얼 평균 점수</dt>
-          <dd>{studio.avgVisualScore}</dd>
-
-          <dt>바이브 평균 점수</dt>
-          <dd>{studio.avgVibeScore}</dd>
-
           <dt>총점</dt>
           <dd>{studio.totalScore}</dd>
 
@@ -119,6 +111,14 @@ const StudioHomeScene = () => {
           <dt>조회수</dt>
           <dd>{studio.totalViews}</dd>
         </dl>
+        <StudioScoreGraph
+          // vocalScore={studio.avgVocalScore}
+          // visualScore={studio.avgVisualScore}
+          // vibeScore={studio.avgVibeScore}
+          vibeScore={7}
+          visualScore={3}
+          vocalScore={8}
+        />
       </section>
     </article>
   );
