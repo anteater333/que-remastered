@@ -88,37 +88,30 @@ const StudioHomeScene = () => {
         </div>
       </header>
 
-      <section aria-label="스튜디오 정보">
+      <section aria-label="스튜디오 정보" className={styles.summary}>
         <dl>
-          <dt>선호 장르</dt>
-          <dd>{studio.preferredGenres.join(", ")}</dd>
-
-          <dt>선호 아티스트</dt>
-          <dd>{studio.preferredArtists.join(", ")}</dd>
-
-          <dt>추천곡</dt>
-          <dd>
-            {studio.recommendedTrackArtist} - {studio.recommendedTrackTitle} (
-            {studio.recommendedTrackLink})
-          </dd>
-
           <dt>총점</dt>
           <dd>{studio.totalScore}</dd>
 
-          <dt>좋아요 수</dt>
+          <dt>받은 ♥️ 수</dt>
           <dd>{studio.totalLikes}</dd>
 
-          <dt>조회수</dt>
+          <dt>전체 시청 수</dt>
           <dd>{studio.totalViews}</dd>
         </dl>
-        <StudioScoreGraph
-          // vocalScore={studio.avgVocalScore}
-          // visualScore={studio.avgVisualScore}
-          // vibeScore={studio.avgVibeScore}
-          vibeScore={7}
-          visualScore={3}
-          vocalScore={8}
-        />
+        <div className={styles.graphContainer}>
+          <span>점수 통계</span>
+          <div className={styles.graph}>
+            <StudioScoreGraph
+              // vocalScore={studio.avgVocalScore}
+              // visualScore={studio.avgVisualScore}
+              // vibeScore={studio.avgVibeScore}
+              vibeScore={7}
+              visualScore={3}
+              vocalScore={8}
+            />
+          </div>
+        </div>
       </section>
     </article>
   );

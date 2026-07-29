@@ -12,9 +12,9 @@ interface StudioScoreGraphProps
 }
 
 const AXES = [
-  { key: "vocal", label: "보컬", angle: -90 },
-  { key: "visual", label: "비주얼", angle: 30 },
-  { key: "vibe", label: "바이브", angle: 150 },
+  { key: "vocal", label: "Vocal", angle: -90 },
+  { key: "visual", label: "Visual", angle: 30 },
+  { key: "vibe", label: "Vibe", angle: 150 },
 ] as const;
 
 const LABEL_OFFSET = 16;
@@ -35,7 +35,7 @@ export const StudioScoreGraph = ({
   visualScore,
   vibeScore,
   maxScore = 10,
-  size = 160,
+  size = 220,
   className,
   ...rest
 }: StudioScoreGraphProps) => {
@@ -57,6 +57,18 @@ export const StudioScoreGraph = ({
     return polarToPoint(angle, radius * ratio, center);
   });
 
+  const labelPoints = AXES.map(({ key, label, angle }) => ({
+    key,
+    label,
+    ...polarToPoint(angle, radius + LABEL_OFFSET, center),
+  }));
+
+  // 축 각도가 대칭이 아니라(위 1개, 아래 2개) 라벨까지 포함한 실제 도형은
+  // size 정중앙보다 위로 치우친다. 라벨 영역의 세로 중심을 다시 정중앙으로 맞춘다.
+  const labelMinY = Math.min(...labelPoints.map((point) => point.y));
+  const labelMaxY = Math.max(...labelPoints.map((point) => point.y));
+  const offsetY = center - (labelMinY + labelMaxY) / 2;
+
   return (
     <svg
       className={clsx(styles.graph, className)}
@@ -65,37 +77,36 @@ export const StudioScoreGraph = ({
       viewBox={`0 0 ${size} ${size}`}
       {...rest}
     >
-      <polygon className={styles.guide} points={toPointsAttr(guidePoints)} />
+      <g transform={`translate(0, ${offsetY})`}>
+        <polygon className={styles.guide} points={toPointsAttr(guidePoints)} />
 
-      {AXES.map(({ key, angle }) => {
-        const { x, y } = polarToPoint(angle, radius, center);
-        return (
-          <line
-            key={key}
-            className={styles.axis}
-            x1={center}
-            y1={center}
-            x2={x}
-            y2={y}
+        {AXES.map(({ key, angle }) => {
+          const { x, y } = polarToPoint(angle, radius, center);
+          return (
+            <line
+              key={key}
+              className={styles.axis}
+              x1={center}
+              y1={center}
+              x2={x}
+              y2={y}
+            />
+          );
+        })}
+
+        <polygon className={styles.score} points={toPointsAttr(scorePoints)} />
+
+        {scorePoints.map((point, index) => (
+          <circle
+            key={AXES[index].key}
+            className={styles.scoreDot}
+            cx={point.x}
+            cy={point.y}
+            r={3}
           />
-        );
-      })}
+        ))}
 
-      <polygon className={styles.score} points={toPointsAttr(scorePoints)} />
-
-      {scorePoints.map((point, index) => (
-        <circle
-          key={AXES[index].key}
-          className={styles.scoreDot}
-          cx={point.x}
-          cy={point.y}
-          r={3}
-        />
-      ))}
-
-      {AXES.map(({ key, label, angle }) => {
-        const { x, y } = polarToPoint(angle, radius + LABEL_OFFSET, center);
-        return (
+        {labelPoints.map(({ key, label, x, y }) => (
           <text
             key={key}
             className={styles.label}
@@ -106,8 +117,8 @@ export const StudioScoreGraph = ({
           >
             {label}
           </text>
-        );
-      })}
+        ))}
+      </g>
     </svg>
   );
 };
