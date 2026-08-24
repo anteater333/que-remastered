@@ -3,7 +3,7 @@
   --studio-score-graph-axis-color: rgba(0, 0, 0, 0.08);
   --studio-score-graph-fill-color: rgb(0 115 245 / 35%);
   --studio-score-graph-stroke-color: #{$que-gradient-primary};
-  --studio-score-graph-label-color: #44474f;
+  --studio-score-graph-label-color: #{$que-black};
 
   overflow: visible;
 }
@@ -32,6 +32,6 @@
 
 .label {
   fill: var(--studio-score-graph-label-color);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: bolder;
 }
