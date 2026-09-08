@@ -2,7 +2,8 @@
   --studio-score-graph-guide-color: rgba(0, 0, 0, 0.12);
   --studio-score-graph-axis-color: rgba(0, 0, 0, 0.08);
   --studio-score-graph-fill-color: rgb(0 115 245 / 35%);
-  --studio-score-graph-stroke-color: #{$que-gradient-primary};
+  --studio-score-graph-stroke-from: #{$que-gradient-primary};
+  --studio-score-graph-stroke-to: #{$que-gradient-secondary};
   --studio-score-graph-label-color: #{$que-black};
 
   overflow: visible;
@@ -19,15 +20,22 @@
   stroke-width: 1;
 }
 
-.score {
+.scoreFill {
   fill: var(--studio-score-graph-fill-color);
-  stroke: var(--studio-score-graph-stroke-color);
-  stroke-width: 2;
-  stroke-linejoin: round;
+  stroke: none;
 }
 
-.scoreDot {
-  fill: var(--studio-score-graph-stroke-color);
+.scoreGlow {
+  fill: none;
+  stroke-width: 6;
+  stroke-linejoin: round;
+  opacity: 0.9;
+}
+
+.scoreStroke {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
 }
 
 .label {

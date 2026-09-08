@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { ComponentProps } from "react";
+import { useEffect, useId, useState } from "react";
 import styles from "./StudioScoreGraph.module.scss";
 
 interface StudioScoreGraphProps
@@ -45,6 +46,29 @@ const GRAPH_PADDING = 16;
 const LABEL_OFFSET = 32;
 /** 모서리 둥글기 */
 const CORNER_RADIUS = 14;
+/** 테두리 그라데이션 각도. 서비스 메인 그라데이션(-115deg)과 통일 */
+const STROKE_GRADIENT_ANGLE = -115;
+/** 테두리 그라데이션 한 바퀴 회전 시간 */
+const STROKE_ROTATION_DURATION = "5s";
+/** 밝은 색으로 넘어가기 전까지 어두운 색을 유지하는 구간. 밝은 배경에서 밝은 색 비중이 커 보이는 걸 완화한다. */
+const STROKE_GRADIENT_HOLD = "33%";
+/** 테두리 글로우 흐림 정도 */
+const GLOW_BLUR_STD_DEVIATION = 5;
+
+const usePrefersReducedMotion = () => {
+  const [reduced, setReduced] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setReduced(query.matches);
+    query.addEventListener("change", handleChange);
+    return () => query.removeEventListener("change", handleChange);
+  }, []);
+
+  return reduced;
+};
 
 const polarToPoint = (angleDeg: number, radius: number, center: number) => {
   const angleRad = (angleDeg * Math.PI) / 180;
@@ -119,6 +143,9 @@ export const StudioScoreGraph = ({
 }: StudioScoreGraphProps) => {
   const center = size / 2;
   const radius = center - GRAPH_PADDING;
+  const gradientId = useId();
+  const glowFilterId = useId();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const scoreByKey = {
     vocal: vocalScore,
@@ -155,6 +182,10 @@ export const StudioScoreGraph = ({
   const labelMaxY = Math.max(...labelPoints.map((point) => point.y));
   const offsetY = center - (labelMinY + labelMaxY) / 2;
 
+  const scorePath = toRoundedPolygonPath(scoreCorners);
+  const gradientFrom = polarToPoint(STROKE_GRADIENT_ANGLE, radius, center);
+  const gradientTo = polarToPoint(STROKE_GRADIENT_ANGLE + 180, radius, center);
+
   return (
     <svg
       className={clsx(styles.graph, className)}
@@ -163,6 +194,43 @@ export const StudioScoreGraph = ({
       viewBox={`0 0 ${size} ${size}`}
       {...rest}
     >
+      <defs>
+        <linearGradient
+          id={gradientId}
+          gradientUnits="userSpaceOnUse"
+          x1={gradientFrom.x}
+          y1={gradientFrom.y}
+          x2={gradientTo.x}
+          y2={gradientTo.y}
+        >
+          <stop
+            offset="0%"
+            style={{ stopColor: "var(--studio-score-graph-stroke-from)" }}
+          />
+          <stop
+            offset={STROKE_GRADIENT_HOLD}
+            style={{ stopColor: "var(--studio-score-graph-stroke-from)" }}
+          />
+          <stop
+            offset="100%"
+            style={{ stopColor: "var(--studio-score-graph-stroke-to)" }}
+          />
+          {!prefersReducedMotion && (
+            <animateTransform
+              attributeName="gradientTransform"
+              type="rotate"
+              from={`0 ${center} ${center}`}
+              to={`360 ${center} ${center}`}
+              dur={STROKE_ROTATION_DURATION}
+              repeatCount="indefinite"
+            />
+          )}
+        </linearGradient>
+        <filter id={glowFilterId} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation={GLOW_BLUR_STD_DEVIATION} />
+        </filter>
+      </defs>
+
       <g transform={`translate(0, ${offsetY})`}>
         <path className={styles.guide} d={toRoundedPolygonPath(guideCorners)} />
 
@@ -180,7 +248,18 @@ export const StudioScoreGraph = ({
           );
         })}
 
-        <path className={styles.score} d={toRoundedPolygonPath(scoreCorners)} />
+        <path className={styles.scoreFill} d={scorePath} />
+        <path
+          className={styles.scoreGlow}
+          d={scorePath}
+          stroke={`url(#${gradientId})`}
+          filter={`url(#${glowFilterId})`}
+        />
+        <path
+          className={styles.scoreStroke}
+          d={scorePath}
+          stroke={`url(#${gradientId})`}
+        />
 
         {labelPoints.map(({ key, label, x, y }) => (
           <text
