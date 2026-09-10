@@ -1,0 +1,26 @@
+// 카드 사이즈(160px)와 bleed(16px)는 BiasCard.tsx의 BIAS_CARD_SIZE / BIAS_CARD_BLEED와 값을 맞춘다.
+// gap은 카드 양쪽 bleed(16px + 16px)가 겹치지 않도록 그보다 넉넉하게 32px로 잡는다.
+.rail {
+  display: flex;
+  gap: 32px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  // 위아래 bleed(16px)가 auto-overflow에 잘리지 않도록 여유를 준다.
+  padding: 16px;
+  margin: -16px;
+}
+
+.cardSlot {
+  flex: 0 0 auto;
+  width: 160px;
+  height: 160px;
+  scroll-snap-align: start;
+}
+
+.empty {
+  margin: 0;
+  padding: 16px 0;
+  color: #767676;
+  font-size: 14px;
+}

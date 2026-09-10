@@ -1,0 +1,29 @@
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.imageLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 4px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// 데코/텍스트 레이어. 카드 경계 밖 bleed를 보여주기 위해 overflow는 visible로 둔다.
+.overlayLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}

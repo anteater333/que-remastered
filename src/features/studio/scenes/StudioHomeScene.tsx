@@ -1,7 +1,13 @@
 import styles from "./StudioHomeScene.module.scss";
 
 import { useLoaderData } from "@tanstack/react-router";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import clsx from "clsx";
 import { Profile } from "../../../components/Profile/Profile";
@@ -10,6 +16,8 @@ import { useUserCountQuery } from "../../../hooks/queries/useUserCountQuery";
 import { formatCount } from "../../../utils/formatter";
 import { QUE_USER_ROLE } from "@shared/role";
 import { StudioScoreGraph } from "../components/StudioScoreGraph";
+import { BiasRail } from "../components/Bias/BiasRail";
+import { createDefaultBiasAssets } from "../components/Bias/createDefaultBiasAssets";
 
 const StudioHomeScene = () => {
   const { studio } = useLoaderData({
@@ -33,6 +41,12 @@ const StudioHomeScene = () => {
     if (!el) return;
     setIsDescriptionClamped(el.scrollHeight > el.clientHeight);
   }, [studio.user.description]);
+
+  // TODO: 아티스트별 전용 Deco/Text가 준비되면 createDefaultBiasAssets 대신 그걸로 교체
+  const biasAssets = useMemo(
+    () => studio.preferredArtists.map(createDefaultBiasAssets),
+    [studio.preferredArtists],
+  );
 
   return (
     <article className={styles.article}>
@@ -88,7 +102,7 @@ const StudioHomeScene = () => {
         </div>
       </header>
 
-      <section aria-label="스튜디오 정보" className={styles.summary}>
+      <section aria-label="스튜디오 요약" className={styles.summary}>
         <dl>
           <dt>총점</dt>
           <dd>{studio.totalScore}</dd>
@@ -113,6 +127,13 @@ const StudioHomeScene = () => {
           </div>
         </div>
       </section>
+
+      <section aria-label="좋아해요" className={styles.bias}>
+        <h2 className={styles.sectionTitle}>좋아해요</h2>
+        <BiasRail items={biasAssets} />
+      </section>
+
+      <section aria-label="들어주세요" className={styles.listen} />
     </article>
   );
 };
