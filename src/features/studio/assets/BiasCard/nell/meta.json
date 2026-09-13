@@ -1,0 +1,10 @@
+{
+  "nameKor": "넬",
+  "nameEng": "Nell",
+  "description": "음악적 뿌리",
+  "recommendedTracks": [
+    { "title": "인어의 별" },
+    { "title": "Meaningless", "url": "https://..." },
+    { "title": "One Time Bestseller", "url": "https://..." }
+  ]
+}
